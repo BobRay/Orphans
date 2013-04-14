@@ -24,19 +24,20 @@ if (! function_exists('stripPhpTags')) {
 
 $action = $modx->newObject('modAction');
 $action->fromArray( array (
-  'id' => 1,
   'namespace' => 'orphans',
   'controller' => 'index',
-  'haslayout' => true,
-  'lang_topics' => 'orphans:default',
+  'haslayout' => 1,
+  'lang_topics' => '',
   'assets' => '',
+  'help_url' => '',
+  'id' => 1,
 ), '', true, true);
 
 $menus[1] = $modx->newObject('modMenu');
 $menus[1]->fromArray( array (
-  'text' => 'Orphans',
+  'text' => 'orphans~~Orphans',
   'parent' => 'components',
-  'description' => 'orphans_menu_desc~~Orphans looks for unused elements',
+  'description' => 'orphans.menu_desc~~Find unused elements',
   'icon' => '',
   'menuindex' => 0,
   'params' => '',
