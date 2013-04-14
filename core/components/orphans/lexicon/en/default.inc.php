@@ -36,3 +36,13 @@
 
 $_lang['orphans'] = 'Orphans';
 $_lang['orphans.menu_desc'] = 'Find unused elements';
+
+
+/* used in orphans.class.php */
+$_lang['orphans.header_message'] = 'Processing all resource and element objects looking for unused elements. The following objects may, or may not, be unused.';
+$_lang['orphans.found'] = 'Found';
+$_lang['orphans.php_files'] = 'PHP files in core/components.';
+$_lang['orphans.total'] = 'Total';
+$_lang['orphans.Orphan'] = 'Orphan';
+$_lang['orphans.total_processed'] = 'Total Objects Processed';
+$_lang['orphans.file_nf'] = 'Could not open file';

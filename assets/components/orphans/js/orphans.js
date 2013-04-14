@@ -18,7 +18,10 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * @package orphans
  */
-
+/* These are for LexiconHelper:
+   $modx->lexicon->load('orphans:default');
+   include 'orphans.class.php'
+ */
 Ext.MessageBox.show({
 
     msg: 'Saving your data, please wait...',
