@@ -18,3 +18,15 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * @package orphans
  */
+
+Ext.MessageBox.show({
+
+    msg: 'Saving your data, please wait...',
+    progressText: 'Saving...',
+    width: 300,
+    wait: true,
+    waitConfig: {
+        interval: 200
+    }
+
+});
