@@ -30,7 +30,7 @@
 //return $orphans->initialize('mgr');
 
 /* @var $modx modX */
-// $modx->lexicon->load
+$modx->lexicon->load('orphans:default');
 if (! $modx->user->hasSessionContext('mgr')) return $modx->lexicon('access_denied');
 
 require_once $modx->getOption('orphans.core_path', null, MODX_CORE_PATH . 'components/orphans/') . 'model/orphans/orphans.class.php';

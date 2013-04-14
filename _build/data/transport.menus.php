@@ -35,9 +35,9 @@ $action->fromArray( array (
 
 $menus[1] = $modx->newObject('modMenu');
 $menus[1]->fromArray( array (
-  'text' => 'orphans~~Orphans',
+  'text' => 'orphans',
   'parent' => 'components',
-  'description' => 'orphans.menu_desc~~Find unused elements',
+  'description' => 'orphans.menu_desc',
   'icon' => '',
   'menuindex' => 0,
   'params' => '',
