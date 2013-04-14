@@ -169,12 +169,15 @@ class Orphans {
             : false;
 
         $this->output .= $cli? '' : "\n" . '<div id="orphans-div">' ;
+        $msg = $this->modx->lexicon('orphans.header_message~~Processing all resource and element objects looking for unused elements. The following objects may, or may not, be unused.');
         $this->output .= $cli
-            ? "\nProcessing all resource and element objects looking for unused elements. The following objects may, or may not, be unused."
-            : "\n" . '<h2>Orphans</h2>' . "\n" . '<p class="orphans">Processing all resource and element objects looking for unused elements. The following objects may, or may not, be unused.</p>';
+            ? "\n" . $msg
+            : "\n" . '<h2>Orphans</h2>' . "\n" . '<p class="orphans">' . $msg . '</p>';
+        $msg = $this->modx->lexicon('orphans.found~~Found');
+        $msg2 = $this->modx->lexicon('orphans.php_files~~PHP files in core/components.');
         $this->output .= $cli
-            ? "\nFound " . $this->classFileCount . ' PHP files in core/components.'
-            : "\n" . '<p class="orphans">Found ' . $this->classFileCount . ' PHP files in core/components.' . '</p>';
+            ? "\n" . $msg . ' ' . $this->classFileCount . ' ' . $msg2
+            : "\n" . '<p class="orphans">' . $msg . ' ' .  $this->classFileCount . ' ' . $msg2 . '</p>';
         $objectTypes = $this->objectTypes;
         $totalObjects = 0;
         $totalObjects += count($this->getObjects('modResource'));
@@ -190,9 +193,10 @@ class Orphans {
             $this->output .= $cli
                 ? "\n\n" . strtoupper($objectName)
                 : "\n" . '<h3 class="orphans">' . $objectName . '</h3>';
+            $msg = $this->modx->lexicon('orphans.total~~Total');
             $this->output .= $cli
-                ? "\n\nTotal " . $objectName . ': ' . $total
-                : "\n" . '<p class="orphans">Total ' . $objectName . ': ' . $total . '</p>';
+                ? "\n\n" . $msg . " " . $objectName . ': ' . $total
+                : "\n" . '<p class="orphans">' . $msg . ' ' .  $objectName . ': ' . $total . '</p>';
             $orphanCount = 0;
             $orphans = array();
             foreach ($objects as $object) {
@@ -201,9 +205,11 @@ class Orphans {
                     $orphanCount++;
                 }
             }
+
+            $msg = $this->modx->lexicon('orphans.Orphan~~Orphan');
             $this->output .= $cli
-                ? "\nOrphan " . $objectName . ': ' . $orphanCount
-                : "\n" . '<p class="orphans">Orphan ' . $objectName . ': ' . $orphanCount . '</p>';
+                ? "\n" . $msg . ' ' . $objectName . ': ' . $orphanCount
+                : "\n" . '<p class="orphans">' . $msg . ' ' . $objectName . ': ' . $orphanCount . '</p>';
             natcasesort($orphans);
             $this->output .= $cli
                 ? ''
@@ -217,9 +223,10 @@ class Orphans {
                 ? ''
                 : "\n</ul>";
         }
+        $msg = $this->modx->lexicon('orphans.total_processed~~Total Objects Processed');
         $this->output .= $cli
-            ? "\n\nTotal Objects Processed: " . $totalObjects
-            : "\n<br />" . '<p class="orphans">' . 'Total Objects Processed: ' . $totalObjects;
+            ? "\n\n" . $msg . ": " . $totalObjects
+            : "\n<br />" . '<p class="orphans">' . $msg . ': ' . $totalObjects;
         $this->output .= $cli ? '' : "\n</div>";
     }
 
@@ -381,7 +388,7 @@ class Orphans {
                 }
                 fclose($fp);
             } else {
-                $this->output .= "\nCould not open file: " . $file;
+                $this->output .= "\n" .  $this->modx->lexicon('orphans.file_nf~~Could not open file') . ': ' . $file;
                 return;
             }
         } else {

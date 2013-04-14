@@ -34,3 +34,5 @@
  * @package orphans
  **/
 
+$_lang['orphans'] = 'Orphans';
+$_lang['orphans.menu_desc'] = 'Find unused elements';
