@@ -1,20 +1,48 @@
-<p>Orphans project for MyComponent extra</p>
+<p>Orphans Extra</p>
 
-<p>(Jump to <a href="[[~[[*id]]]]#propertiesTable">Properties Table</a>.)</p>
+<p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the sections at lines 133, 320, and 376 (my apologies if that code has been moved by the time you read this and I've forgotten to update this section).
+
+<p><b>Important: </b>Orphans will list the names of elements that might be unused, but it can't guarantee that they are really not in use somewhere.</p>
 
 <h3>Installing Orphans</h3>
 
 <p>
 Go to System | Package Management on the main menu in the MODX Manager and click on the "Download Extras" button. That will take you to the
-Revolution Repository (AKA Web Transport Facility). Put Orphans in the search box and press Enter. Click on the "Download" button, and
-when it changes to "Downloaded," click on the "Finish" button. That should bring you back to your Package Management grid. Click on the
+Revolution Repository (AKA Web Transport Facility). Put Orphans in the search box and press Enter. Click on the "Download" button, and when the download is finished, click on the "Back to Package Manager" button. That should bring you back to your Package Management grid. Click on the
 "Install" button next to Orphans in the grid. The Orphans package should now be installed.</p>
+
+<p>After installing Orphans, you'll need to reload the Manager page before it will show up under the Components menu. In fact, if you don't already have any components installed, the Components menu itself won't appear until after you install Orphans and then reload the Manager page.</p>
 
 <h3>Usage</h3>
 
+<p>To run Orphans, just select the Orphans menu item under Components in the Manager's Top Menu. Orphans does a tremendous amount of processing before it can render its output, so be patient. Nothing will show up until the analysis is complete. Orphans looks at the entire source code of all Resources and all Elements. It also examines all Element properties, and the code of all class files included by snippets and plugins (and recursively at files included in those class files). It takes time.</p>
+
+<h3>Considerations</h3>
+
+<p>Orphans is very conservative about identifying Orphans. If the name of an object is used anywhere (even in comments or files that aren't really included because the include statement is commented out), Orphans will consider the file in use and won't list it as an Orphan. Even with this policy, however, there can still be false positives in the Orphans list.
+
+<p>The listing of orphan Templates is generally quite accurate because if any Resource uses a template, Orphans will consider it in use and won't list it. It's still possible that a Template might be referred to by ID in snippet or plugin code or in the properties of a snippet tag, but this is fairly rare.</p>
+
+<p>TVs are more of a challenge because they can be referred to by ID in snippets. Referring to them by ID is faster, so a TV that is identified by its ID and is used to control a snippet may never appear in a tag. Orphans will mistakenly consider it unused.</p>
+
+<p>I couldn't think of any sensible way to identify unused Plugins or Resources, so they are not listed.</p>
+
+<p>Chunks are particularly difficult for Orphans because their names in code are often dynamic. For example, suppose you have an extra that uses a Tpl chunk called &quot;FileUploadTpl.&quot; The Tpl chunk might be referred to in this way in the extra's code:</p>
+
+<pre><fixedpre>
+$name = "FileUpload";
+$tpl = $name . 'Tpl';
+$modx->getChunk($tpl);
+</fixedpre></pre>
+
+<p>Since the name &quot;FileUploadTpl&quot; does not appear anywhere in the code, Orphans will consider it unused, even though it is in use and may be critical for that extra. Because of this, you should take all listed orphans with a grain of salt. In spite of this, Orphans is actually surprisingly good about identifying Tpl chunks that are in use because they are usually named in snippet and plugin properties, which Orphans always checks. Note that Orphans does not check custom Property Sets or System Settings, which could also have references to Tpl chunks. Checking these is on the roadmap.</p>
+
+<p>Often, you'll recognize listed orphans as things that are definitely no longer in use. For listed orphans you're not sure about, though, the best practice is to rename them by putting an
+&quot;X&quot; at the beginning of their names. Run your site for a good while and try to check the operation of all extras to see if there are any problems. If there are no problems, you can delete the Orphans. If thing go sideways, you can change the names back.</p>
+
+<p>Another consideration is that you will often use your own Tpl chunks in place of the default ones that come with an extra. Orphans will list the default Tpl chunks as unused, but it's a good idea to keep them around for reference in case your own Tpl chunks develop problems.</p>
 
 
+<p>&nbsp;</p>
 
-<a name="propertiesTable"></a>
 
-<h3>Orphans Properties</h3>
