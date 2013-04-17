@@ -125,7 +125,7 @@ $components = array(
         'Orphans' => array(
             'text' => 'Orphans',
             'parent' => 'components',
-            'description' => 'orphans_menu_desc~~Orphans looks for unused elements',
+            'description' => 'orphans_menu_desc',
             'icon' => '',
             'menuindex' => 0,
             'params' => '',
@@ -172,6 +172,9 @@ $components = array(
         'plugins' => array(
         ),
         'chunks' => array(
+            'OrphansTplChunk' => array(
+                'category' => 'Orphans',
+            ),
         ),
         'templates' => array(
         ),
@@ -332,7 +335,7 @@ $components = array(
 
     /* ******************** LEXICON HELPER SETTINGS ***************** */
     /* These settings are used by LexiconHelper */
-    'rewriteCodeFiles' => false,
+    'rewriteCodeFiles' => true,
     /*# remove ~~descriptions */
     'rewriteLexiconFiles' => true,
     /* automatically add missing strings to lexicon files */

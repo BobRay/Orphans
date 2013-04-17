@@ -71,7 +71,6 @@ class Orphans {
 
     function __construct(&$modx) {
         $this->modx =& $modx;
-
     }
 
     public function addFile($dir, $file) {
@@ -137,6 +136,7 @@ class Orphans {
             $objects = $this->modx->getCollection($objectType);
             foreach ($objects as $object) {
                 /* @var $orphanObject OrphanObject */
+                /* Get concatenated content + included files + properties, etc. */
                 $content = $this->getContent($object, $objectType);
                 /* look through all object of this type for each orphan of any type.
                    findMe() sets its 'found' member if found anywhere */
@@ -182,8 +182,11 @@ class Orphans {
         $totalObjects = 0;
         $totalObjects += count($this->getObjects('modResource'));
         $totalObjects += count ($this->getObjects('modPlugin'));
+
+        /* Won't be displaying these two */
         unset($objectTypes[array_search('modPlugin', $objectTypes)]);
         unset($objectTypes[array_search('modResource', $objectTypes)]);
+
 
         foreach ($objectTypes as $objectType) {
             $objectName = substr($objectType, 3) . 's';
