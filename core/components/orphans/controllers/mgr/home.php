@@ -22,9 +22,16 @@
  * @package orphans
  */
 /**
+ * Loads the home page.
+ *
  * @package orphans
  * @subpackage controllers
  */
-require_once dirname(dirname(__FILE__)).'/model/orphans/orphans.class.php';
-$orphans = new Orphans($modx);
-return $orphans->initialize('mgr');
+$modx->regClientStartupScript($modx->getOption('manager_url').'assets/modext/util/datetime.js');
+$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/template.grid.js');
+$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
+$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/home.panel.js');
+$modx->regClientStartupScript($orphans->config['jsUrl'].'sections/home.js');
+$output = '<div id="orphans-panel-home-div"></div>';
+
+return $output;

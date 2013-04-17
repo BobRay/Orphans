@@ -22,14 +22,13 @@
    $modx->lexicon->load('orphans:default');
    include 'orphans.class.php'
  */
-Ext.MessageBox.show({
-
-    msg: 'Saving your data, please wait...',
-    progressText: 'Saving...',
-    width: 300,
-    wait: true,
-    waitConfig: {
-        interval: 200
-    }
-
+var Orphans = function (config) {
+    config = config || {};
+    Orphans.superclass.constructor.call(this, config);
+};
+Ext.extend(Orphans, Ext.Component, {
+    page: {}, window: {}, grid: {}, tree: {}, panel: {}, combo: {}, config: {}
 });
+Ext.reg('orphans', Orphans);
+
+var Orphans = new Orphans();

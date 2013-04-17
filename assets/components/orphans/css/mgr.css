@@ -1,0 +1,20 @@
+
+.orphans-resource-body {
+    padding: 10px 0 10px 20px;
+}
+
+
+.orphans-grid .orphans-unpublished,
+.orphans-grid .orphans-unpublished span,
+.orphans-grid .orphans-unpublished a {
+    color: gray;
+}
+.x-grid3-body .x-grid3-td-checker {
+    background-image: none !important;
+}
+
+
+.orphans-deleted, .orphans-deleted span, .orphans-deleted a,
+.orphans-grid .orphans-deleted, .orphans-grid .orphans-deleted span, .orphans-grid .orphans-deleted a {
+    color: red !important;
+}

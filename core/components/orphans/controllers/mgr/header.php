@@ -22,9 +22,18 @@
  * @package orphans
  */
 /**
+ * Loads the header for mgr pages.
+ *
  * @package orphans
  * @subpackage controllers
  */
-require_once dirname(dirname(__FILE__)).'/model/orphans/orphans.class.php';
-$orphans = new Orphans($modx);
-return $orphans->initialize('mgr');
+$modx->regClientCSS($orphans->config['cssUrl'].'mgr.css');
+$modx->regClientStartupScript($orphans->config['jsUrl'].'orphans.js');
+$modx->regClientStartupHTMLBlock('<script type="text/javascript">
+Ext.onReady(function() {
+    Orphans.config = '.$modx->toJSON($orphans->config).';
+    Orphans.config.connector_url = "'.$orphans->config['connectorUrl'].'";
+});
+</script>');
+
+return '';
