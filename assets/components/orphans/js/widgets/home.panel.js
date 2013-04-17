@@ -41,7 +41,22 @@ Orphans.panel.Home = function(config) {
                     xtype: 'orphans-grid-template'
                     ,preventRender: true
                 }]
-            }]
+
+            }
+,{
+                title: _('orphans.templates')
+                ,defaults: { autoHeight: true }
+                ,items: [{
+                    html: '<p>'+_('orphans.templates.intro_msg')+'</p>'
+                    ,border: false
+                    ,bodyStyle: 'padding: 10px'
+                },{
+                    xtype: 'orphans-grid-template'
+                    ,preventRender: true
+                }]
+
+            }
+            ]
         }]
     });
     Orphans.panel.Home.superclass.constructor.call(this,config);

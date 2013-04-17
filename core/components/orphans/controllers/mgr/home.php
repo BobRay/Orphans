@@ -29,6 +29,7 @@
  */
 $modx->regClientStartupScript($modx->getOption('manager_url').'assets/modext/util/datetime.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/template.grid.js');
+$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/snippet.grid.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/home.panel.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'sections/home.js');

@@ -27,6 +27,12 @@
  * @package orphans
  * @subpackage processors
  */
+
+
+/* @var $this modProcessor */
+/* @var $resource modResource */
+/* @var $modx modX */
+
 /* setup default properties */
 $isLimit = !empty($scriptProperties['limit']);
 $isCombo = !empty($scriptProperties['combo']);
