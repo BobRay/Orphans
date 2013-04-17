@@ -1,10 +1,10 @@
-Orphans.grid.Templates = function (config) {
+Orphans.grid.Snippets = function (config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
 
     Ext.applyIf(config, {
         url: Orphans.config.connector_url, baseParams: {
-            action: 'mgr/template/getList', thread: config.thread
+            action: 'mgr/snippet/getList', thread: config.thread
         }, fields: ['id', 'templatename', 'description', 'category', 'tvs'], paging: true, autosave: false, remoteSort: true, autoExpandColumn: 'templatename', cls: 'orphans-grid', sm: this.sm, columns: [this.sm, {
             header: _('id'), dataIndex: 'id', sortable: true, width: 60
         }, {
@@ -47,9 +47,9 @@ Orphans.grid.Templates = function (config) {
             }
         ]
     });
-    Orphans.grid.Templates.superclass.constructor.call(this, config)
+    Orphans.grid.Snippets.superclass.constructor.call(this, config)
 };
-Ext.extend(Orphans.grid.Templates, MODx.grid.Grid, {
+Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
     search: function (tf, nv, ov) {
         this.getStore().setBaseParam('search', tf.getValue());
         this.getBottomToolbar().changePage(1);
@@ -60,7 +60,7 @@ Ext.extend(Orphans.grid.Templates, MODx.grid.Grid, {
         this.refresh();
     }, clearFilter: function () {
         this.getStore().baseParams = {
-            action: 'mgr/template/getList'
+            action: 'mgr/snippet/getList'
         };
         Ext.getCmp('orphans-search').reset();
         this.getBottomToolbar().changePage(1);
@@ -136,7 +136,7 @@ Ext.extend(Orphans.grid.Templates, MODx.grid.Grid, {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
-        var r = {templates: cs};
+        var r = {snippets: cs};
         if (!this.changeCategoryWindow) {
             this.changeCategoryWindow = MODx.load({
                                                       xtype: 'orphans-window-change-category', record: r, listeners: {
@@ -161,7 +161,7 @@ Ext.extend(Orphans.grid.Templates, MODx.grid.Grid, {
         return bm;
     }
 });
-Ext.reg('orphans-grid-template', Orphans.grid.Templates);
+Ext.reg('orphans-grid-snippet', Orphans.grid.Snippets);
 
 
 Orphans.window.ChangeCategory = function (config) {
@@ -173,7 +173,7 @@ Orphans.window.ChangeCategory = function (config) {
         ,width: 400
         ,fields: [{
             xtype: 'hidden'
-            ,name: 'templates'
+            ,name: 'snippets'
         },{
             xtype: 'modx-combo-category'
             ,fieldLabel: _('orphans.category')

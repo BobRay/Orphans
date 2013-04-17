@@ -51,7 +51,7 @@ Orphans.panel.Home = function(config) {
                     ,border: false
                     ,bodyStyle: 'padding: 10px'
                 },{
-                    xtype: 'orphans-grid-template'
+                    xtype: 'orphans-grid-snippet'
                     ,preventRender: true
                 }]
 
