@@ -62,6 +62,7 @@ $_lang['orphans.resources'] = 'Resources';
 $_lang['orphans.resources_affect'] = 'This will affect the following Resources:';
 $_lang['orphans.resources_err_ns'] = 'Please select some Resources to perform that action on.';
 $_lang['orphans.richtext'] = 'Richtext Enabled';
+$_lang['orphans.reload'] = 'Reload';
 $_lang['orphans.searchable'] = 'Searchable';
 $_lang['orphans.template'] = 'Template';
 $_lang['orphans.template_err_nf'] = 'Template not found.';

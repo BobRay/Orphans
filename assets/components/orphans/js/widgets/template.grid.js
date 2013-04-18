@@ -54,23 +54,10 @@ Orphans.grid.Templates = function(config) {
         ,tbar: [{
             text: _('orphans.bulk_actions')
             ,menu: this.getBatchMenu()
-        },'->',{
-            xtype: 'textfield'
-            ,name: 'search'
-            ,id: 'orphans-search'
-            ,emptyText: _('search')
-            ,listeners: {
-                'change': {fn:this.search,scope:this}
-                ,'render': {fn:function(tf) {
-                    tf.getEl().addKeyListener(Ext.EventObject.ENTER,function() {
-                        this.search(tf);
-                    },this);
-                },scope:this}
-            }
         },{
             xtype: 'button'
-            ,id: 'orphans-filter-clear'
-            ,text: _('filter_clear')
+           /*  ,id: 'orphans-filter-clear' */
+            ,text: _('orphans.reload')
             ,listeners: {
                 'click': {fn: this.clearFilter, scope: this}
             }
@@ -93,7 +80,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
     	this.getStore().baseParams = {
             action: 'mgr/template/getList'
     	};
-        Ext.getCmp('orphans-search').reset();
+        /* Ext.getCmp('orphans-search').reset(); */
     	this.getBottomToolbar().changePage(1);
         this.refresh();
     }

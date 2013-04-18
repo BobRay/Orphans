@@ -69,31 +69,10 @@ Orphans.grid.Resources = function(config) {
         ,tbar: [{
             text: _('orphans.bulk_actions')
             ,menu: this.getBatchMenu()
-        },'->',{
-            xtype: 'modx-combo-template'
-            ,name: 'template'
-            ,id: 'orphans-template'
-            ,emptyText: _('orphans.filter_by_template')
-            ,listeners: {
-                'select': {fn:this.filterTemplate,scope:this}
-            }
-        },{
-            xtype: 'textfield'
-            ,name: 'search'
-            ,id: 'orphans-search'
-            ,emptyText: _('search')
-            ,listeners: {
-                'change': {fn:this.search,scope:this}
-                ,'render': {fn:function(tf) {
-                    tf.getEl().addKeyListener(Ext.EventObject.ENTER,function() {
-                        this.search(tf);
-                    },this);
-                },scope:this}
-            }
         },{
             xtype: 'button'
-            ,id: 'orphans-filter-clear'
-            ,text: _('filter_clear')
+          /*   ,id: 'orphans-filter-clear' */
+            ,text: _('orphans.reload')
             ,listeners: {
                 'click': {fn: this.clearFilter, scope: this}
             }
@@ -116,8 +95,8 @@ Ext.extend(Orphans.grid.Resources,MODx.grid.Grid,{
     	this.getStore().baseParams = {
             action: 'mgr/resource/getList'
     	};
-        Ext.getCmp('orphans-search').reset();
-        Ext.getCmp('orphans-template').reset();
+        /* Ext.getCmp('orphans-search').reset(); */
+       /*  Ext.getCmp('orphans-template').reset(); */
     	this.getBottomToolbar().changePage(1);
         this.refresh();
     }
