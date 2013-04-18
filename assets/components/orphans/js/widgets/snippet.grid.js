@@ -3,17 +3,40 @@ Orphans.grid.Snippets = function (config) {
     this.sm = new Ext.grid.CheckboxSelectionModel();
 
     Ext.applyIf(config, {
-        url: Orphans.config.connector_url, baseParams: {
-            action: 'mgr/snippet/getList', thread: config.thread
-        }, fields: ['id', 'templatename', 'description', 'category', 'tvs'], paging: true, autosave: false, remoteSort: true, autoExpandColumn: 'templatename', cls: 'orphans-grid', sm: this.sm, columns: [this.sm, {
-            header: _('id'), dataIndex: 'id', sortable: true, width: 60
+        url: Orphans.config.connector_url
+        , baseParams: {
+            action: 'mgr/snippet/getList'
+            , thread: config.thread
+        }
+        , fields: ['id', 'name', 'category', 'description']
+        , paging: true
+        , autosave: false
+        , remoteSort: true
+        , autoExpandColumn: 'name'
+        , cls: 'orphans-grid'
+        , sm: this.sm
+        , columns: [this.sm, {
+            header: _('id')
+            ,dataIndex: 'id'
+            ,sortable: true
+            ,width: 60
         }, {
-                                                                                                                                                                                                                header: _('name'), dataIndex: 'templatename', sortable: true, width: 300
-                                                                                                                                                                                                            }, {
-                                                                                                                                                                                                                header: _('category'), dataIndex: 'category', sortable: true, width: 120
-                                                                                                                                                                                                            }, {
-                                                                                                                                                                                                                header: _('orphans.tvs'), dataIndex: 'tvs', sortable: false, width: 100
-                                                                                                                                                                                                            }], viewConfig: {
+            header: _('name')
+            ,dataIndex: 'name'
+            ,sortable: true
+            ,width: 300
+                                                                                                           }, {
+           header: _('category'),
+            dataIndex: 'category',
+            sortable: true,
+            width: 120
+        }, {
+            header: _('orphans.tvs')
+            , dataIndex: 'tvs'
+            , sortable: false
+            , width: 100
+        }]
+        ,viewConfig: {
             forceFit: true,
             enableRowBody: true,
             showPreview: true,
@@ -66,7 +89,7 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }, _renderUrl: function (v, md, rec) {
-        return '<a href="' + rec.data.url + '" target="_blank">' + rec.data.templatename + '</a>';
+        return '<a href="' + rec.data.url + '" target="_blank">' + rec.data.name + '</a>';
     }, _showMenu: function (g, ri, e) {
         e.stopEvent();
         e.preventDefault();

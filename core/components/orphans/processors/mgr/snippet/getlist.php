@@ -32,22 +32,22 @@ $isLimit = !empty($scriptProperties['limit']);
 $isCombo = !empty($scriptProperties['combo']);
 $start = $modx->getOption('start', $scriptProperties, 0);
 $limit = $modx->getOption('limit', $scriptProperties, 10);
-$sort = $modx->getOption('sort', $scriptProperties, 'templatename');
+$sort = $modx->getOption('sort', $scriptProperties, 'name');
 $dir = $modx->getOption('dir', $scriptProperties, 'ASC');
 
-$c = $modx->newQuery('modTemplate');
+$c = $modx->newQuery('modSnippet');
 $c->leftJoin('modCategory', 'Category');
 if (!empty($scriptProperties['search'])) {
     $c->where(array(
-                   'templatename:LIKE' => '%' . $scriptProperties['search'] . '%',
+                   'name:LIKE' => '%' . $scriptProperties['search'] . '%',
                    'OR:description:LIKE' => '%' . $scriptProperties['search'] . '%',
               ));
 }
-$count = $modx->getCount('modTemplate', $c);
+$count = $modx->getCount('modSnippet', $c);
 $c->select(array(
-                'modTemplate.id',
-                'modTemplate.templatename',
-                'modTemplate.description',
+                'modSnippet.id',
+                'modSnippet.name',
+                'modSnippet.description',
            ));
 $c->select(array(
                 'category_name' => 'Category.category',
@@ -56,13 +56,13 @@ $c->sortby($sort, $dir);
 if ($isLimit) {
     $c->limit($limit, $start);
 }
-$templates = $modx->getCollection('modTemplate', $c);
+$snippets = $modx->getCollection('modSnippet', $c);
 //echo $c->toSql();
 
 $list = array();
-foreach ($templates as $template) {
-    $templateArray = $template->toArray();
-    $templateArray['category'] = $template->get('category_name');
-    $list[] = $templateArray;
+foreach ($snippets as $snippet) {
+    $snippetArray = $snippet->toArray();
+    $snippetArray['category'] = $snippet->get('category_name');
+    $list[] = $snippetArray;
 }
 return $this->outputArray($list, $count);
