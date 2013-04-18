@@ -45,13 +45,17 @@ if (!empty($scriptProperties['search'])) {
 }
 $count = $modx->getCount('modSnippet', $c);
 $c->select(array(
-                'modSnippet.id',
-                'modSnippet.name',
-                'modSnippet.description',
+    'modSnippet.id',
+    'modSnippet.name',
+    'modSnippet.description',
            ));
 $c->select(array(
                 'category_name' => 'Category.category',
            ));
+if ($sort == 'category') {
+    $sort = 'Category.category';
+}
+
 $c->sortby($sort, $dir);
 if ($isLimit) {
     $c->limit($limit, $start);
@@ -60,8 +64,16 @@ $snippets = $modx->getCollection('modSnippet', $c);
 //echo $c->toSql();
 
 $list = array();
+$fields = array(
+    'id',
+    'name',
+    'description'
+);
 foreach ($snippets as $snippet) {
-    $snippetArray = $snippet->toArray();
+    // $snippetArray = $snippet->toArray();
+    foreach($fields as $field)  {
+        $snippetArray[$field] = $snippet->get($field);
+    }
     $snippetArray['category'] = $snippet->get('category_name');
     $list[] = $snippetArray;
 }

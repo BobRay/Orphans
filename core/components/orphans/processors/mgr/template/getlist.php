@@ -52,6 +52,9 @@ $c->select(array(
 $c->select(array(
     'category_name' => 'Category.category',
 ));
+if ($sort == 'category') {
+    $sort = 'Category.category';
+}
 $c->sortby($sort,$dir);
 if ($isLimit) {
     $c->limit($limit,$start);
@@ -60,8 +63,16 @@ $templates = $modx->getCollection('modTemplate',$c);
 //echo $c->toSql();
 
 $list = array();
+$fields = array(
+    'id',
+    'templatename',
+    'description',
+);
 foreach ($templates as $template) {
-    $templateArray = $template->toArray();
+    // $templateArray = $template->toArray();
+    foreach ($fields as $field) {
+        $templateArray[$field] = $template->get($field);
+    }
     $templateArray['category'] = $template->get('category_name');
     $list[]= $templateArray;
 }

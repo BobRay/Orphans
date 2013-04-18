@@ -20,23 +20,25 @@ Orphans.grid.Templates = function(config) {
             header: _('id')
             ,dataIndex: 'id'
             ,sortable: true
-            ,width: 60
+            ,width: 50
         },{
             header: _('name')
             ,dataIndex: 'templatename'
             ,sortable: true
-            ,width: 300
+            ,width: 100
         },{
             header: _('category')
             ,dataIndex: 'category'
             ,sortable: true
             ,width: 120
-        },{
-            header: _('orphans.tvs')
-            ,dataIndex: 'tvs'
+        }
+        ,{
+            header: _('description')
+            ,dataIndex: 'description'
             ,sortable: false
-            ,width: 100
-        }]
+            ,width: 300
+        }
+        ]
         ,viewConfig: {
             forceFit:true,
             enableRowBody:true,
