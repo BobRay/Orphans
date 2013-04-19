@@ -6,8 +6,8 @@ Orphans.grid.Templates = function(config) {
     Ext.applyIf(config,{
         url: Orphans.config.connector_url
         ,baseParams: {
-            action: 'mgr/template/getList'
-            ,thread: config.thread
+           /* action: 'mgr/template/getList'*/
+            thread: config.thread
         }
         ,fields: ['id','templatename','description','category','tvs']
         ,paging: true

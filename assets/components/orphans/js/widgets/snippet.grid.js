@@ -5,8 +5,8 @@ Orphans.grid.Snippets = function (config) {
     Ext.applyIf(config, {
         url: Orphans.config.connector_url
         , baseParams: {
-            action: 'mgr/snippet/getList'
-            , thread: config.thread
+            /*action: 'mgr/snippet/getList'*/
+            thread: config.thread
         }
         , fields: ['id', 'name', 'category', 'description']
         , paging: true
