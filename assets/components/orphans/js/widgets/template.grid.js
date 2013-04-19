@@ -9,7 +9,7 @@ Orphans.grid.Templates = function(config) {
            /* action: 'mgr/template/getList'*/
             thread: config.thread
         }
-        ,fields: ['id','templatename','description','category','tvs']
+        ,fields: ['id','templatename','description']
         ,paging: true
         ,autosave: false
         ,remoteSort: true
