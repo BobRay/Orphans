@@ -9,7 +9,7 @@ Orphans.grid.Templates = function(config) {
            /* action: 'mgr/template/getList'*/
             thread: config.thread
         }
-        ,fields: ['id','templatename','description']
+        ,fields: ['id','templatename', 'category', 'description']
         ,paging: true
         ,autosave: false
         ,remoteSort: true
@@ -75,11 +75,6 @@ Orphans.grid.Templates = function(config) {
 Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
     search: function(tf,nv,ov) {
         this.getStore().setBaseParam('search',tf.getValue());
-        this.getBottomToolbar().changePage(1);
-        this.refresh();
-    }
-    ,filterTemplate: function(cb,nv,ov) {
-        this.getStore().setBaseParam('template',cb.getValue());
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
