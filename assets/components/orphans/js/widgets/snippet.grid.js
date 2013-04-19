@@ -71,10 +71,6 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         this.getStore().setBaseParam('search', tf.getValue());
         this.getBottomToolbar().changePage(1);
         this.refresh();
-    }, filterTemplate: function (cb, nv, ov) {
-        this.getStore().setBaseParam('template', cb.getValue());
-        this.getBottomToolbar().changePage(1);
-        this.refresh();
     }, clearFilter: function () {
         this.getStore().baseParams = {
             action: 'mgr/snippet/getList'
