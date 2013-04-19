@@ -56,13 +56,18 @@ Orphans.grid.Templates = function(config) {
         ,tbar: [{
             text: _('orphans.bulk_actions')
             ,menu: this.getBatchMenu()
-        },{
-            xtype: 'button'
-           /*  ,id: 'orphans-filter-clear' */
-            ,text: _('orphans.reload')
-            ,listeners: {
-                'click': {fn: this.clearFilter, scope: this}
-            }
+        }
+        ,{xtype: 'tbspacer', width: 200}
+
+        ,{
+        xtype: 'button'
+       /*  ,id: 'orphans-filter-clear' */
+        ,text: _('orphans.reload')
+
+        ,listeners: {
+            'click': {fn: this.clearFilter, scope: this}
+        }
+
         }]
     });
     Orphans.grid.Templates.superclass.constructor.call(this,config)

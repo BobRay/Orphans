@@ -53,6 +53,7 @@ Orphans.grid.Snippets = function (config) {
             {
                 text: _('orphans.bulk_actions'), menu: this.getBatchMenu()
             }
+            ,{xtype: 'tbspacer', width: 200}
             ,{
                 xtype: 'button'
                 /* , id: 'orphans-filter-clear' */
