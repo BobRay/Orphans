@@ -6,8 +6,8 @@ Orphans.grid.Templates = function(config) {
     Ext.applyIf(config,{
         url: Orphans.config.connector_url
         ,baseParams: {
-           /* action: 'mgr/template/getList'*/
-            thread: config.thread
+           action: 'mgr/template/dummy'
+            /* thread: config.thread */
         }
         ,fields: ['id','templatename', 'category', 'description']
         ,paging: true
@@ -61,7 +61,7 @@ Orphans.grid.Templates = function(config) {
 
         ,{
         xtype: 'button'
-       /*  ,id: 'orphans-filter-clear' */
+        ,id: 'orphans-filter-clear'
         ,text: _('orphans.reload')
 
         ,listeners: {
@@ -169,7 +169,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         var r = {templates: cs};
         if (!this.changeCategoryWindow) {
             this.changeCategoryWindow = MODx.load({
-                xtype: 'orphans-window-change-category'
+                xtype: 'orphans-template-window-change-category'
                 ,record: r
                 ,listeners: {
                     'success': {fn:function(r) {
@@ -226,4 +226,4 @@ Orphans.window.ChangeCategory = function(config) {
     Orphans.window.ChangeCategory.superclass.constructor.call(this,config);
 };
 Ext.extend(Orphans.window.ChangeCategory,MODx.Window);
-Ext.reg('orphans-window-change-category',Orphans.window.ChangeCategory);
+Ext.reg('orphans-template-window-change-category',Orphans.window.ChangeCategory);

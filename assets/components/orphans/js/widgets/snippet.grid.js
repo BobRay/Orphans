@@ -5,8 +5,8 @@ Orphans.grid.Snippets = function (config) {
     Ext.applyIf(config, {
         url: Orphans.config.connector_url
         , baseParams: {
-            /*action: 'mgr/snippet/getList'*/
-            thread: config.thread
+           action: 'mgr/snippet/dummy'
+            /* ,thread: config.thread */
         }
         , fields: ['id', 'name', 'category', 'description']
         , paging: true
@@ -67,20 +67,18 @@ Orphans.grid.Snippets = function (config) {
     Orphans.grid.Snippets.superclass.constructor.call(this, config)
 };
 Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
-    search: function (tf, nv, ov) {
-        this.getStore().setBaseParam('search', tf.getValue());
-        this.getBottomToolbar().changePage(1);
-        this.refresh();
-    }, clearFilter: function () {
+     clearFilter: function () {
         this.getStore().baseParams = {
             action: 'mgr/snippet/getList'
         };
        /*  Ext.getCmp('orphans-search').reset(); */
         this.getBottomToolbar().changePage(1);
         this.refresh();
-    }, _renderUrl: function (v, md, rec) {
+        return false;
+    }/*, _renderUrl: function (v, md, rec) {
         return '<a href="' + rec.data.url + '" target="_blank">' + rec.data.name + '</a>';
-    }, _showMenu: function (g, ri, e) {
+    }*/
+    , _showMenu: function (g, ri, e) {
         e.stopEvent();
         e.preventDefault();
         this.menu.record = this.getStore().getAt(ri).data;
@@ -152,7 +150,7 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         var r = {snippets: cs};
         if (!this.changeCategoryWindow) {
             this.changeCategoryWindow = MODx.load({
-                                                      xtype: 'orphans-window-change-category', record: r, listeners: {
+                  xtype: 'orphans-snippet-window-change-category', record: r, listeners: {
                     'success': {fn: function (r) {
                         this.refresh();
                     }, scope: this}
@@ -181,7 +179,7 @@ Orphans.window.ChangeCategory = function (config) {
     config = config || {};
     Ext.applyIf(config, {
         title: _('orphans.change_category'), url: Orphans.config.connector_url, baseParams: {
-            action: 'mgr/template/changecategory'
+            action: 'mgr/snippet/changecategory'
             }
         ,width: 400
         ,fields: [{
@@ -198,4 +196,4 @@ Orphans.window.ChangeCategory = function (config) {
     Orphans.window.ChangeCategory.superclass.constructor.call(this, config);
 };
 Ext.extend(Orphans.window.ChangeCategory, MODx.Window);
-Ext.reg('orphans-window-change-category', Orphans.window.ChangeCategory);
+Ext.reg('orphans-snippet-window-change-category', Orphans.window.ChangeCategory);

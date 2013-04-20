@@ -22,15 +22,15 @@
  * @package orphans
  */
 /**
- * Change template for multiple resources
+ * Change category for multiple snippets
  *
  * @package orphans
  * @subpackage processors
  */
-if (!$modx->hasPermission('save_template')) return $modx->error->failure($modx->lexicon('access_denied'));
+if (!$modx->hasPermission('save_snippet')) return $modx->error->failure($modx->lexicon('access_denied'));
 
-if (empty($scriptProperties['templates'])) {
-    return $modx->error->failure($modx->lexicon('orphans.templates_err_ns'));
+if (empty($scriptProperties['snippets'])) {
+    return $modx->error->failure($modx->lexicon('orphans.snippets_err_ns'));
 }
 /* get parent */
 if (!empty($scriptProperties['category'])) {
@@ -39,14 +39,14 @@ if (!empty($scriptProperties['category'])) {
 }
 
 /* iterate over resources */
-$templateIds = explode(',',$scriptProperties['templates']);
-foreach ($templateIds as $templateId) {
-    $template = $modx->getObject('modTemplate',$templateId);
-    if ($template == null) continue;
+$snippetIds = explode(',',$scriptProperties['snippets']);
+foreach ($snippetIds as $snippetId) {
+    $snippet = $modx->getObject('modSnippet',$snippetId);
+    if ($snippet == null) continue;
 
-    $template->set('category',$scriptProperties['category']);
+    $snippet->set('category',$scriptProperties['category']);
 
-    if ($template->save() === false) {
+    if ($snippet->save() === false) {
         
     }
 }
