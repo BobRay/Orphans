@@ -112,7 +112,7 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         }
         cs = Ext.util.Format.substr(cs, 1);
         return cs;
-    }, batchAction: function (act, btn, e) {
+    }/*, batchAction: function (act, btn, e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
@@ -131,7 +131,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
             }
                           });
         return true;
-    }, changeTVValues: function (btn, e) {
+    }*/
+    , changeTVValues: function (btn, e) {
         var sm = this.getSelectionModel();
         var cs = sm.getSelected();
         if (cs === false) return false;
@@ -160,14 +161,101 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         this.changeCategoryWindow.setValues(r);
         this.changeCategoryWindow.show(e.target);
         return true;
-    }, getBatchMenu: function () {
+    }, snippetRename: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+                url: this.config.url, params: {
+                action: 'mgr/snippet/rename',
+                snippets: cs /* batch: act */
+            }, listeners: {
+                'success': {fn: function (r) {
+                    this.getSelectionModel().clearSelections(true);
+                    this.refresh();
+                    var t = Ext.getCmp('modx-resource-tree');
+                    if (t) {
+                        t.refresh();
+                    }
+                }, scope: this}
+            }
+                          });
+        return true;
+
+    }, snippetDelete: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+        MODx.msg.confirm({
+             title: _('orphans.delete')
+             , text: _('orphans.confirm_delete')
+             , url: this.config.url
+             , params: {
+                action: 'mgr/snippet/delete'
+                , snippets: cs
+            }, listeners: {
+                'success': {fn: function (r) {
+                    this.refresh();
+                }
+                , scope: this}
+                , 'failure': {fn: function (r) {
+                    MODx.msg.alert();
+                }
+                , scope: this}
+            }
+        });
+        /*Ext.MessageBox.confirm('Delete', 'Are you sure ?', function (btn) {
+            if (btn === 'yes') {
+                MODx.Ajax.request({
+
+                                      url: this.config.url, params: {
+                        action: 'mgr/snippet/delete',
+                        snippets: cs *//* batch: act *//*
+                    }, listeners: {
+                        'success': {fn: function (r) {
+                            this.getSelectionModel().clearSelections(true);
+                            this.refresh();
+                            var t = Ext.getCmp('modx-resource-tree');
+                            if (t) {
+                                t.refresh();
+                            }
+                        }, scope: this}
+                    }
+                                  });
+                return true;
+            }
+            else {
+                return false;
+            }
+        });*/
+
+
+        /*if (!this.changeCategoryWindow) {
+         this.changeCategoryWindow = MODx.load({
+         xtype: 'orphans-snippet-window-change-category', record: r, listeners: {
+         'success': {fn: function (r) {
+         this.refresh();
+         }, scope: this}
+         }
+         });
+         }
+         this.changeCategoryWindow.setValues(r);
+         this.changeCategoryWindow.show(e.target);*/
+        return true;
+    }
+
+
+    , getBatchMenu: function () {
         var bm = [];
         bm.push({
                     text: _('orphans.change_category'), handler: this.changeCategory, scope: this
                 }, '-', {
-                    text: _('orphans.change_tv_values'), handler: this.changeTVValues, scope: this
+                    text: _('orphans.rename_snippet')
+                    ,handler: this.snippetRename
+                    ,scope: this
                 }, {
-                    text: _('orphans.change_default_tv_values'), handler: this.changeDefaultTVValues, scope: this
+                    text: _('orphans.delete_snippet')
+                    ,handler: this.snippetDelete
+                    , scope: this
                 });
         return bm;
     }

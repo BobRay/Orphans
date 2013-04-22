@@ -22,7 +22,7 @@
  * @package orphans
  */
 /**
- * Change category for multiple snippets
+ * rename multiple snippets
  *
  * @package orphans
  * @subpackage processors
@@ -33,10 +33,6 @@ if (empty($scriptProperties['snippets'])) {
     return $modx->error->failure($modx->lexicon('orphans.snippets_err_ns'));
 }
 /* get parent */
-if (!empty($scriptProperties['category'])) {
-    $category = $modx->getObject('modCategory',$scriptProperties['category']);
-    if (empty($category)) return $modx->error->failure($modx->lexicon('orphans.category_err_nf',array('id' => $scriptProperties['category'])));
-}
 
 /* iterate over snippets */
 $snippetIds = explode(',',$scriptProperties['snippets']);
@@ -44,9 +40,7 @@ foreach ($snippetIds as $snippetId) {
     $snippet = $modx->getObject('modSnippet',$snippetId);
     if ($snippet == null) continue;
 
-    $snippet->set('category',$scriptProperties['category']);
-
-    if ($snippet->save() === false) {
+    if ($snippet->remove() === false) {
         
     }
 }

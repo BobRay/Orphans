@@ -84,4 +84,7 @@ $_lang['orphans.unpublished'] = 'Unpublished';
 $_lang['orphans.unrichtext'] = 'Richtext Disabled';
 $_lang['orphans.unsearchable'] = 'Unsearchable';
 $_lang['orphans.user_err_nf'] = 'User not found.';
-
+$_lang['orphans.delete_snippet'] = 'Delete Snippet';
+$_lang['orphans.rename_snippet'] = 'Rename Snippet';
+$_lang['orphans.delete'] = 'Delete';
+$_lang['orphans.confirm_delete'] = 'Are you sure?<br />This action is not reversible';
