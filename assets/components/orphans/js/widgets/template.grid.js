@@ -6,7 +6,7 @@ Orphans.grid.Templates = function(config) {
     Ext.applyIf(config,{
         url: Orphans.config.connector_url
         ,baseParams: {
-           action: 'mgr/template/dummy'
+           action: 'mgr/dummy'
             /* thread: config.thread */
         }
         ,fields: ['id','templatename', 'category', 'description']
@@ -61,11 +61,11 @@ Orphans.grid.Templates = function(config) {
 
         ,{
         xtype: 'button'
-        ,id: 'orphans-filter-clear'
+        ,id: 'orphans-templates-reload'
         ,text: _('orphans.reload')
 
         ,listeners: {
-            'click': {fn: this.clearFilter, scope: this}
+            'click': {fn: this.orphansReloadTemplates, scope: this}
         }
 
         }]
@@ -73,22 +73,18 @@ Orphans.grid.Templates = function(config) {
     Orphans.grid.Templates.superclass.constructor.call(this,config)
 };
 Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
-    search: function(tf,nv,ov) {
-        this.getStore().setBaseParam('search',tf.getValue());
-        this.getBottomToolbar().changePage(1);
-        this.refresh();
-    }
-    ,clearFilter: function() {
+
+    orphansReloadTemplates: function() {
     	this.getStore().baseParams = {
             action: 'mgr/template/getList'
     	};
         /* Ext.getCmp('orphans-search').reset(); */
     	this.getBottomToolbar().changePage(1);
-        this.refresh();
+        // this.refresh();
     }
-    ,_renderUrl: function(v,md,rec) {
+   /* ,_renderUrl: function(v,md,rec) {
         return '<a href="'+rec.data.url+'" target="_blank">'+rec.data.templatename+'</a>';
-    }
+    }*/
     ,_showMenu: function(g,ri,e) {
         e.stopEvent();
         e.preventDefault();

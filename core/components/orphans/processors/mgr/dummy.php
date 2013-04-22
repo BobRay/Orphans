@@ -31,7 +31,7 @@
 $fields = array(
     'id' => '',
     'name' => '',
-    'catagory' => '',
+    'category' => '',
     'description' => '',
 );
 return $this->outputArray($fields, 1);

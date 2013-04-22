@@ -5,7 +5,7 @@ Orphans.grid.Snippets = function (config) {
     Ext.applyIf(config, {
         url: Orphans.config.connector_url
         , baseParams: {
-           action: 'mgr/snippet/dummy'
+           action: 'mgr/dummy'
             /* ,thread: config.thread */
         }
         , fields: ['id', 'name', 'category', 'description']
@@ -56,10 +56,10 @@ Orphans.grid.Snippets = function (config) {
             ,{xtype: 'tbspacer', width: 200}
             ,{
                 xtype: 'button'
-                /* , id: 'orphans-filter-clear' */
+                , id: 'orphans-snippets-reload'
                 , text: _('orphans.reload')
                 , listeners: {
-                'click': {fn: this.clearFilter, scope: this}
+                'click': {fn: this.reloadSnippets, scope: this}
             }
             }
         ]
@@ -67,13 +67,13 @@ Orphans.grid.Snippets = function (config) {
     Orphans.grid.Snippets.superclass.constructor.call(this, config)
 };
 Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
-     clearFilter: function () {
+     reloadSnippets: function () {
         this.getStore().baseParams = {
             action: 'mgr/snippet/getList'
         };
        /*  Ext.getCmp('orphans-search').reset(); */
         this.getBottomToolbar().changePage(1);
-        this.refresh();
+        // this.refresh();
         return false;
     }/*, _renderUrl: function (v, md, rec) {
         return '<a href="' + rec.data.url + '" target="_blank">' + rec.data.name + '</a>';
