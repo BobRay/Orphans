@@ -33,7 +33,7 @@ Orphans.panel.Home = function(config) {
                     ]
 
                 }
-                ,{
+                /*,{
                     title: _('orphans.resources')
                     ,tabTip: 'Orphans Orphans Orphans (mushroom mushroom!)'
                     ,defaults: { autoHeight: true }
@@ -45,7 +45,7 @@ Orphans.panel.Home = function(config) {
                         xtype: 'orphans-grid-resource'
                         ,preventRender: true
                     }]
-                }
+                }*/
                 ,{
                     title: _('orphans.templates')
                     ,defaults: { autoHeight: true }

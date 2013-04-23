@@ -32,7 +32,7 @@ $modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/tv.grid.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/chunk.grid.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/template.grid.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/snippet.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
+// $modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/home.panel.js');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'sections/home.js');
 $output = '<div id="orphans-panel-home-div"></div>';

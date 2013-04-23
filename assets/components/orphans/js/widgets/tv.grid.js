@@ -299,4 +299,4 @@ Orphans.window.ChangeCategory = function (config) {
 Ext.extend(Orphans.window.ChangeCategory, MODx.Window);
 Ext.reg('orphans-tv-window-change-category', Orphans.window.ChangeCategory);
 
-/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. */
+/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. http://jsfiddle.net/27fRh/ + rec.commit();*/
