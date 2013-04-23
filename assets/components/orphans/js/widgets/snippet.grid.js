@@ -8,10 +8,16 @@ Orphans.grid.Snippets = function (config) {
            action: 'mgr/dummy'
             /* ,thread: config.thread */
         }
-        , fields: ['id', 'name', 'category', 'description']
+        , pageSize: 300
+        , fields: [
+            {name:'id', sortType: Ext.data.SortTypes.asInt}
+            , {name: 'name', sortType: Ext.data.SortTypes.asUCString}
+            , {name: 'category', sortType: Ext.data.SortTypes.asUCString}
+            , {name: 'description'}
+         ]
         , paging: true
         , autosave: false
-        , remoteSort: true
+        , remoteSort: false
         , autoExpandColumn: 'description'
         , cls: 'orphans-grid'
         , sm: this.sm
@@ -49,9 +55,10 @@ Orphans.grid.Snippets = function (config) {
                 }
                 return cls + ' orphans-resource-collapsed';
             }
-        }, tbar: [
-            {
-                text: _('orphans.bulk_actions'), menu: this.getBatchMenu()
+        }
+        , tbar: [{
+                text: _('orphans.bulk_actions')
+                , menu: this.getBatchMenu()
             }
             ,{xtype: 'tbspacer', width: 200}
             ,{
@@ -71,10 +78,10 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         this.getStore().baseParams = {
             action: 'mgr/snippet/getList'
         };
-       /*  Ext.getCmp('orphans-search').reset(); */
+        // Ext.getCmp('orphans-grid-snippet').reset();
         this.getBottomToolbar().changePage(1);
         // this.refresh();
-        return false;
+
     }/*, _renderUrl: function (v, md, rec) {
         return '<a href="' + rec.data.url + '" target="_blank">' + rec.data.name + '</a>';
     }*/
@@ -151,7 +158,9 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         var r = {snippets: cs};
         if (!this.changeCategoryWindow) {
             this.changeCategoryWindow = MODx.load({
-                  xtype: 'orphans-snippet-window-change-category', record: r, listeners: {
+                  xtype: 'orphans-snippet-window-change-category'
+                  , record: r
+                  , listeners: {
                     'success': {fn: function (r) {
                         this.refresh();
                     }, scope: this}
@@ -182,7 +191,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
                           });
         return true;
 
-    }, snippetDelete: function () {
+    }
+    , snippetDelete: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
         MODx.msg.confirm({
@@ -203,43 +213,6 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
                 , scope: this}
             }
         });
-        /*Ext.MessageBox.confirm('Delete', 'Are you sure ?', function (btn) {
-            if (btn === 'yes') {
-                MODx.Ajax.request({
-
-                                      url: this.config.url, params: {
-                        action: 'mgr/snippet/delete',
-                        snippets: cs *//* batch: act *//*
-                    }, listeners: {
-                        'success': {fn: function (r) {
-                            this.getSelectionModel().clearSelections(true);
-                            this.refresh();
-                            var t = Ext.getCmp('modx-resource-tree');
-                            if (t) {
-                                t.refresh();
-                            }
-                        }, scope: this}
-                    }
-                                  });
-                return true;
-            }
-            else {
-                return false;
-            }
-        });*/
-
-
-        /*if (!this.changeCategoryWindow) {
-         this.changeCategoryWindow = MODx.load({
-         xtype: 'orphans-snippet-window-change-category', record: r, listeners: {
-         'success': {fn: function (r) {
-         this.refresh();
-         }, scope: this}
-         }
-         });
-         }
-         this.changeCategoryWindow.setValues(r);
-         this.changeCategoryWindow.show(e.target);*/
         return true;
     }
 
@@ -247,16 +220,18 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
     , getBatchMenu: function () {
         var bm = [];
         bm.push({
-                    text: _('orphans.change_category'), handler: this.changeCategory, scope: this
-                }, '-', {
-                    text: _('orphans.rename_snippet')
-                    ,handler: this.snippetRename
-                    ,scope: this
-                }, {
-                    text: _('orphans.delete_snippet')
-                    ,handler: this.snippetDelete
-                    , scope: this
-                });
+            text: _('orphans.change_category')
+            , handler: this.changeCategory
+            , scope: this
+        }, '-', {
+            text: _('orphans.rename_snippet')
+            ,handler: this.snippetRename
+            ,scope: this
+        }, {
+            text: _('orphans.delete_snippet')
+            ,handler: this.snippetDelete
+            , scope: this
+        });
         return bm;
     }
 });
@@ -266,7 +241,9 @@ Ext.reg('orphans-grid-snippet', Orphans.grid.Snippets);
 Orphans.window.ChangeCategory = function (config) {
     config = config || {};
     Ext.applyIf(config, {
-        title: _('orphans.change_category'), url: Orphans.config.connector_url, baseParams: {
+        title: _('orphans.change_category')
+        , url: Orphans.config.connector_url
+        , baseParams: {
             action: 'mgr/snippet/changecategory'
             }
         ,width: 400

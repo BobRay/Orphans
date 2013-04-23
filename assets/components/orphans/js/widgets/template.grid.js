@@ -8,12 +8,16 @@ Orphans.grid.Templates = function(config) {
         ,baseParams: {
            action: 'mgr/dummy'
             /* thread: config.thread */
-        }
-        ,fields: ['id','templatename', 'category', 'description']
+        }, pageSize: 300, fields: [
+            {name: 'id', sortType: Ext.data.SortTypes.asInt}
+            , {name: 'templatename', sortType: Ext.data.SortTypes.asUCString}
+            , {name: 'category', sortType: Ext.data.SortTypes.asUCString}
+            , {name: 'description'}
+        ]
         ,paging: true
         ,autosave: false
-        ,remoteSort: true
-        ,autoExpandColumn: 'templatename'
+        ,remoteSort: false
+        ,autoExpandColumn: 'description'
         ,cls: 'orphans-grid'
         ,sm: this.sm
         ,columns: [this.sm,{
@@ -65,7 +69,7 @@ Orphans.grid.Templates = function(config) {
         ,text: _('orphans.reload')
 
         ,listeners: {
-            'click': {fn: this.orphansReloadTemplates, scope: this}
+            'click': {fn: this.reloadTemplates, scope: this}
         }
 
         }]
@@ -73,8 +77,7 @@ Orphans.grid.Templates = function(config) {
     Orphans.grid.Templates.superclass.constructor.call(this,config)
 };
 Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
-
-    orphansReloadTemplates: function() {
+     reloadTemplates: function () {
     	this.getStore().baseParams = {
             action: 'mgr/template/getList'
     	};
@@ -122,7 +125,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         return cs;
     }
     
-    ,batchAction: function(act,btn,e) {
+    /*,batchAction: function(act,btn,e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
@@ -143,8 +146,8 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
             }
         });
         return true;
-    }
-    ,changeTVValues: function(btn,e) {
+    }*/
+    /*,changeTVValues: function(btn,e) {
         var sm = this.getSelectionModel();
         var cs = sm.getSelected();
         if (cs === false) return false;
@@ -157,7 +160,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         if (cs === false) return false;
 
         location.href = MODx.config.manager_url+'?a='+MODx.request.a+'&action=template/tvdefaults&template='+cs.data.id;
-    }
+    }*/
     ,changeCategory: function(btn,e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -177,7 +180,53 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         this.changeCategoryWindow.setValues(r);
         this.changeCategoryWindow.show(e.target);
         return true;
+    }, templateRename: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+                url: this.config.url, params: {
+                action: 'mgr/template/rename',
+                templates: cs /* batch: act */
+            }, listeners: {
+                'success': {fn: function (r) {
+                    this.getSelectionModel().clearSelections(true);
+                    this.refresh();
+                    var t = Ext.getCmp('modx-resource-tree');
+                    if (t) {
+                        t.refresh();
+                    }
+                }, scope: this}
+            }
+        });
+        return true;
+
     }
+    , templateDelete: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+        MODx.msg.confirm({
+             title: _('orphans.delete')
+             , text: _('orphans.confirm_delete')
+             , url: this.config.url
+             , params: {
+                action: 'mgr/template/delete'
+                , templates: cs
+            }, listeners: {
+                'success': {fn: function (r) {
+                    this.refresh();
+                }
+                , scope: this}
+                , 'failure': {fn: function (r) {
+                    MODx.msg.alert();
+                }
+                , scope: this}
+            }
+        });
+        return true;
+    }
+
+
     ,getBatchMenu: function() {
         var bm = [];
         bm.push({
@@ -185,12 +234,12 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
             ,handler: this.changeCategory
             ,scope: this
         },'-',{
-            text: _('orphans.change_tv_values')
-            ,handler: this.changeTVValues
+            text: _('orphans.rename_template')
+            ,handler: this.templateRename
             ,scope: this
         },{
-            text: _('orphans.change_default_tv_values')
-            ,handler: this.changeDefaultTVValues
+            text: _('orphans.delete_template')
+            ,handler: this.templateDelete
             ,scope: this
         });
         return bm;

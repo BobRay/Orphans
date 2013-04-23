@@ -47,7 +47,7 @@ Orphans.panel.Home = function(config) {
                 title: _('orphans.snippets')
                 ,defaults: { autoHeight: true }
                 ,items: [{
-                    html: '<p>'+_('orphans.templates.intro_msg')+'</p>'
+                    html: '<p>'+_('orphans.snippets.intro_msg')+'</p>'
                     ,border: false
                     ,bodyStyle: 'padding: 10px'
                 },{
