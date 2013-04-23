@@ -22,19 +22,33 @@
  * @package orphans
  */
 /**
- * Loads the home page.
+ * Change category for multiple tvs
  *
  * @package orphans
- * @subpackage controllers
+ * @subpackage processors
  */
-$modx->regClientStartupScript($modx->getOption('manager_url').'assets/modext/util/datetime.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/tv.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/chunk.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/template.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/snippet.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/home.panel.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'sections/home.js');
-$output = '<div id="orphans-panel-home-div"></div>';
+if (!$modx->hasPermission('save_tv')) return $modx->error->failure($modx->lexicon('access_denied'));
 
-return $output;
+if (empty($scriptProperties['tvs'])) {
+    return $modx->error->failure($modx->lexicon('orphans.tv_err_ns'));
+}
+/* get parent */
+if (!empty($scriptProperties['category'])) {
+    $category = $modx->getObject('modCategory',$scriptProperties['category']);
+    if (empty($category)) return $modx->error->failure($modx->lexicon('orphans.category_err_nf',array('id' => $scriptProperties['category'])));
+}
+
+/* iterate over tvs */
+$tvIds = explode(',',$scriptProperties['tvs']);
+foreach ($tvIds as $tvId) {
+    $tv = $modx->getObject('modTemplateVar',$tvId);
+    if ($tv == null) continue;
+
+    $tv->set('category',$scriptProperties['category']);
+
+    if ($tv->save() === false) {
+        
+    }
+}
+
+return $modx->error->success();

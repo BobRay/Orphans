@@ -63,6 +63,7 @@ $_lang['orphans.resources_err_ns'] = 'Please select some Resources to perform th
 $_lang['orphans.richtext'] = 'Richtext Enabled';
 $_lang['orphans.reload'] = 'Search for Orphans';
 $_lang['orphans.searchable'] = 'Searchable';
+
 $_lang['orphans.chunk'] = 'Chunk';
 $_lang['orphans.chunk_err_nf'] = 'Chunk not found.';
 $_lang['orphans.chunk_err_ns'] = 'Chunk not specified.';
@@ -84,6 +85,18 @@ $_lang['orphans.templates.intro_msg'] = 'Search for orphan Templates.';
 $_lang['orphans.delete_template'] = 'Delete Template';
 $_lang['orphans.rename_template'] = 'Rename Template';
 $_lang['orphans.unrename_template'] = 'UN-Rename Template';
+
+$_lang['orphans.tv'] = 'TV';
+$_lang['orphans.tv_err_nf'] = 'TV not found.';
+$_lang['orphans.tv_err_ns'] = 'TV not specified.';
+$_lang['orphans.tvs'] = 'TVs';
+$_lang['orphans.tvs_err_ns'] = 'Please select some TVs to perform that action on.';
+$_lang['orphans.tvs.intro_msg'] = 'Search for orphan TVs.';
+$_lang['orphans.delete_tv'] = 'Delete TV';
+$_lang['orphans.rename_tv'] = 'Rename TV';
+$_lang['orphans.unrename_tv'] = 'UN-Rename TV';
+
+
 $_lang['orphans.snippets'] = 'Snippets';
 $_lang['orphans.tvs'] = 'Template Variables';
 $_lang['orphans.tvs_err_ns'] = 'No Template Variables specified!';

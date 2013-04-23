@@ -60,6 +60,19 @@ Orphans.panel.Home = function(config) {
 
                 }
                 ,{
+                    title: _('orphans.tvs'), defaults: { autoHeight: true }, items: [
+                    {
+                        html: '<p>' + _('orphans.tvs.intro_msg') + '</p>'
+                        , border: false
+                        , bodyStyle: 'padding: 10px'
+                    },
+                    {
+                        xtype: 'orphans-grid-tv', preventRender: true
+                    }
+                ]
+
+                }
+                ,{
                     title: _('orphans.snippets')
                     ,defaults: { autoHeight: true }
                     ,items: [{

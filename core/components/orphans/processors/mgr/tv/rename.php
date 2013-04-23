@@ -22,19 +22,30 @@
  * @package orphans
  */
 /**
- * Loads the home page.
+ * rename multiple tvs
  *
  * @package orphans
- * @subpackage controllers
+ * @subpackage processors
  */
-$modx->regClientStartupScript($modx->getOption('manager_url').'assets/modext/util/datetime.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/tv.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/chunk.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/template.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/snippet.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/home.panel.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'sections/home.js');
-$output = '<div id="orphans-panel-home-div"></div>';
+if (!$modx->hasPermission('save_tv')) return $modx->error->failure($modx->lexicon('access_denied'));
 
-return $output;
+if (empty($scriptProperties['tvs'])) {
+    return $modx->error->failure($modx->lexicon('orphans.tvs_err_ns'));
+}
+/* get parent */
+
+/* iterate over tvs */
+$tvIds = explode(',',$scriptProperties['tvs']);
+$prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
+foreach ($tvIds as $tvId) {
+    $tv = $modx->getObject('modTemplateVar',$tvId);
+    if ($tv == null) continue;
+    $name = $tv->get('name');
+    $name = $prefix . $name;
+    $tv->set('name', $name);
+    if ($tv->save() === false) {
+        
+    }
+}
+
+return $modx->error->success();
