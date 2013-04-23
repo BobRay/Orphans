@@ -192,13 +192,35 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                 'success': {fn: function (r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
-                    var t = Ext.getCmp('modx-resource-tree');
+                    /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
-                    }
+                    }*/
                 }, scope: this}
             }
         });
+        return true;
+
+    }
+    , templateUnRename: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+                              url: this.config.url, params: {
+                action: 'mgr/template/unrename',
+                templates: cs
+            }, listeners: {
+                'success': {fn: function (r) {
+                    this.getSelectionModel().clearSelections(true);
+                    this.refresh();
+                    /*var t = Ext.getCmp('modx-resource-tree');
+                     if (t) {
+                     t.refresh();
+                     }*/
+                }, scope: this}
+            }
+                          });
         return true;
 
     }
@@ -226,18 +248,25 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         return true;
     }
 
-
     ,getBatchMenu: function() {
         var bm = [];
         bm.push({
             text: _('orphans.change_category')
             ,handler: this.changeCategory
             ,scope: this
-        },'-',{
+        }
+        ,'-'
+        ,{
             text: _('orphans.rename_template')
             ,handler: this.templateRename
             ,scope: this
-        },{
+        }
+        , {
+            text: _('orphans.unrename_template'), handler: this.templateUnRename, scope: this
+        }
+        , '-'
+        , '-'
+        ,{
             text: _('orphans.delete_template')
             ,handler: this.templateDelete
             ,scope: this

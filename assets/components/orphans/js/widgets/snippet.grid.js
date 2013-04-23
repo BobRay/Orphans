@@ -109,7 +109,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
             }
             this.menu.show(e.target);
         }
-    }, getSelectedAsList: function () {
+    }
+    , getSelectedAsList: function () {
         var sels = this.getSelectionModel().getSelections();
         if (sels.length <= 0) return false;
 
@@ -192,7 +193,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
                           });
         return true;
 
-    }, snippetUnRename: function () {
+    }
+    , snippetUnRename: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
@@ -255,15 +257,17 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
               }
             , '-'
             , {
-                text: _('orphans.unrename_snippet'), handler: this.snippetUnRename
+                text: _('orphans.unrename_snippet')
+                , handler: this.snippetUnRename
                 , scope: this
             }
             , '-'
+            , '-'
             , {
-                    text: _('orphans.delete_snippet')
-                    ,handler: this.snippetDelete
-                    , scope: this
-                });
+                text: _('orphans.delete_snippet')
+                ,handler: this.snippetDelete
+                , scope: this
+            });
         return bm;
     }
 });
@@ -294,3 +298,5 @@ Orphans.window.ChangeCategory = function (config) {
 };
 Ext.extend(Orphans.window.ChangeCategory, MODx.Window);
 Ext.reg('orphans-snippet-window-change-category', Orphans.window.ChangeCategory);
+
+/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. */
