@@ -36,11 +36,12 @@ if (empty($scriptProperties['templates'])) {
 
 /* iterate over templates */
 $templateIds = explode(',',$scriptProperties['templates']);
+$prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
 foreach ($templateIds as $templateId) {
     $template = $modx->getObject('modTemplate',$templateId);
     if ($template == null) continue;
     $name = $template->get('templatename');
-    $name = 'Xorphan.' . $name;
+    $name = $prefix . $name;
     $template->set('templatename', $name);
     if ($template->save() === false) {
         

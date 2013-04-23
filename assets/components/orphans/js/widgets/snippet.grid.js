@@ -170,7 +170,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         this.changeCategoryWindow.setValues(r);
         this.changeCategoryWindow.show(e.target);
         return true;
-    }, snippetRename: function () {
+    }
+    , snippetRename: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
@@ -182,10 +183,31 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
                 'success': {fn: function (r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
-                    var t = Ext.getCmp('modx-resource-tree');
+                    /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
-                    }
+                    }*/
+                }, scope: this}
+            }
+                          });
+        return true;
+
+    }, snippetUnRename: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+                              url: this.config.url, params: {
+                action: 'mgr/snippet/unrename',
+                snippets: cs /* batch: act */
+            }, listeners: {
+                'success': {fn: function (r) {
+                    this.getSelectionModel().clearSelections(true);
+                    this.refresh();
+                    /*var t = Ext.getCmp('modx-resource-tree');
+                    if (t) {
+                        t.refresh();
+                    }*/
                 }, scope: this}
             }
                           });
@@ -219,19 +241,29 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
 
     , getBatchMenu: function () {
         var bm = [];
-        bm.push({
-            text: _('orphans.change_category')
-            , handler: this.changeCategory
-            , scope: this
-        }, '-', {
-            text: _('orphans.rename_snippet')
-            ,handler: this.snippetRename
-            ,scope: this
-        }, {
-            text: _('orphans.delete_snippet')
-            ,handler: this.snippetDelete
-            , scope: this
-        });
+        bm.push(
+            {
+                text: _('orphans.change_category')
+                , handler: this.changeCategory
+                , scope: this
+            }
+            , '-'
+            , {
+                    text: _('orphans.rename_snippet')
+                    ,handler: this.snippetRename
+                    ,scope: this
+              }
+            , '-'
+            , {
+                text: _('orphans.unrename_snippet'), handler: this.snippetUnRename
+                , scope: this
+            }
+            , '-'
+            , {
+                    text: _('orphans.delete_snippet')
+                    ,handler: this.snippetDelete
+                    , scope: this
+                });
         return bm;
     }
 });
