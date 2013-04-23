@@ -22,18 +22,27 @@
  * @package orphans
  */
 /**
- * Loads the home page.
+ * rename multiple chunks
  *
  * @package orphans
- * @subpackage controllers
+ * @subpackage processors
  */
-$modx->regClientStartupScript($modx->getOption('manager_url').'assets/modext/util/datetime.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/chunk.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/template.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'] . 'widgets/snippet.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/resource.grid.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'widgets/home.panel.js');
-$modx->regClientStartupScript($orphans->config['jsUrl'].'sections/home.js');
-$output = '<div id="orphans-panel-home-div"></div>';
+if (!$modx->hasPermission('save_chunk')) return $modx->error->failure($modx->lexicon('access_denied'));
 
-return $output;
+if (empty($scriptProperties['chunks'])) {
+    return $modx->error->failure($modx->lexicon('orphans.chunks_err_ns'));
+}
+/* get parent */
+
+/* iterate over chunks */
+$chunkIds = explode(',',$scriptProperties['chunks']);
+foreach ($chunkIds as $chunkId) {
+    $chunk = $modx->getObject('modChunk',$chunkId);
+    if ($chunk == null) continue;
+
+    if ($chunk->remove() === false) {
+        
+    }
+}
+
+return $modx->error->success();

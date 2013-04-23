@@ -63,6 +63,16 @@ $_lang['orphans.resources_err_ns'] = 'Please select some Resources to perform th
 $_lang['orphans.richtext'] = 'Richtext Enabled';
 $_lang['orphans.reload'] = 'Search for Orphans';
 $_lang['orphans.searchable'] = 'Searchable';
+$_lang['orphans.chunk'] = 'Chunk';
+$_lang['orphans.chunk_err_nf'] = 'Chunk not found.';
+$_lang['orphans.chunk_err_ns'] = 'Chunk not specified.';
+$_lang['orphans.chunks'] = 'Chunks';
+$_lang['orphans.chunks_err_ns'] = 'Please select some Chunks to perform that action on.';
+$_lang['orphans.chunks.intro_msg'] = 'Search for orphan Chunks.';
+$_lang['orphans.delete_chunk'] = 'Delete Chunk';
+$_lang['orphans.rename_chunk'] = 'Rename Chunk';
+$_lang['orphans.unrename_chunk'] = 'UN-Rename Chunk';
+
 $_lang['orphans.template'] = 'Template';
 $_lang['orphans.template_err_nf'] = 'Template not found.';
 $_lang['orphans.template_err_ns'] = 'Template not specified.';

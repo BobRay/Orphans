@@ -18,44 +18,60 @@ Orphans.panel.Home = function(config) {
             ,getState:function() {
                 return {activeTab:this.items.indexOf(this.getActiveTab())};
             }
-            ,items: [{
-                title: _('orphans.resources')
-                ,tabTip: 'Orphans Orphans Orphans (mushroom mushroom!)'
-                ,defaults: { autoHeight: true }
-                ,items: [{
-                    html: '<p>'+_('orphans.intro_msg')+'</p>'
-                    ,border: false
-                    ,bodyStyle: 'padding: 10px'
-                },{
-                    xtype: 'orphans-grid-resource'
-                    ,preventRender: true
-                }]
-            },{
-                title: _('orphans.templates')
-                ,defaults: { autoHeight: true }
-                ,items: [{
-                    html: '<p>'+_('orphans.templates.intro_msg')+'</p>'
-                    ,border: false
-                    ,bodyStyle: 'padding: 10px'
-                },{
-                    xtype: 'orphans-grid-template'
-                    ,preventRender: true
-                }]
+            ,items: [
+                {
+                    title: _('orphans.chunks')
+                    , defaults: { autoHeight: true }
+                    , items: [{
+                        html: '<p>' + _('orphans.chunks.intro_msg') + '</p>'
+                        , border: false
+                        , bodyStyle: 'padding: 10px'
+                    }
+                    ,{
+                        xtype: 'orphans-grid-chunk', preventRender: true
+                    }
+                    ]
 
-            }
-,{
-                title: _('orphans.snippets')
-                ,defaults: { autoHeight: true }
-                ,items: [{
-                    html: '<p>'+_('orphans.snippets.intro_msg')+'</p>'
-                    ,border: false
-                    ,bodyStyle: 'padding: 10px'
-                },{
-                    xtype: 'orphans-grid-snippet'
-                    ,preventRender: true
-                }]
+                }
+                ,{
+                    title: _('orphans.resources')
+                    ,tabTip: 'Orphans Orphans Orphans (mushroom mushroom!)'
+                    ,defaults: { autoHeight: true }
+                    ,items: [{
+                        html: '<p>'+_('orphans.intro_msg')+'</p>'
+                        ,border: false
+                        ,bodyStyle: 'padding: 10px'
+                    },{
+                        xtype: 'orphans-grid-resource'
+                        ,preventRender: true
+                    }]
+                }
+                ,{
+                    title: _('orphans.templates')
+                    ,defaults: { autoHeight: true }
+                    ,items: [{
+                        html: '<p>'+_('orphans.templates.intro_msg')+'</p>'
+                        ,border: false
+                        ,bodyStyle: 'padding: 10px'
+                    },{
+                        xtype: 'orphans-grid-template'
+                        ,preventRender: true
+                    }]
 
-            }
+                }
+                ,{
+                    title: _('orphans.snippets')
+                    ,defaults: { autoHeight: true }
+                    ,items: [{
+                        html: '<p>'+_('orphans.snippets.intro_msg')+'</p>'
+                        ,border: false
+                        ,bodyStyle: 'padding: 10px'
+                    },{
+                        xtype: 'orphans-grid-snippet'
+                        ,preventRender: true
+                    }]
+
+                }
             ]
         }]
     });
