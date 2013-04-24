@@ -40,19 +40,19 @@ $c = $modx->newQuery('modTemplateVar');
 $c->leftJoin('modCategory', 'Category');
 if (!empty($scriptProperties['search'])) {
     $c->where(array(
-                   'name:LIKE' => '%' . $scriptProperties['search'] . '%',
-                   'OR:description:LIKE' => '%' . $scriptProperties['search'] . '%',
-              ));
+       'name:LIKE' => '%' . $scriptProperties['search'] . '%',
+       'OR:description:LIKE' => '%' . $scriptProperties['search'] . '%',
+    ));
 }
 $count = $modx->getCount('modTemplateVar', $c);
 $c->select(array(
     'modTemplateVar.id',
     'modTemplateVar.name',
     'modTemplateVar.description',
-           ));
+));
 $c->select(array(
-                'category_name' => 'Category.category',
-           ));
+    'category_name' => 'Category.category',
+));
 if ($sort == 'category') {
     $sort = 'Category.category';
 }
