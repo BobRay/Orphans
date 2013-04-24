@@ -77,7 +77,7 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
      reloadSnippets: function () {
         this.getStore().baseParams = {
             action: 'mgr/snippet/getList'
-            , orphanSearch: 'snippets'
+            , orphanSearch: 'modSnippet'
         };
         // Ext.getCmp('orphans-grid-snippet').reset();
         this.getBottomToolbar().changePage(1);

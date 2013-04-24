@@ -80,7 +80,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
      reloadTemplates: function () {
     	this.getStore().baseParams = {
             action: 'mgr/template/getList'
-            , orphanSearch: 'templates'
+            , orphanSearch: 'modTemplate'
     	};
         /* Ext.getCmp('orphans-search').reset(); */
     	this.getBottomToolbar().changePage(1);

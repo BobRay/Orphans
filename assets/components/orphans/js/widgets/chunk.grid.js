@@ -77,7 +77,7 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
      reloadChunks: function () {
         this.getStore().baseParams = {
             action: 'mgr/chunk/getList'
-            ,orphanSearch: 'chunks'
+            ,orphanSearch: 'modChunk'
         };
         // Ext.getCmp('orphans-grid-chunk').reset();
         this.getBottomToolbar().changePage(1);
