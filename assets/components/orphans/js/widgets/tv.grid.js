@@ -77,6 +77,7 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
      reloadTvs: function () {
         this.getStore().baseParams = {
             action: 'mgr/tv/getList'
+            ,orphanSearch: 'tvs'
         };
         // Ext.getCmp('orphans-grid-chunk').reset();
         this.getBottomToolbar().changePage(1);
