@@ -28,13 +28,14 @@
  * @subpackage processors
  */
 /* setup default properties */
+/* @var $modx modX */
+
 $isLimit = !empty($scriptProperties['limit']);
 $isCombo = !empty($scriptProperties['combo']);
 $start = $modx->getOption('start', $scriptProperties, 0);
 $limit = $modx->getOption('limit', $scriptProperties, 10);
 $sort = $modx->getOption('sort', $scriptProperties, 'name');
 $dir = $modx->getOption('dir', $scriptProperties, 'ASC');
-$modx->log(MODX::LOG_LEVEL_ERROR, ' CALLED ');
 $c = $modx->newQuery('modChunk');
 $c->leftJoin('modCategory', 'Category');
 if (!empty($scriptProperties['search'])) {

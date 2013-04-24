@@ -27,6 +27,9 @@
  * @package orphans
  * @subpackage processors
  */
+
+/* @var $modx modX */
+
 if (!$modx->hasPermission('save_chunk')) return $modx->error->failure($modx->lexicon('access_denied'));
 
 if (empty($scriptProperties['chunks'])) {
