@@ -27,6 +27,17 @@
  * @package orphans
  * @subpackage processors
  */
+
+/* @var $modx modX */
+/* @var $this modProcessor */
+/* @var $orphans Orphans */
+
+$orphans = $modx->orphans;
+$results = $orphans->process('modTemplate');
+$count = count($results);
+
+return $this->outputArray($results, $count);
+
 /* setup default properties */
 $isLimit = !empty($scriptProperties['limit']);
 $isCombo = !empty($scriptProperties['combo']);

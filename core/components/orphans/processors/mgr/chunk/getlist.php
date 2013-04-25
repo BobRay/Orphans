@@ -29,6 +29,14 @@
  */
 /* setup default properties */
 /* @var $modx modX */
+/* @var $this modProcessor */
+/* @var $orphans Orphans */
+
+$orphans = $modx->orphans;
+$results = $orphans->process('modChunk');
+$count = count($results);
+
+return $this->outputArray($results, $count);
 
 $isLimit = !empty($scriptProperties['limit']);
 $isCombo = !empty($scriptProperties['combo']);
