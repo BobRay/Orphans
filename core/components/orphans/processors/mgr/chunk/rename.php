@@ -42,9 +42,9 @@ foreach ($chunkIds as $chunkId) {
     if ($chunk == null) continue;
     $name = $chunk->get('name');
     $name = $prefix . $name;
-    $chunk->set('name', $name);
-    if ($chunk->save() === false) {
-        
+    if (! strstr($name, $prefix)) {
+        $chunk->set('name', $name);
+        $chunk->save();
     }
 }
 

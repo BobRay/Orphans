@@ -42,9 +42,9 @@ foreach ($tvIds as $tvId) {
     if ($tv == null) continue;
     $name = $tv->get('name');
     $name = $prefix . $name;
-    $tv->set('name', $name);
-    if ($tv->save() === false) {
-        
+    if (!strstr($name, $prefix)) {
+        $tv->set('name', $name);
+        $tv->save();
     }
 }
 

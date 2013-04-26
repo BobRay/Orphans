@@ -42,9 +42,9 @@ foreach ($snippetIds as $snippetId) {
     if ($snippet == null) continue;
     $name = $snippet->get('name');
     $name = $prefix . $name;
-    $snippet->set('name', $name);
-    if ($snippet->save() === false) {
-        
+    if (!strstr($name, $prefix)) {
+        $snippet->set('name', $name);
+        $snippet->save();
     }
 }
 

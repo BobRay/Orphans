@@ -42,9 +42,10 @@ foreach ($templateIds as $templateId) {
     if ($template == null) continue;
     $name = $template->get('templatename');
     $name = $prefix . $name;
+
+    if (! strstr($name, $prefix)) {
     $template->set('templatename', $name);
-    if ($template->save() === false) {
-        
+    $template->save();
     }
 }
 
