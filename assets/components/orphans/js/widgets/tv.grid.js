@@ -190,21 +190,27 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
         if (sels.length <= 0) return false;
         var s = this.getStore();
         for (var i = 0; i < sels.length; i = i + 1) {
+           var prefix = Orphans.config.prefix;
            var id = sels[i].get('id');
            var name = sels[i].get('name');
+           var pos = name.indexOf(prefix);
+            if (pos != -1) {
+                continue;
+            }
            var ri = id;
            var record = s.getById(ri);
-           record.set("name", Orphans.config.prefix + name);
+           record.set("name", prefix + name);
            record.commit();
         }
         MODx.Ajax.request({
-                url: this.config.url, params: {
-                action: 'mgr/tv/rename',
-                tvs: cs /* batch: act */
+            url: this.config.url, params: {
+            action: 'mgr/tv/rename',
+            tvs: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
-                    // this.refresh();
+                    this.getSelectionModel().clearSelections(false);
+                    //this.getSelectionModel().clearSelections(true);
+                    //this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
@@ -226,7 +232,7 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
             }, listeners: {
                 'success': {fn: function (r) {
                     this.getSelectionModel().clearSelections(true);
-                    this.refresh();
+                    // this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
