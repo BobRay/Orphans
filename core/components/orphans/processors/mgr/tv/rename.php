@@ -41,8 +41,8 @@ foreach ($tvIds as $tvId) {
     $tv = $modx->getObject('modTemplateVar',$tvId);
     if ($tv == null) continue;
     $name = $tv->get('name');
-    $name = $prefix . $name;
     if (!strstr($name, $prefix)) {
+        $name = $prefix . $name;
         $tv->set('name', $name);
         $tv->save();
     }

@@ -41,8 +41,9 @@ foreach ($snippetIds as $snippetId) {
     $snippet = $modx->getObject('modSnippet',$snippetId);
     if ($snippet == null) continue;
     $name = $snippet->get('name');
-    $name = $prefix . $name;
+
     if (!strstr($name, $prefix)) {
+        $name = $prefix . $name;
         $snippet->set('name', $name);
         $snippet->save();
     }

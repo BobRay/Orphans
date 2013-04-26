@@ -41,9 +41,9 @@ foreach ($chunkIds as $chunkId) {
     $chunk = $modx->getObject('modChunk',$chunkId);
     if ($chunk == null) continue;
     $name = $chunk->get('name');
-    $name = $prefix . $name;
     if (! strstr($name, $prefix)) {
-        $chunk->set('name', $name);
+        $name = $prefix . $name;
+        $chunk->set('name', $prefix . $name);
         $chunk->save();
     }
 }

@@ -41,11 +41,10 @@ foreach ($templateIds as $templateId) {
     $template = $modx->getObject('modTemplate',$templateId);
     if ($template == null) continue;
     $name = $template->get('templatename');
-    $name = $prefix . $name;
-
     if (! strstr($name, $prefix)) {
-    $template->set('templatename', $name);
-    $template->save();
+        $name = $prefix . $name;
+        $template->set('templatename', $name);
+        $template->save();
     }
 }
 
