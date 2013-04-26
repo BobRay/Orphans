@@ -87,7 +87,7 @@ class Orphans {
             'chunksPath' => $corePath.'elements/chunks/',
             'modelPath' => $corePath.'model/',
             'processorsPath' => $corePath.'processors/',
-
+            'prefix' => $this->modx->getOption('orphans.prefix', null, 'aaOrphan.'),
             'assetsUrl' => $assetsUrl,
             'connectorUrl' => $assetsUrl.'connector.php',
             'cssUrl' => $assetsUrl.'css/',

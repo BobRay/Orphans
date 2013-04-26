@@ -33,6 +33,7 @@ $modx->regClientStartupHTMLBlock('<script type="text/javascript">
 Ext.onReady(function() {
     Orphans.config = '.$modx->toJSON($orphans->config).';
     Orphans.config.connector_url = "'.$orphans->config['connectorUrl'].'";
+    Orphans.config.prefix = "' . $orphans->config['prefix'] . '";
 });
 </script>');
 

@@ -175,8 +175,28 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
     }
     , tvRename: function () {
         var cs = this.getSelectedAsList();
+        // Ext.Msg.alert('Info', cs);
         if (cs === false) return false;
+        /*var sels = cs.split(",");
+        for (var i = 0, len = sels.length; i < len; i++) {
+        // Ext.each(sels, function (sel) {
 
+            Ext.Msg.alert('Info', sels[i]);
+            *//*ips.push(sel.get('ip'));
+            nodes.push(sel.get('node'));*//*
+        }*/
+
+        var sels = this.getSelectionModel().getSelections();
+        if (sels.length <= 0) return false;
+        var s = this.getStore();
+        for (var i = 0; i < sels.length; i = i + 1) {
+           var id = sels[i].get('id');
+           var name = sels[i].get('name');
+           var ri = id;
+           var record = s.getById(ri);
+           record.set("name", Orphans.config.prefix + name);
+           record.commit();
+        }
         MODx.Ajax.request({
                 url: this.config.url, params: {
                 action: 'mgr/tv/rename',
@@ -184,14 +204,14 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
             }, listeners: {
                 'success': {fn: function (r) {
                     this.getSelectionModel().clearSelections(true);
-                    this.refresh();
+                    // this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
                     }*/
                 }, scope: this}
             }
-                          });
+}       );
         return true;
 
     }
@@ -300,4 +320,8 @@ Orphans.window.ChangeCategory = function (config) {
 Ext.extend(Orphans.window.ChangeCategory, MODx.Window);
 Ext.reg('orphans-tv-window-change-category', Orphans.window.ChangeCategory);
 
-/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. http://jsfiddle.net/27fRh/ + rec.commit();*/
+/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. http://jsfiddle.net/27fRh/ + rec.commit();
+
+dataStore.each(function(rec){
+ alert(rec.get(field1));
+ }*/
