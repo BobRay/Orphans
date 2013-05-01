@@ -206,28 +206,29 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
             nodes.push(sel.get('node'));*//*
         }*/
 
-        var sels = this.getSelectionModel().getSelections();
-        if (sels.length <= 0) return false;
-        var s = this.getStore();
-        for (var i = 0; i < sels.length; i = i + 1) {
-           var prefix = Orphans.config.prefix;
-           var id = sels[i].get('id');
-           var name = sels[i].get('name');
-           var pos = name.indexOf(prefix);
-            if (pos != -1) {
-                continue;
-            }
-           var ri = id;
-           var record = s.getById(ri);
-           record.set("name", prefix + name);
-           record.commit();
-        }
+
         MODx.Ajax.request({
             url: this.config.url, params: {
             action: 'mgr/tv/rename',
             tvs: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+                        var prefix = Orphans.config.prefix;
+                        var id = sels[i].get('id');
+                        var name = sels[i].get('name');
+                        var pos = name.indexOf(prefix);
+                        if (pos != -1) {
+                            continue;
+                        }
+                        var ri = id;
+                        var record = s.getById(ri);
+                        record.set("name", prefix + name);
+                        record.commit();
+                    }
                     this.getSelectionModel().clearSelections(false);
                     //this.getSelectionModel().clearSelections(true);
                     //this.refresh();
@@ -244,30 +245,31 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
     , tvUnRename: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
-        var sels = this.getSelectionModel().getSelections();
-        if (sels.length <= 0) return false;
-        var s = this.getStore();
-        for (var i = 0; i < sels.length; i = i + 1) {
-            var prefix = Orphans.config.prefix;
-            var id = sels[i].get('id');
-            var name = sels[i].get('name');
-            var pos = name.indexOf(prefix);
-            if (pos == -1) {
-                continue;
-            }
-            var ri = id;
-            var record = s.getById(ri);
-            name = name.replace(prefix, '');
 
-            record.set("name", name);
-            record.commit();
-        }
         MODx.Ajax.request({
                               url: this.config.url, params: {
                 action: 'mgr/tv/unrename',
                 tvs: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+                        var prefix = Orphans.config.prefix;
+                        var id = sels[i].get('id');
+                        var name = sels[i].get('name');
+                        var pos = name.indexOf(prefix);
+                        if (pos == -1) {
+                            continue;
+                        }
+                        var ri = id;
+                        var record = s.getById(ri);
+                        name = name.replace(prefix, '');
+
+                        record.set("name", name);
+                        record.commit();
+                    }
                     this.getSelectionModel().clearSelections(false);
                     // this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
@@ -374,9 +376,3 @@ Orphans.window.ChangeCategory = function (config) {
 };
 Ext.extend(Orphans.window.ChangeCategory, MODx.Window);
 Ext.reg('orphans-tv-window-change-category', Orphans.window.ChangeCategory);
-
-/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. http://jsfiddle.net/27fRh/ + rec.commit();
-
-dataStore.each(function(rec){
- alert(rec.get(field1));
- }*/
