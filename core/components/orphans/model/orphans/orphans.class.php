@@ -201,6 +201,7 @@ class Orphans {
             $c->sortby('name');
         }
         // $c->limit(10);
+        /* ToDo: Use getCollectionGraph here */
         $objects = $this->modx->getCollection($type, $c);
 
         /* @var $object modElement */

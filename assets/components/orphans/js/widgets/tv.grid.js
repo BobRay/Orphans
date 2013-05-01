@@ -147,15 +147,20 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
         if (cs === false) return false;
 
         location.href = MODx.config.manager_url + '?a=' + MODx.request.a + '&action=template/tvs&template=' + cs.data.id;
-    }, changeDefaultTVValues: function (btn, e) {
+    }
+    , changeDefaultTVValues: function (btn, e) {
         var sm = this.getSelectionModel();
         var cs = sm.getSelected();
         if (cs === false) return false;
 
         location.href = MODx.config.manager_url + '?a=' + MODx.request.a + '&action=template/tvdefaults&template=' + cs.data.id;
-    }, changeCategory: function (btn, e) {
+    }
+    , changeCategory: function (btn, e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
+        var sels = this.getSelectionModel().getSelections();
+        if (sels.length <= 0) return false;
+
 
         var r = {tvs: cs};
         if (!this.changeCategoryWindow) {
@@ -164,12 +169,27 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
                   , record: r
                   , listeners: {
                     'success': {fn: function (r) {
-                        this.refresh();
+                        // this.refresh();
+                        var sels = this.getSelectionModel().getSelections();
+                        var cat = Ext.getCmp('orphans-category-combo').lastSelectionText;
+                        var s = this.getStore();
+                        for (var i = 0; i < sels.length; i = i + 1) {
+                            var id = sels[i].get('id');
+                            var ri = id;
+                            var record = s.getById(ri);
+                            record.set("category", cat);
+                            record.commit();
+                        }
+                        //Ext.Msg.alert('Info',retVal);
+                            // Ext.Msg.alert('Info', 'Testing');
+
+                        this.getSelectionModel().clearSelections(false);
                     }, scope: this}
                 }
                                                   });
         }
         this.changeCategoryWindow.setValues(r);
+        // var cat = this.changeCategoryWindow.getValue('category');
         this.changeCategoryWindow.show(e.target);
         return true;
     }
@@ -224,14 +244,31 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
     , tvUnRename: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
+        var sels = this.getSelectionModel().getSelections();
+        if (sels.length <= 0) return false;
+        var s = this.getStore();
+        for (var i = 0; i < sels.length; i = i + 1) {
+            var prefix = Orphans.config.prefix;
+            var id = sels[i].get('id');
+            var name = sels[i].get('name');
+            var pos = name.indexOf(prefix);
+            if (pos == -1) {
+                continue;
+            }
+            var ri = id;
+            var record = s.getById(ri);
+            name = name.replace(prefix, '');
 
+            record.set("name", name);
+            record.commit();
+        }
         MODx.Ajax.request({
                               url: this.config.url, params: {
                 action: 'mgr/tv/unrename',
                 tvs: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
+                    this.getSelectionModel().clearSelections(false);
                     // this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
@@ -255,7 +292,17 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
                 , tvs: cs
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.refresh();
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
                 }
                 , scope: this}
                 , 'failure': {fn: function (r) {
@@ -305,6 +352,7 @@ Orphans.window.ChangeCategory = function (config) {
     config = config || {};
     Ext.applyIf(config, {
         title: _('orphans.change_category')
+        ,id:'wtf'
         , url: Orphans.config.connector_url
         , baseParams: {
             action: 'mgr/tv/changecategory'
@@ -315,6 +363,7 @@ Orphans.window.ChangeCategory = function (config) {
             ,name: 'tvs'
         },{
             xtype: 'modx-combo-category'
+            ,id: 'orphans-category-combo'
             ,fieldLabel: _('orphans.category')
             ,name: 'category'
             ,hiddenName: 'category'
