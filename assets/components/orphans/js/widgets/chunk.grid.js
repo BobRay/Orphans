@@ -78,6 +78,7 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
             action: 'mgr/chunk/getList'
             ,orphanSearch: 'modChunk'
         };
+
         this.getBottomToolbar().changePage(1);
         // this.refresh();
 
@@ -229,6 +230,36 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
         return true;
 
     }
+    // ********
+    , chunkAddToIgnore: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+            url: this.config.url, params: {
+                action: 'mgr/chunk/addtoignore',
+                chunks: cs /* batch: act */
+            }
+            , listeners: {
+                'success': {fn: function (r) {
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
+                }
+                , scope: this}
+            }
+            });
+        return true;
+
+    }
+
     , chunkDelete: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -239,7 +270,8 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
              , params: {
                 action: 'mgr/chunk/delete'
                 , chunks: cs
-            }, listeners: {
+            }
+                             , listeners: {
                 'success': {fn: function (r) {
                     // this.refresh();
                     var sels = this.getSelectionModel().getSelections();
@@ -284,6 +316,13 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
                 , handler: this.chunkUnRename
                 , scope: this
             }
+            , '-'
+            , {
+                text: _('orphans.add_to_ignore')
+                , handler: this.chunkAddToIgnore
+                , scope: this
+            }
+
             , '-'
             , '-'
             , {

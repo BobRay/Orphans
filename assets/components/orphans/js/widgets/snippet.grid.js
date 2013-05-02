@@ -123,8 +123,6 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
     , changeCategory: function (btn, e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
-        var sels = this.getSelectionModel().getSelections();
-        if (sels.length <= 0) return false;
 
         var r = {snippets: cs};
         if (!this.changeCategoryWindow) {
@@ -199,7 +197,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
             url: this.config.url, params: {
                 action: 'mgr/snippet/unrename',
                 snippets: cs /* batch: act */
-            }, listeners: {
+            }
+            , listeners: {
                 'success': {fn: function (r) {
                     var sels = this.getSelectionModel().getSelections();
                     if (sels.length <= 0) return false;
@@ -231,6 +230,36 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         return true;
 
     }
+    // ********
+    , snippetAddToIgnore: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+            url: this.config.url, params: {
+                action: 'mgr/snippet/addtoignore',
+                snippets: cs /* batch: act */
+            }
+            , listeners: {
+                'success': {fn: function (r) {
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
+                }
+                , scope: this}
+            }
+            });
+        return true;
+
+    }
+
     , snippetDelete: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -241,7 +270,8 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
              , params: {
                 action: 'mgr/snippet/delete'
                 , snippets: cs
-            }, listeners: {
+            }
+             , listeners: {
                 'success': {fn: function (r) {
                     // this.refresh();
                     var sels = this.getSelectionModel().getSelections();
@@ -286,6 +316,13 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
                 , handler: this.snippetUnRename
                 , scope: this
             }
+            , '-'
+            , {
+                text: _('orphans.add_to_ignore')
+                , handler: this.snippetAddToIgnore
+                , scope: this
+            }
+
             , '-'
             , '-'
             , {

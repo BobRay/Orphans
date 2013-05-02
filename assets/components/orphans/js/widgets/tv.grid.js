@@ -78,6 +78,7 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
             action: 'mgr/tv/getList'
             ,orphanSearch: 'modTemplateVar'
         };
+
         this.getBottomToolbar().changePage(1);
         // this.refresh();
 
@@ -229,6 +230,36 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
         return true;
 
     }
+    // ********
+    , tvAddToIgnore: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+            url: this.config.url, params: {
+                action: 'mgr/tv/addtoignore',
+                tvs: cs /* batch: act */
+            }
+            , listeners: {
+                'success': {fn: function (r) {
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
+                }
+                , scope: this}
+            }
+            });
+        return true;
+
+    }
+
     , tvDelete: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -286,6 +317,13 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
                 , scope: this
             }
             , '-'
+            , {
+                text: _('orphans.add_to_ignore')
+                , handler: this.tvAddToIgnore
+                , scope: this
+            }
+
+            , '-'
             , '-'
             , {
                 text: _('orphans.delete_tv')
@@ -312,12 +350,12 @@ Orphans.window.ChangeCategory = function (config) {
             ,name: 'tvs'
             }
             ,{
-            xtype: 'modx-combo-category'
-            ,id: 'orphans-tv-category-combo'
-            ,fieldLabel: _('orphans.category')
-            ,name: 'category'
-            ,hiddenName: 'category'
-            ,anchor: '90%'
+                xtype: 'modx-combo-category'
+                ,id: 'orphans-tv-category-combo'
+                ,fieldLabel: _('orphans.category')
+                ,name: 'category'
+                ,hiddenName: 'category'
+                ,anchor: '90%'
         }]
     });
     Orphans.window.ChangeCategory.superclass.constructor.call(this, config);

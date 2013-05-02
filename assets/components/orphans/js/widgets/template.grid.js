@@ -7,8 +7,10 @@ Orphans.grid.Templates = function(config) {
         url: Orphans.config.connector_url
         ,baseParams: {
            action: 'mgr/dummy'
-            /* thread: config.thread */
-        }, pageSize: 300, fields: [
+            /* ,thread: config.thread */
+        }
+        , pageSize: 300
+        , fields: [
             {name: 'id', sortType: Ext.data.SortTypes.asInt}
             , {name: 'templatename', sortType: Ext.data.SortTypes.asUCString}
             , {name: 'category', sortType: Ext.data.SortTypes.asUCString}
@@ -232,6 +234,36 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         return true;
 
     }
+    // ********
+    , templateAddToIgnore: function () {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
+
+        MODx.Ajax.request({
+            url: this.config.url, params: {
+                action: 'mgr/template/addtoignore',
+                templates: cs /* batch: act */
+            }
+            , listeners: {
+                'success': {fn: function (r) {
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
+                }
+                , scope: this}
+            }
+            });
+        return true;
+
+    }
+
     , templateDelete: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -242,7 +274,8 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
              , params: {
                 action: 'mgr/template/delete'
                 , templates: cs
-            }, listeners: {
+            }
+             , listeners: {
                 'success': {fn: function (r) {
                     // this.refresh();
                     var sels = this.getSelectionModel().getSelections();
@@ -282,10 +315,17 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         }
             , '-'
         , {
-                text: _('orphans.unrename_tv')
+                text: _('orphans.unrename_template')
                 , handler: this.templateUnRename
                 , scope: this
         }
+            , '-'
+            , {
+                text: _('orphans.add_to_ignore')
+                , handler: this.templateAddToIgnore
+                , scope: this
+            }
+
         , '-'
         , '-'
         ,{
@@ -311,7 +351,8 @@ Orphans.window.ChangeCategory = function(config) {
         ,fields: [{
             xtype: 'hidden'
             ,name: 'templates'
-        },{
+        }
+        ,{
             xtype: 'modx-combo-category'
             ,id: 'orphans-template-category-combo'
             ,fieldLabel: _('orphans.category')

@@ -29,6 +29,7 @@
  * @language en
  */
 $_lang['orphans'] = 'Orphans';
+$_lang['orphans.add_to_ignore'] = 'Add to Ignore List';
 $_lang['orphans.action_err_ns'] = 'Please specify an action.';
 $_lang['orphans.and_others'] = 'And [[+count]] others...';
 $_lang['orphans.bulk_actions'] = 'Bulk Actions';

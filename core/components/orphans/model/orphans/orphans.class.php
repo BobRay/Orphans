@@ -215,7 +215,7 @@ class Orphans {
                 $fields['name'] = $fields['templatename'];
             }
             /* check ignore list */
-            if (strstr($ignoreList, $fields['name'])) {
+            if (strpos($ignoreList, $fields['name']) !== false) {
                 continue;
             }
             $cat = $this->modx->getObject('modCategory', $fields['category']);
