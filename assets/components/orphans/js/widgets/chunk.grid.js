@@ -156,6 +156,8 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
     }, changeCategory: function (btn, e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
+        var sels = this.getSelectionModel().getSelections();
+        if (sels.length <= 0) return false;
 
         var r = {chunks: cs};
         if (!this.changeCategoryWindow) {
@@ -164,7 +166,18 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
                   , record: r
                   , listeners: {
                     'success': {fn: function (r) {
-                        this.refresh();
+                        // this.refresh();
+                        var sels = this.getSelectionModel().getSelections();
+                        var cat = Ext.getCmp('orphans-chunk-category-combo').lastSelectionText;
+                        var s = this.getStore();
+                        for (var i = 0; i < sels.length; i = i + 1) {
+                            var id = sels[i].get('id');
+                            var ri = id;
+                            var record = s.getById(ri);
+                            record.set("category", cat);
+                            record.commit();
+                        }
+                        this.getSelectionModel().clearSelections(false);
                     }, scope: this}
                 }
                                                   });
@@ -183,8 +196,24 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
                 chunks: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+                        var prefix = Orphans.config.prefix;
+                        var id = sels[i].get('id');
+                        var name = sels[i].get('name');
+                        var pos = name.indexOf(prefix);
+                        if (pos != -1) {
+                            continue;
+                        }
+                        var ri = id;
+                        var record = s.getById(ri);
+                        record.set("name", prefix + name);
+                        record.commit();
+                    }
+                    this.getSelectionModel().clearSelections(false);
+
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
@@ -200,13 +229,31 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
         if (cs === false) return false;
 
         MODx.Ajax.request({
-                              url: this.config.url, params: {
+            url: this.config.url, params: {
                 action: 'mgr/chunk/unrename',
                 chunks: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+                        var prefix = Orphans.config.prefix;
+                        var id = sels[i].get('id');
+                        var name = sels[i].get('name');
+                        var pos = name.indexOf(prefix);
+                        if (pos == -1) {
+                            continue;
+                        }
+                        var ri = id;
+                        var record = s.getById(ri);
+                        name = name.replace(prefix, '');
+
+                        record.set("name", name);
+                        record.commit();
+                    }
+                    this.getSelectionModel().clearSelections(false);
+                    // this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
@@ -229,7 +276,17 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
                 , chunks: cs
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.refresh();
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
                 }
                 , scope: this}
                 , 'failure': {fn: function (r) {
@@ -289,6 +346,7 @@ Orphans.window.ChangeCategory = function (config) {
             ,name: 'chunks'
         },{
             xtype: 'modx-combo-category'
+            ,id: 'orphans-chunk-category-combo'
             ,fieldLabel: _('orphans.category')
             ,name: 'category'
             ,hiddenName: 'category'

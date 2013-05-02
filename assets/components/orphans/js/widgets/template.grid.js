@@ -173,7 +173,18 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                 ,record: r
                 ,listeners: {
                     'success': {fn:function(r) {
-                       this.refresh();
+                        // this.refresh();
+                        var sels = this.getSelectionModel().getSelections();
+                        var cat = Ext.getCmp('orphans-template-category-combo').lastSelectionText;
+                        var s = this.getStore();
+                        for (var i = 0; i < sels.length; i = i + 1) {
+                            var id = sels[i].get('id');
+                            var ri = id;
+                            var record = s.getById(ri);
+                            record.set("category", cat);
+                            record.commit();
+                        }
+                        this.getSelectionModel().clearSelections(false);
                     },scope:this}
                 }
             });
@@ -181,7 +192,8 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         this.changeCategoryWindow.setValues(r);
         this.changeCategoryWindow.show(e.target);
         return true;
-    }, templateRename: function () {
+    }
+    , templateRename: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
@@ -191,8 +203,24 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                 templates: cs /* batch: act */
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+                        var prefix = Orphans.config.prefix;
+                        var id = sels[i].get('id');
+                        var name = sels[i].get('templatename');
+                        var pos = name.indexOf(prefix);
+                        if (pos != -1) {
+                            continue;
+                        }
+                        var ri = id;
+                        var record = s.getById(ri);
+                        record.set("templatename", prefix + name);
+                        record.commit();
+                    }
+                    this.getSelectionModel().clearSelections(false);
+
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
@@ -213,8 +241,26 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                 templates: cs
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+                        var prefix = Orphans.config.prefix;
+                        var id = sels[i].get('id');
+                        var name = sels[i].get('templatename');
+                        var pos = name.indexOf(prefix);
+                        if (pos == -1) {
+                            continue;
+                        }
+                        var ri = id;
+                        var record = s.getById(ri);
+                        name = name.replace(prefix, '');
+
+                        record.set("templatename", name);
+                        record.commit();
+                    }
+                    this.getSelectionModel().clearSelections(false);
+                    // this.refresh();
                     /*var t = Ext.getCmp('modx-resource-tree');
                      if (t) {
                      t.refresh();
@@ -237,7 +283,17 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                 , templates: cs
             }, listeners: {
                 'success': {fn: function (r) {
-                    this.refresh();
+                    // this.refresh();
+                    var sels = this.getSelectionModel().getSelections();
+                    if (sels.length <= 0) return false;
+                    var s = this.getStore();
+                    for (var i = 0; i < sels.length; i = i + 1) {
+
+                        var id = sels[i].get('id');
+                        var ri = id;
+                        var record = s.getById(ri);
+                        s.remove(record);
+                    }
                 }
                 , scope: this}
                 , 'failure': {fn: function (r) {
@@ -248,6 +304,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         });
         return true;
     }
+
 
     ,getBatchMenu: function() {
         var bm = [];
@@ -262,8 +319,11 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
             ,handler: this.templateRename
             ,scope: this
         }
+            , '-'
         , {
-            text: _('orphans.unrename_template'), handler: this.templateUnRename, scope: this
+                text: _('orphans.unrename_tv')
+                , handler: this.templateUnRename
+                , scope: this
         }
         , '-'
         , '-'
@@ -292,6 +352,7 @@ Orphans.window.ChangeCategory = function(config) {
             ,name: 'templates'
         },{
             xtype: 'modx-combo-category'
+            ,id: 'orphans-template-category-combo'
             ,fieldLabel: _('orphans.category')
             ,name: 'category'
             ,hiddenName: 'category'

@@ -171,7 +171,7 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
                     'success': {fn: function (r) {
                         // this.refresh();
                         var sels = this.getSelectionModel().getSelections();
-                        var cat = Ext.getCmp('orphans-category-combo').lastSelectionText;
+                        var cat = Ext.getCmp('orphans-tv-category-combo').lastSelectionText;
                         var s = this.getStore();
                         for (var i = 0; i < sels.length; i = i + 1) {
                             var id = sels[i].get('id');
@@ -180,32 +180,18 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
                             record.set("category", cat);
                             record.commit();
                         }
-                        //Ext.Msg.alert('Info',retVal);
-                            // Ext.Msg.alert('Info', 'Testing');
-
                         this.getSelectionModel().clearSelections(false);
                     }, scope: this}
                 }
                                                   });
         }
         this.changeCategoryWindow.setValues(r);
-        // var cat = this.changeCategoryWindow.getValue('category');
         this.changeCategoryWindow.show(e.target);
         return true;
     }
     , tvRename: function () {
         var cs = this.getSelectedAsList();
-        // Ext.Msg.alert('Info', cs);
         if (cs === false) return false;
-        /*var sels = cs.split(",");
-        for (var i = 0, len = sels.length; i < len; i++) {
-        // Ext.each(sels, function (sel) {
-
-            Ext.Msg.alert('Info', sels[i]);
-            *//*ips.push(sel.get('ip'));
-            nodes.push(sel.get('node'));*//*
-        }*/
-
 
         MODx.Ajax.request({
             url: this.config.url, params: {
@@ -230,8 +216,7 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
                         record.commit();
                     }
                     this.getSelectionModel().clearSelections(false);
-                    //this.getSelectionModel().clearSelections(true);
-                    //this.refresh();
+
                     /*var t = Ext.getCmp('modx-resource-tree');
                     if (t) {
                         t.refresh();
@@ -247,7 +232,7 @@ Ext.extend(Orphans.grid.Tvs, MODx.grid.Grid, {
         if (cs === false) return false;
 
         MODx.Ajax.request({
-                              url: this.config.url, params: {
+            url: this.config.url, params: {
                 action: 'mgr/tv/unrename',
                 tvs: cs /* batch: act */
             }, listeners: {
@@ -354,7 +339,6 @@ Orphans.window.ChangeCategory = function (config) {
     config = config || {};
     Ext.applyIf(config, {
         title: _('orphans.change_category')
-        ,id:'wtf'
         , url: Orphans.config.connector_url
         , baseParams: {
             action: 'mgr/tv/changecategory'
@@ -365,7 +349,7 @@ Orphans.window.ChangeCategory = function (config) {
             ,name: 'tvs'
         },{
             xtype: 'modx-combo-category'
-            ,id: 'orphans-category-combo'
+            ,id: 'orphans-tv-category-combo'
             ,fieldLabel: _('orphans.category')
             ,name: 'category'
             ,hiddenName: 'category'
