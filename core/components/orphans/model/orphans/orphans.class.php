@@ -204,11 +204,19 @@ class Orphans {
         /* ToDo: Use getCollectionGraph here */
         $objects = $this->modx->getCollection($type, $c);
 
+        /* get Ignore List */
+        $ignoreChunk = $this->modx->getObject('modChunk', array('name' => 'OrphansIgnoreList'));
+        $ignoreList = $ignoreChunk? $ignoreChunk->getContent() : '';
+
         /* @var $object modElement */
         foreach ($objects as $object) {
             $fields = $object->toArray('',true, true);
             if ($type == 'modTemplate') {
                 $fields['name'] = $fields['templatename'];
+            }
+            /* check ignore list */
+            if (strstr($ignoreList, $fields['name'])) {
+                continue;
             }
             $cat = $this->modx->getObject('modCategory', $fields['category']);
             $fields['category'] = $cat? $cat->get('category') : '';
