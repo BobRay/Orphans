@@ -79,13 +79,10 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
             action: 'mgr/chunk/getList'
             ,orphanSearch: 'modChunk'
         };
-        // Ext.getCmp('orphans-grid-chunk').reset();
         this.getBottomToolbar().changePage(1);
         // this.refresh();
 
-    }/*, _renderUrl: function (v, md, rec) {
-        return '<a href="' + rec.data.url + '" target="_blank">' + rec.data.name + '</a>';
-    }*/
+    }
     , _showMenu: function (g, ri, e) {
         e.stopEvent();
         e.preventDefault();
@@ -121,43 +118,11 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
         }
         cs = Ext.util.Format.substr(cs, 1);
         return cs;
-    }/*, batchAction: function (act, btn, e) {
+    }
+
+    , changeCategory: function (btn, e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
-
-        MODx.Ajax.request({
-                              url: this.config.url, params: {
-                action: 'mgr/resource/batch', resources: cs, batch: act
-            }, listeners: {
-                'success': {fn: function (r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
-                    var t = Ext.getCmp('modx-resource-tree');
-                    if (t) {
-                        t.refresh();
-                    }
-                }, scope: this}
-            }
-                          });
-        return true;
-    }*/
-    , changeTVValues: function (btn, e) {
-        var sm = this.getSelectionModel();
-        var cs = sm.getSelected();
-        if (cs === false) return false;
-
-        location.href = MODx.config.manager_url + '?a=' + MODx.request.a + '&action=template/tvs&template=' + cs.data.id;
-    }, changeDefaultTVValues: function (btn, e) {
-        var sm = this.getSelectionModel();
-        var cs = sm.getSelected();
-        if (cs === false) return false;
-
-        location.href = MODx.config.manager_url + '?a=' + MODx.request.a + '&action=template/tvdefaults&template=' + cs.data.id;
-    }, changeCategory: function (btn, e) {
-        var cs = this.getSelectedAsList();
-        if (cs === false) return false;
-        var sels = this.getSelectionModel().getSelections();
-        if (sels.length <= 0) return false;
 
         var r = {chunks: cs};
         if (!this.changeCategoryWindow) {
@@ -214,7 +179,7 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
                     }
                     this.getSelectionModel().clearSelections(false);
 
-                    /*var t = Ext.getCmp('modx-resource-tree');
+                    /*var t = Ext.getCmp('modx-element-tree');
                     if (t) {
                         t.refresh();
                     }*/
@@ -254,13 +219,13 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
                     }
                     this.getSelectionModel().clearSelections(false);
                     // this.refresh();
-                    /*var t = Ext.getCmp('modx-resource-tree');
+                    /*var t = Ext.getCmp('modx-element-tree');
                     if (t) {
                         t.refresh();
                     }*/
                 }, scope: this}
             }
-                          });
+        });
         return true;
 
     }
@@ -357,5 +322,3 @@ Orphans.window.ChangeCategory = function (config) {
 };
 Ext.extend(Orphans.window.ChangeCategory, MODx.Window);
 Ext.reg('orphans-chunk-window-change-category', Orphans.window.ChangeCategory);
-
-/* Ext.data.Store.commitChanges() is a client-side-only method. It does not communicate with the server in any form. */

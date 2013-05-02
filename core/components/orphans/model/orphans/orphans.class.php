@@ -256,7 +256,7 @@ class Orphans {
                 /* @var $orphanObject OrphanObject */
                 /* Get concatenated content + included files + properties, etc. */
                 $content = $this->getContent($object, $objectType);
-                /* look through all object of this type for each orphan of any type.
+                /* look through all objects of this type for each orphan of any type.
                    findMe() sets its 'found' member if found anywhere */
                 foreach ($objectTypes as $orphanType) {
                     /* get the orphan objects of one type */
@@ -510,7 +510,7 @@ class Orphans {
      * @param array $properties The properties for the Chunk
      * @return string The processed content of the Chunk
      */
-    public function getChunk($name,$properties = array()) {
+    /*public function getChunk($name,$properties = array()) {
         $chunk = null;
         if (!isset($this->chunks[$name])) {
             $chunk = $this->_getTplChunk($name);
@@ -526,7 +526,7 @@ class Orphans {
         }
         $chunk->setCacheable(false);
         return $chunk->process($properties);
-    }
+    }*/
 
     /**
      * Returns a modChunk object from a template file.
@@ -536,7 +536,7 @@ class Orphans {
      * @return modChunk/boolean Returns the modChunk object if found, otherwise
      * false.
      */
-    private function _getTplChunk($name) {
+/*    private function _getTplChunk($name) {
         $chunk = false;
         $f = $this->config['chunksPath'].strtolower($name).'.chunk.tpl';
         if (file_exists($f)) {
@@ -546,5 +546,5 @@ class Orphans {
             $chunk->setContent($o);
         }
         return $chunk;
-    }
+    }*/
 }

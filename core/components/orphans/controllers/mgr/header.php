@@ -27,7 +27,7 @@
  * @package orphans
  * @subpackage controllers
  */
-$modx->regClientCSS($orphans->config['cssUrl'].'mgr.css');
+// $modx->regClientCSS($orphans->config['cssUrl'].'mgr.css');
 $modx->regClientStartupScript($orphans->config['jsUrl'].'orphans.js');
 $modx->regClientStartupHTMLBlock('<script type="text/javascript">
 Ext.onReady(function() {

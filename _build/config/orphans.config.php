@@ -172,9 +172,6 @@ $components = array(
         'plugins' => array(
         ),
         'chunks' => array(
-            'OrphansTplChunk' => array(
-                'category' => 'Orphans',
-            ),
         ),
         'templates' => array(
         ),

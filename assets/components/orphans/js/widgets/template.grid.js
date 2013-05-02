@@ -51,7 +51,6 @@ Orphans.grid.Templates = function(config) {
                 var cls = 'orphans-row';
 
                 if(this.showPreview){
-                    //p.body = '<div class="orphans-resource-body">'+rec.data.content+'</div>';
                     return cls+' orphans-resource-expanded';
                 }
                 return cls+' orphans-resource-collapsed';
@@ -77,18 +76,16 @@ Orphans.grid.Templates = function(config) {
     Orphans.grid.Templates.superclass.constructor.call(this,config)
 };
 Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
-     reloadTemplates: function () {
-    	this.getStore().baseParams = {
+    reloadTemplates: function () {
+        this.getStore().baseParams = {
             action: 'mgr/template/getList'
             , orphanSearch: 'modTemplate'
-    	};
-        /* Ext.getCmp('orphans-search').reset(); */
-    	this.getBottomToolbar().changePage(1);
-        // this.refresh();
+        };
+
+        this.getBottomToolbar().changePage(1);
+
     }
-   /* ,_renderUrl: function(v,md,rec) {
-        return '<a href="'+rec.data.url+'" target="_blank">'+rec.data.templatename+'</a>';
-    }*/
+
     ,_showMenu: function(g,ri,e) {
         e.stopEvent();
         e.preventDefault();
@@ -125,43 +122,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         cs = Ext.util.Format.substr(cs,1);
         return cs;
     }
-    
-    /*,batchAction: function(act,btn,e) {
-        var cs = this.getSelectedAsList();
-        if (cs === false) return false;
 
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/batch'
-                ,resources: cs
-                ,batch: act
-            }
-            ,listeners: {
-                'success': {fn:function(r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
-                       var t = Ext.getCmp('modx-resource-tree');
-                       if (t) { t.refresh(); }
-                },scope:this}
-            }
-        });
-        return true;
-    }*/
-    /*,changeTVValues: function(btn,e) {
-        var sm = this.getSelectionModel();
-        var cs = sm.getSelected();
-        if (cs === false) return false;
-
-        location.href = MODx.config.manager_url+'?a='+MODx.request.a+'&action=template/tvs&template='+cs.data.id;
-    }
-    ,changeDefaultTVValues: function(btn,e) {
-        var sm = this.getSelectionModel();
-        var cs = sm.getSelected();
-        if (cs === false) return false;
-
-        location.href = MODx.config.manager_url+'?a='+MODx.request.a+'&action=template/tvdefaults&template='+cs.data.id;
-    }*/
     ,changeCategory: function(btn,e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -221,7 +182,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                     }
                     this.getSelectionModel().clearSelections(false);
 
-                    /*var t = Ext.getCmp('modx-resource-tree');
+                    /*var t = Ext.getCmp('modx-element-tree');
                     if (t) {
                         t.refresh();
                     }*/
@@ -236,7 +197,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         if (cs === false) return false;
 
         MODx.Ajax.request({
-                              url: this.config.url, params: {
+            url: this.config.url, params: {
                 action: 'mgr/template/unrename',
                 templates: cs
             }, listeners: {
@@ -261,13 +222,13 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
                     }
                     this.getSelectionModel().clearSelections(false);
                     // this.refresh();
-                    /*var t = Ext.getCmp('modx-resource-tree');
+                    /*var t = Ext.getCmp('modx-element-tree');
                      if (t) {
                      t.refresh();
                      }*/
                 }, scope: this}
             }
-                          });
+        });
         return true;
 
     }
