@@ -50,7 +50,6 @@ Orphans.grid.Chunks = function (config) {
                 var cls = 'orphans-row';
 
                 if (this.showPreview) {
-                    //p.body = '<div class="orphans-resource-body">'+rec.data.content+'</div>';
                     return cls + ' orphans-resource-expanded';
                 }
                 return cls + ' orphans-resource-collapsed';
@@ -197,7 +196,8 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
             url: this.config.url, params: {
                 action: 'mgr/chunk/unrename',
                 chunks: cs /* batch: act */
-            }, listeners: {
+            }
+            , listeners: {
                 'success': {fn: function (r) {
                     var sels = this.getSelectionModel().getSelections();
                     if (sels.length <= 0) return false;

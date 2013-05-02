@@ -28,7 +28,8 @@ Orphans.panel.Home = function(config) {
                         , bodyStyle: 'padding: 10px'
                     }
                     ,{
-                        xtype: 'orphans-grid-chunk', preventRender: true
+                        xtype: 'orphans-grid-chunk'
+                        , preventRender: true
                     }
                     ]
 
@@ -54,7 +55,8 @@ Orphans.panel.Home = function(config) {
                         , bodyStyle: 'padding: 10px'
                     },
                     {
-                        xtype: 'orphans-grid-tv', preventRender: true
+                        xtype: 'orphans-grid-tv'
+                        , preventRender: true
                     }
                 ]
 
