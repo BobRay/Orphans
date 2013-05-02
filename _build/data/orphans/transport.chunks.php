@@ -3,7 +3,7 @@
  * chunks transport file for Orphans extra
  *
  * Copyright 2013 by Bob Ray <http://bobsguides.com>
- * Created on 04-14-2013
+ * Created on 05-02-2013
  *
  * @package orphans
  * @subpackage build
@@ -28,8 +28,11 @@ $chunks = array();
 $chunks[1] = $modx->newObject('modChunk');
 $chunks[1]->fromArray(array(
     'id' => '1',
-    'name' => 'OrphansTplChunk',
+    'property_preprocess' => '',
+    'name' => 'OrphansIgnoreList',
+    'description' => 'Ignore list for Orphans extra. List known non-orphans here',
+    'properties' => array(),
 ), '', true, true);
-$chunks[1]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/orphanstplchunk.chunk.html'));
+$chunks[1]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/orphansignorelist.chunk.html'));
 
 return $chunks;

@@ -55,7 +55,17 @@ $components = array(
      * and export them with exportObjects. If you do that, be sure to set
      * their namespace to the lowercase package name of your extra */
 
-    'newSystemSettings' => array(),
+    'newSystemSettings' => array(
+        'orphans.prefix' => array( // key
+            'key' => 'orphans.prefix',
+            'name' => 'Orphans Prefix',
+            'description' => 'orphans_prefix_desc',
+            'namespace' => 'orphans',
+            'xtype' => 'textfield',
+            'value' => 'aaOrphan.',
+            'area' => 'orphans',
+        ),
+    ),
 
     /* ************************ NEW SYSTEM EVENTS ************************* */
 
@@ -172,7 +182,14 @@ $components = array(
         'plugins' => array(
         ),
         'chunks' => array(
+            'OrphansIgnoreList' => array(
+                'description' => 'Ignore list for Orphans extra. List known non-orphans here',
+                'category' => 'Orphans',
+                'static' => false,
+            ),
+
         ),
+
         'templates' => array(
         ),
         'templateVars' => array(
@@ -311,7 +328,8 @@ $components = array(
      * of desired resources
     */
     'process' => array(
-        'menus'
+        'systemSettings',
+        'chunks',
     ),
     /*  Array  of resources to process. You can specify specific resources
         or parent (container) resources, or both.

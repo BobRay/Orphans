@@ -3,7 +3,7 @@
  * menus transport file for Orphans extra
  *
  * Copyright 2013 by Bob Ray <http://bobsguides.com>
- * Created on 04-14-2013
+ * Created on 05-02-2013
  *
  * @package orphans
  * @subpackage build
@@ -27,7 +27,7 @@ $action->fromArray( array (
   'namespace' => 'orphans',
   'controller' => 'index',
   'haslayout' => 1,
-  'lang_topics' => '',
+  'lang_topics' => 'orphans:default',
   'assets' => '',
   'help_url' => '',
   'id' => 1,
