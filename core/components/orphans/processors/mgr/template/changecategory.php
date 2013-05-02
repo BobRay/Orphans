@@ -46,7 +46,7 @@ foreach ($templateIds as $templateId) {
 
     $template->set('category',$scriptProperties['category']);
 
-    if ($template->save() === false) {
+    if ($template->save(3600) === false) {
         
     }
 }

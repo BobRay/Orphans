@@ -49,7 +49,7 @@ foreach ($chunkIds as $chunkId) {
 
     $chunk->set('category',$scriptProperties['category']);
 
-    if ($chunk->save() === false) {
+    if ($chunk->save(3600) === false) {
         
     }
 }

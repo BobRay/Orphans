@@ -46,7 +46,7 @@ foreach ($snippetIds as $snippetId) {
 
     $snippet->set('category',$scriptProperties['category']);
 
-    if ($snippet->save() === false) {
+    if ($snippet->save(3600) === false) {
         
     }
 }

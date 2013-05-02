@@ -46,7 +46,7 @@ foreach ($tvIds as $tvId) {
 
     $tv->set('category',$scriptProperties['category']);
 
-    if ($tv->save() === false) {
+    if ($tv->save(3600) === false) {
         
     }
 }

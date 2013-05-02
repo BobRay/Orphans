@@ -43,7 +43,7 @@ foreach ($templateIds as $templateId) {
     $name = $template->get('templatename');
     $name = str_replace($prefix, '', $name);
     $template->set('templatename', $name);
-    if ($template->save() === false) {
+    if ($template->save(3600) === false) {
         
     }
 }

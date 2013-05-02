@@ -44,7 +44,7 @@ foreach ($tvIds as $tvId) {
     if (!strstr($name, $prefix)) {
         $name = $prefix . $name;
         $tv->set('name', $name);
-        $tv->save();
+        $tv->save(3600);
     }
 }
 

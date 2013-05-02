@@ -45,7 +45,7 @@ foreach ($snippetIds as $snippetId) {
     if (!strstr($name, $prefix)) {
         $name = $prefix . $name;
         $snippet->set('name', $name);
-        $snippet->save();
+        $snippet->save(3600);
     }
 }
 

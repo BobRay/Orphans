@@ -43,7 +43,7 @@ foreach ($chunkIds as $chunkId) {
     $name = $chunk->get('name');
     $name = str_replace($prefix, '', $name);
     $chunk->set('name', $name);
-    if ($chunk->save() === false) {
+    if ($chunk->save(3600) === false) {
         
     }
 }

@@ -44,7 +44,7 @@ foreach ($templateIds as $templateId) {
     if (! strstr($name, $prefix)) {
         $name = $prefix . $name;
         $template->set('templatename', $name);
-        $template->save();
+        $template->save(3600);
     }
 }
 

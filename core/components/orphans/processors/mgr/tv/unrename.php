@@ -43,7 +43,7 @@ foreach ($tvIds as $tvId) {
     $name = $tv->get('name');
     $name = str_replace($prefix, '', $name);
     $tv->set('name', $name);
-    if ($tv->save() === false) {
+    if ($tv->save(3600) === false) {
         
     }
 }

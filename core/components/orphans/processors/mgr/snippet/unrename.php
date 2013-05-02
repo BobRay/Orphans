@@ -43,7 +43,7 @@ foreach ($snippetIds as $snippetId) {
     $name = $snippet->get('name');
     $name = str_replace($prefix, '', $name);
     $snippet->set('name', $name);
-    if ($snippet->save() === false) {
+    if ($snippet->save(3600) === false) {
         
     }
 }
