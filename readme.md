@@ -7,3 +7,5 @@ Documentation is available at [Bob's Guides](http://bobsguides.com/orphans-tutor
 
 Orphans is a utility for MODX Revolution that helps you find unused elements such as Snippets, Chunks, Template Variables, and Templates. The results are not perfect, but they can help you find out which elements are no longer in use.
 
+From within the Orphans grid, you can delete, rename, un-rename, or add elements to the ignore list.
+
