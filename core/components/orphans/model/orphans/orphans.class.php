@@ -24,6 +24,16 @@
  * @package orphans
  */
 
+/* These are for LexiconHelper */
+// include 'addtoignore.php'
+// include 'changecategory.php'
+// include 'delete.php'
+// include 'rename.php'
+// include 'unrename.php'
+// include 'getlist.php'
+
+
+
 class OrphanObject {
     public $name = '';
     public $type = '';
