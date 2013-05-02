@@ -15,7 +15,9 @@ Revolution Repository (AKA Web Transport Facility). Put Orphans in the search bo
 
 <h3>Usage</h3>
 
-<p>To run Orphans, just select the Orphans menu item under Components in the Manager's Top Menu. Select the tab for the element you want to examine and click on the &quot;Search for Orphans&quot; button. Orphans does a tremendous amount of processing before it can render its output, so be patient. Nothing will show up until the analysis is complete. Orphans looks at the entire source code of all Resources and all Elements. It also examines all Element properties, Settings retrieved with getOption(), and the code of all class files included by snippets and plugins (and recursively looks at files included in those class files). It takes time.</p>
+<p>To run Orphans, just select the Orphans menu item under Components in the Manager's Top Menu. You'll need to reload the Manager page after installing Orphans before the menu item will show up.</p>
+
+<p>Once Orphans has launched, select the tab for the element you want to examine and click on the &quot;Search for Orphans&quot; button. Orphans does a tremendous amount of processing before it can render its output, so be patient. Nothing will show up until the analysis is complete. Orphans looks at the entire source code of all Resources and all Elements. It also examines all Element properties, Settings retrieved with getOption(), and the code of all class files included by snippets and plugins (and recursively looks at files included in those class files). It takes time.</p>
 
 <p>In the grid, you can perform any of the following functions by selecting the checkboxes next to the items you want to process and either right-clicking in the grid or using the &quot;Bulk Actions&quot; dropdown to select the action you want to perform.</p>
 
@@ -81,7 +83,7 @@ $modx->getChunk($tpl);
 
 <p>Refreshing the grid using the <fixedpre>getList()</fixedpre> processor is acceptable if your getList processor is relatively fast. In the case of Orphans, though, the <fixedpre>getList()</fixedpre> processor performs the complete orphan search, which can take 20 seconds or more. No one wants to wait that long just to rename an Element. Worse yet, in a typical tabbed grid like Batcher, *all* the processors are called and every grid is populated whether it's active or not. With Orphans, this could take a minute or more.</p>
 
-<p>The solution is to load the grids with a dummy processor that returns an empty list. When you click on the &quot;Find Orphans&quot; button, the real processor is called and the grid is populated. When you select one of the actions in the grid, the processor gets called, but all the action from there on is local. Custom JavaScript modifies the grid locally, without contacting the server. There's a chance that the grid won't match what's in the DB if the processor messes up, but clicking on the &quot;Find Orphans&quot; button will always synchronize the grid with what's in the DB.</p>
+<p>The solution is to load the grids with a dummy processor that returns an empty list. When you click on the &quot;Search for Orphans&quot; button, the real processor is called and the grid is populated. When you select one of the actions in the grid, the processor gets called, but all the action from there on is local. Custom JavaScript modifies the grid locally, without contacting the server. There's a chance that the grid won't match what's in the DB if the processor messes up, but clicking on the &quot;Search for Orphans&quot; button will always synchronize the grid with what's in the DB.</p>
 
 <p>Overall, the Orphans JavaScript is not particularly well-designed. There's a fair amount of code duplication and some unwise uses of Ext.getCmp. Someday, I'll get around to refactoring it.</p>
 
