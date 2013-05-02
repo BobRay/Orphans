@@ -40,12 +40,11 @@ $prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
 foreach ($chunkIds as $chunkId) {
     $chunk = $modx->getObject('modChunk',$chunkId);
     if ($chunk == null) continue;
+    
     $name = $chunk->get('name');
     $name = str_replace($prefix, '', $name);
     $chunk->set('name', $name);
-    if ($chunk->save(3600) === false) {
-        
-    }
+    $chunk->save(3600);
 }
 
 return $modx->error->success();

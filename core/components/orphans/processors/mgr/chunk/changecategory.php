@@ -48,10 +48,7 @@ foreach ($chunkIds as $chunkId) {
     if ($chunk == null) continue;
 
     $chunk->set('category',$scriptProperties['category']);
-
-    if ($chunk->save(3600) === false) {
-        
-    }
+    $chunk->save(3600);
 }
 
 return $modx->error->success();

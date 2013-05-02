@@ -40,12 +40,11 @@ $prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
 foreach ($tvIds as $tvId) {
     $tv = $modx->getObject('modTemplateVar',$tvId);
     if ($tv == null) continue;
+    
     $name = $tv->get('name');
     $name = str_replace($prefix, '', $name);
     $tv->set('name', $name);
-    if ($tv->save(3600) === false) {
-        
-    }
+    $tv->save(3600);
 }
 
 return $modx->error->success();

@@ -45,10 +45,7 @@ foreach ($tvIds as $tvId) {
     if ($tv == null) continue;
 
     $tv->set('category',$scriptProperties['category']);
-
-    if ($tv->save(3600) === false) {
-        
-    }
+    $tv->save(3600);
 }
 
 return $modx->error->success();

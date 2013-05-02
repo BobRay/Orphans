@@ -45,10 +45,7 @@ foreach ($templateIds as $templateId) {
     if ($template == null) continue;
 
     $template->set('category',$scriptProperties['category']);
-
-    if ($template->save(3600) === false) {
-        
-    }
+    $template->save(3600);
 }
 
 return $modx->error->success();

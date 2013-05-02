@@ -40,12 +40,11 @@ $prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
 foreach ($templateIds as $templateId) {
     $template = $modx->getObject('modTemplate',$templateId);
     if ($template == null) continue;
+    
     $name = $template->get('templatename');
     $name = str_replace($prefix, '', $name);
     $template->set('templatename', $name);
-    if ($template->save(3600) === false) {
-        
-    }
+    $template->save(3600);
 }
 
 return $modx->error->success();

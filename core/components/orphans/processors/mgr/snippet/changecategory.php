@@ -46,9 +46,7 @@ foreach ($snippetIds as $snippetId) {
 
     $snippet->set('category',$scriptProperties['category']);
 
-    if ($snippet->save(3600) === false) {
-        
-    }
+    $snippet->save(3600);
 }
 
 return $modx->error->success();
