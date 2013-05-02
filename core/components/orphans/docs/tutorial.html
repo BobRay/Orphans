@@ -1,4 +1,3 @@
-<p>Orphans Extra</p>
 
 <p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the section around line 270 (my apologies if that code has been moved by the time you read this and I've forgotten to update this section).
 
@@ -29,14 +28,14 @@ Revolution Repository (AKA Web Transport Facility). Put Orphans in the search bo
     <li><b>Delete</b> &mdash;Permanently deletes the selected elements.</li>
 </ul>
 
-<p>The default prefix used by Rename is &quot;aaOrphan&quot; so the renamed orphans will be at the top of the grid when it's sorted by name. You can change the prefix by going to System | System Settings and selecting the orphans namespace (or putting &quot;Orphans&quot; in the search box at the upper right). Double-click on the prefix value to edit it, and after editing it, click somewhere else in the grid.</p>
+<p>The default prefix used by Rename is &quot;aaOrphan.&quot; so the renamed orphans will be at the top of the grid when it's sorted by name. You can change the prefix by going to System | System Settings and selecting the orphans namespace (or putting &quot;Orphans&quot; in the search box at the upper right). Double-click on the prefix value to edit it, and after editing it, click somewhere else in the grid.</p>
 
 <p>The Ignore List is just a chunk called "OrphansIgnoreList." Important: Do not change the name of the chunk. You can add Element names to the chunk manually, but it's usually easier to do it in the grid. If you change your mind about ignoring some Element, you can delete it from the chunk Manually. The format of the chunk is unimportant, so don't worry about messing it up.</p>
 
 <p>Remember that deleting an Element is permanent. There's no way to get it back once you've deleted it.</p>
 
 <p>You can sort the Orphans grids by ID, Name, or Category by clicking on the heading in the grid. Clicking again reverses the order. The &quot;Per Page&quot; setting at the bottom of the grid is set permanently to 300. This is necessary due to a bug in how ExtJS sorts paged results. Hopefully, you don't have more than 300 orphans in any category.</p>
-
+<br />
 <div class="box">
 
 <p>In order to gain as much speed as possible, Orphans does not refresh the Elements tree after you perform an action. If you want to see what the tree looks like after performing an action in Orphans, you can refresh it manually by clicking on the &quot;refresh&quot; icon at the top of the tree.</p>
@@ -79,9 +78,9 @@ $modx->getChunk($tpl);
 
 <p>If you use ExtJS, you might be curious about how the grid actions can be so fast when the search for orphans is so slow. Because the search for orphans takes such a long time, I had to be a little tricky about updating the grid.</p>
 
-<p>Typically, with grids in MODX, making changes calls the processors (which modify the DB), then the whole grid is refreshed by calling the grid's <fixedpre>getlist() </fixedpre> method. That gets all the data from the DB and repopulates the grid. The Batcher extra, for example, actually does that twice for every action you perform.</p>
+<p>Typically, with grids in MODX, making changes calls the processors (which modify the DB), then the whole grid is refreshed by calling the grid's <code>getlist()</code> processor. That gets all the data from the DB and repopulates the grid. The Batcher extra, for example, actually does that twice for every action you perform.</p>
 
-<p>Refreshing the grid using the <fixedpre>getList()</fixedpre> processor is acceptable if your getList processor is relatively fast. In the case of Orphans, though, the <fixedpre>getList()</fixedpre> processor performs the complete orphan search, which can take 20 seconds or more. No one wants to wait that long just to rename an Element. Worse yet, in a typical tabbed grid like Batcher, *all* the processors are called and every grid is populated whether it's active or not. With Orphans, this could take a minute or more.</p>
+<p>Refreshing the grid using the <code>getList()</code> processor is acceptable if your <code>getList()</code> processor is relatively fast. In the case of Orphans, though, the <code>getList()</code> processor performs the complete orphan search, which can take 20 seconds or more. No one wants to wait that long just to rename an Element. Worse yet, in a typical tabbed grid like Batcher, *all* the processors are called and every grid is populated whether it's active or not. With Orphans, this could take a minute or more.</p>
 
 <p>The solution is to load the grids with a dummy processor that returns an empty list. When you click on the &quot;Search for Orphans&quot; button, the real processor is called and the grid is populated. When you select one of the actions in the grid, the processor gets called, but all the action from there on is local. Custom JavaScript modifies the grid locally, without contacting the server. There's a chance that the grid won't match what's in the DB if the processor messes up, but clicking on the &quot;Search for Orphans&quot; button will always synchronize the grid with what's in the DB.</p>
 
