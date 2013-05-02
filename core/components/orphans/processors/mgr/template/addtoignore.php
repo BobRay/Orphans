@@ -2,9 +2,9 @@
 /**
  * Orphans
  *
- * Copyright 2010 by Shaun McCormick <shaun@modxcms.com>
+ * Copyright 2013 by Bob Ray <http://bobsguides.com>
  *
- * This file is part of Orphans, a batch resource editing Extra.
+ * This file is part of Orphans, a utility for finding unused elements.
  *
  * Orphans is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
@@ -22,7 +22,7 @@
  * @package orphans
  */
 /**
- * rename multiple templates
+ * add multiple templates to ignore list
  *
  * @package orphans
  * @subpackage processors
