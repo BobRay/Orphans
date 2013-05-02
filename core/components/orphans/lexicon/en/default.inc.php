@@ -116,3 +116,8 @@ $_lang['orphans.delete'] = 'Delete';
 $_lang['orphans.confirm_delete'] = 'Are you sure?<br />This action is not reversible';
 $_lang['orphans.intro_msg'] = 'Manage orphan elements here.';
 $_lang['orphans.snippets.intro_msg'] = 'Search for orphan Snippets.';
+$_lang['orphans.file_nf'] = 'File not found';
+
+/* System Setting Names and Descriptions */
+$_lang['setting_orphans.prefix'] = 'Orphans Prefix';
+$_lang['setting_orphans.prefix_desc'] = 'Prefix to use when renaming orphans';

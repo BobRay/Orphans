@@ -29,7 +29,7 @@ $systemSettings[1] = $modx->newObject('modSystemSetting');
 $systemSettings[1]->fromArray(array(
     'key' => 'orphans.prefix',
     'name' => 'Orphans Prefix',
-    'description' => 'orphans_prefix_desc~~Prefix to use when renaming orphans',
+    'description' => 'orphans_prefix_desc',
     'namespace' => 'orphans',
     'xtype' => 'textfield',
     'value' => 'aaOrphan.',

@@ -414,8 +414,7 @@ foreach ($categories as $k => $categoryName) {
                     . '.');
             } else {
                 $helper->sendLog(modX::LOG_LEVEL_FATAL, '    ' .
-                    $modx->lexicon('mc_adding_property_sets_failed~~Adding Property Sets
-                failed')
+                    $modx->lexicon('mc_adding_property_sets_failed')
                     . '.');
             }
         } else {
@@ -610,8 +609,7 @@ foreach ($categories as $k => $categoryName) {
                                               ));
                 } else {
                     $helper->sendLog(modX::LOG_LEVEL_ERROR,
-                        $modx->lexicon('mc_could_not_find_validator_file~~Could not find Validator
-                    file')
+                        $modx->lexicon('mc_could_not_find_validator_file')
                             . ': ' . $file);
                 }
             }
