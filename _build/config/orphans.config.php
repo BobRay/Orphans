@@ -15,8 +15,8 @@ $components = array(
     /* These are used to define the package and set values for placeholders */
     'packageName' => 'Orphans',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
-    'packageDescription' => 'Orphans project for MyComponent extra',
-    'version' => '1.0.0',
+    'packageDescription' => 'Orphans attempts to identify unused elements',
+    'version' => '1.0.1',
     'release' => 'beta1',
     'author' => 'Bob Ray',
     'email' => '<http://bobsguides.com>',
