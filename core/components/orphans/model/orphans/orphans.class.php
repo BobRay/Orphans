@@ -246,7 +246,7 @@ class Orphans {
 
             switch ($objectType) {
                 case 'modResource':
-                    $c->select(array('id', 'content', 'template'));
+                    $c->select(array('id', 'content', 'template', 'class_key'));
                     break;
                 case 'modChunk';
                     $c->select(array('id', 'snippet', 'properties'));
@@ -324,6 +324,9 @@ class Orphans {
     public function getContent($object, $objectType) {
         /* @var $object xPDOObject */
         $fields = $object->toArray('', true, true);
+        if ($fields['class_key'] == 'modStaticResource') {
+            $fields['content'] = $object->getContent();
+        }
         $content = implode(' ', $fields);
         switch ($objectType) {
             case 'modResource':
