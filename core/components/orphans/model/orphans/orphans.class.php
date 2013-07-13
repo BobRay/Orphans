@@ -324,7 +324,9 @@ class Orphans {
     public function getContent($object, $objectType) {
         /* @var $object xPDOObject */
         $fields = $object->toArray('', true, true);
-        if ($fields['class_key'] == 'modStaticResource') {
+        if (isset($fields['class_key'])
+            && ($fields['class_key'] == 'modStaticResource')) {
+
             $fields['content'] = $object->getContent();
         }
         $content = implode(' ', $fields);
