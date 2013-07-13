@@ -16,8 +16,8 @@ $components = array(
     'packageName' => 'Orphans',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'Orphans attempts to identify unused elements',
-    'version' => '1.0.1',
-    'release' => 'beta1',
+    'version' => '1.1.0',
+    'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<http://bobsguides.com>',
     'authorUrl' => 'http://bobsguides.com',
@@ -38,12 +38,12 @@ $components = array(
     'dirPermission' => 0755,  /* No quotes!! */
     'filePermission' => 0644, /* No quotes!! */
 
-    /* Define source and target directories (mycomponent root and core directories) */
+    /* Define source and target directories */
+
+    /* path to MyComponent source files */
     'mycomponentRoot' => $this->modx->getOption('mc.root', null,
         MODX_CORE_PATH . 'components/mycomponent/'),
-    /* path to MyComponent source files */
-    'mycomponentCore' => $this->modx->getOption('mc.core_path', null,
-        MODX_CORE_PATH . 'components/mycomponent/core/components/mycomponent/'),
+
     /* path to new project root */
     'targetRoot' => MODX_ASSETS_PATH . 'mycomponents/' . $packageNameLower . '/',
 

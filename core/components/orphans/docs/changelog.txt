@@ -1,5 +1,11 @@
 Changelog for Orphans
 
+Orphans 1.1.0-pl
+---------------------------------
+Handles static elements
+Fixed E_NOTICE bug
+
+
 Orphans 1.0.0
 ---------------------------------
 Initial Version
