@@ -26,12 +26,14 @@ if (! function_exists('stripPhpTags')) {
 $chunks = array();
 
 $chunks[1] = $modx->newObject('modChunk');
-$chunks[1]->fromArray(array(
-    'id' => '1',
-    'property_preprocess' => '',
-    'name' => 'OrphansIgnoreList',
-    'description' => 'Ignore list for Orphans extra. List known non-orphans here',
-    'properties' => array(),
+$chunks[1]->fromArray(array (
+  'id' => 1,
+  'property_preprocess' => false,
+  'name' => 'OrphansIgnoreList',
+  'description' => 'Ignore list for Orphans extra. List known non-orphans here',
+  'properties' => 
+  array (
+  ),
 ), '', true, true);
 $chunks[1]->setContent(file_get_contents($sources['source_core'] . '/elements/chunks/orphansignorelist.chunk.html'));
 

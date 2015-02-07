@@ -26,11 +26,13 @@ if (! function_exists('stripPhpTags')) {
 $systemSettings = array();
 
 $systemSettings[1] = $modx->newObject('modSystemSetting');
-$systemSettings[1]->fromArray(array(
-    'key' => 'orphans.prefix',
-    'value' => 'aaOrphan.',
-    'xtype' => 'textfield',
-    'namespace' => 'orphans',
-    'area' => 'orphans',
+$systemSettings[1]->fromArray(array (
+  'key' => 'orphans.prefix',
+  'value' => 'aaOrphan.',
+  'xtype' => 'textfield',
+  'namespace' => 'orphans',
+  'area' => 'orphans',
+  'name' => 'Orphans Prefix',
+  'description' => 'orphans_prefix_desc~~Prefix to use when renaming orphans',
 ), '', true, true);
 return $systemSettings;
