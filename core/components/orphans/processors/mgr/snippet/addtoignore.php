@@ -28,7 +28,7 @@
  * @subpackage processors
  */
 if (!$modx->hasPermission('save_chunk')) {
-    $modx->log(MODX::LOG_LEVEL_ERROR, '[Orphans addtoignore.php] No save_chunk permission');
+    $modx->log(modX::LOG_LEVEL_ERROR, '[Orphans addtoignore.php] No save_chunk permission');
     return $modx->error->failure($modx->lexicon('access_denied'));
 }
 
@@ -52,7 +52,7 @@ foreach ($snippetIds as $snippetId) {
         $chunk->setContent($content);
         $chunk->save(3600);
     } else {
-        $modx->log(MODX::LOG_LEVEL_ERROR, '[Orphans] Could not get OrphansIgnoreList chunk');
+        $modx->log(modX::LOG_LEVEL_ERROR, '[Orphans] Could not get OrphansIgnoreList chunk');
     }
 }
 
