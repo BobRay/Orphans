@@ -130,6 +130,8 @@ class Orphans {
      * @return string The processed content.
      */
     public function initialize($ctx = 'mgr') {
+        @set_time_limit(0);
+        @ini_set('memory_limit', '1024M');
         $output = '';
         switch ($ctx) {
             case 'mgr':
@@ -274,6 +276,7 @@ class Orphans {
                 /* look through all objects of this type for each orphan of any type.
                    findMe() sets its 'found' member if found anywhere */
                 foreach ($objectTypes as $orphanType) {
+                    @set_time_limit(0);
                     /* get the orphan objects of one type */
                     $orphanObjects = $this->allObjects;
                     /* Check each one against the content of the current $object */
