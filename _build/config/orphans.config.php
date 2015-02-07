@@ -177,6 +177,10 @@ $components = array(
         ),
 
         'snippets' => array(
+            'Orphans' => array(
+                'category'    => 'Orphans',
+                'description' => 'Standalone Version of Orphans',
+            )
 
         ),
         'plugins' => array(
