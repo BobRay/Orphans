@@ -39,10 +39,11 @@ $menus[1]->fromArray( array (
   'parent' => 'components',
   'description' => 'orphans.menu_desc',
   'icon' => '',
-  'menuindex' => 0,
+  'menuindex' => 3,
   'params' => '',
   'handler' => '',
   'permissions' => '',
+  'namespace' => 'orphans',
   'id' => 1,
 ), '', true, true);
 $menus[1]->addOne($action);
