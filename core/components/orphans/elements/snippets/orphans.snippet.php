@@ -33,7 +33,7 @@
  *
  * @package orphans
  **/
-
+exit;
 if (!defined('MODX_CORE_PATH')) {
     @include(dirname(__FILE__) . '/config.core.php');
 
