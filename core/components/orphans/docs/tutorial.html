@@ -2,6 +2,22 @@
 <p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the section around line 270 (my apologies if that code has been moved by the time you read this and I've forgotten to update this section).
 
 <p><b>Important: </b>Orphans will list the names of elements that might be unused, but it can't guarantee that they are really not in use somewhere.</p>
+<br />
+<div class="box">
+    <p>On large sites, the Orphans CMP can time out and produce no output. As of Orphans 1.1.1, there is added code to prevent this, but it may not work for you, so the new version includes a standalone snippet that will give you an Orphans report. The location is <code>core/components/orphans/elements/snippets/orphans.snippet.php</code>.  It can be run from the command line or as a one-time cron job &mdash; in either case, it will not time out.</p>
+
+<p><b>Important!</b> Because Orphans uses a <i>lot</i> of memory and time, the snippet is disabled on install. You definitely don't want outsiders to be able to run it at will. To enable it, just comment out the first line of code like this:</p>
+
+<pre class="brush: php; toolbar: false;"><fixedpre>
+    // exit;
+</fixedpre></pre>
+
+<p>Disable it when you're through running it by changing it back:</p>
+
+    <pre class="brush: php; toolbar: false;"><fixedpre>
+        exit;
+    </fixedpre></pre>
+</div>
 
 <h3>Installing Orphans</h3>
 
