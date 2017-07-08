@@ -2,7 +2,7 @@
 /**
  * snippets transport file for Orphans extra
  *
- * Copyright 2013 by Bob Ray <http://bobsguides.com>
+ * Copyright 2013-2017 Bob Ray <https://bobsguides.com>
  * Created on 02-07-2015
  *
  * @package orphans
