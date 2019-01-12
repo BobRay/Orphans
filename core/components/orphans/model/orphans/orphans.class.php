@@ -264,7 +264,7 @@ class Orphans {
 
                     break;
                 case 'modTemplateVar':
-                    $c->select('id', 'default_text', 'input_properties', 'output_properties', 'properties');
+                    $c->select(array('id', 'default_text', 'input_properties', 'output_properties', 'properties'));
                     break;
             }
 

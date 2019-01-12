@@ -12,6 +12,7 @@ $orphansCorePath = $modx->getOption('orphans.core_path',null,$modx->getOption('c
 require_once $orphansCorePath.'model/orphans/orphans.class.php';
 $modx->orphans = new Orphans($modx);
 
+$modx->getService('lexicon', 'modLexicon');
 $modx->lexicon->load('orphans:default');
 
 /* handle request */
