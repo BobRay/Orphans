@@ -27,14 +27,50 @@
  * @package orphans
  * @subpackage processors
  */
-if (!$modx->hasPermission('save_template')) return $modx->error->failure($modx->lexicon('access_denied'));
+
+class OrphansDeleteProcessor extends modProcessor {
+
+    public function process(array $scriptProperties=array()) {
+        $class = $this->getProperty('orphanSearch');
+        if ($class == 'modTemplateVar') {
+            $name = 'tv';
+        } else {
+            $name = strtolower(str_replace('mod', '', $class));
+        }
+        if (! $this->modx->hasPermission('save_' . $name)) {
+            return $this->modx->error->failure($this->modx->lexicon('access_denied'));
+        }
+        $objects = $this->getProperty($name . 's');
+        if (empty($objects)) {
+            return $this->modx->error->failure($this->modx->lexicon('orphans.' . $name .'s' . '_err_ns'));
+        }
+
+        $objectIds = explode(',', $objects);
+        foreach ($objectIds as $objectId) {
+            $object = $this->modx->getObject($class, $objectId);
+            if ($object == null) {
+                continue;
+            }
+
+            if ($object->remove() === false) {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, 'Failed to remove ' . $class . ' ' . $objectId);
+            }
+        }
+
+        return $this->modx->error->success();
+
+
+    }
+}
+
+return 'OrphansDeleteProcessor';
+
+/* if (!$modx->hasPermission('save_template')) return $modx->error->failure($modx->lexicon('access_denied'));
 
 if (empty($scriptProperties['templates'])) {
     return $modx->error->failure($modx->lexicon('orphans.templates_err_ns'));
 }
-/* get parent */
 
-/* iterate over templates */
 $templateIds = explode(',',$scriptProperties['templates']);
 foreach ($templateIds as $templateId) {
     $template = $modx->getObject('modTemplate',$templateId);
@@ -45,4 +81,4 @@ foreach ($templateIds as $templateId) {
     }
 }
 
-return $modx->error->success();
+return $modx->error->success();*/

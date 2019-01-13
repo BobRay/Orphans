@@ -27,14 +27,48 @@
  * @package orphans
  * @subpackage processors
  */
-if (!$modx->hasPermission('save_chunk')) return $modx->error->failure($modx->lexicon('access_denied'));
+class OrphansUnrenameProcessor extends modProcessor {
+    public function process() {
+        $class = $this->getProperty('orphanSearch');
+        if ($class == 'modTemplateVar') {
+            $name = 'tv';
+        } else {
+            $name = strtolower(str_replace('mod', '', $class));
+        }
+        if (!$this->modx->hasPermission('save_' . $name)) {
+            return $this->modx->error->failure($this->modx->lexicon('access_denied'));
+        }
+        $objects = $this->getProperty($name . 's');
+        if (empty($objects)) {
+            return $this->modx->error->failure($this->modx->lexicon('orphans.' . $name . 's' . '_err_ns'));
+        }
+        $prefix = $this->modx->getOption('orphans.prefix', null, 'aaOrphan.');
+        $objectIds = explode(',', $objects);
+        foreach ($objectIds as $objectId) {
+            $object = $this->modx->getObject($class, $objectId);
+            if ($object == null) {
+                continue;
+            }
+
+            $nameField = $class == 'modTemplate' ? 'templatename' : 'name';
+            $name = $object->get($nameField);
+            if (strstr($name, $prefix)) {
+                $name = str_replace($prefix, '', $name);
+                $object->set($nameField, $name);
+                $object->save(3600);
+            }
+        }
+        return $this->modx->error->success();
+    }
+}
+
+return 'OrphansUnrenameProcessor';
+/* if (!$modx->hasPermission('save_chunk')) return $modx->error->failure($modx->lexicon('access_denied'));
 
 if (empty($scriptProperties['chunks'])) {
     return $modx->error->failure($modx->lexicon('orphans.chunks_err_ns'));
 }
-/* get parent */
 
-/* iterate over chunks */
 $chunkIds = explode(',',$scriptProperties['chunks']);
 $prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
 foreach ($chunkIds as $chunkId) {
@@ -46,6 +80,6 @@ foreach ($chunkIds as $chunkId) {
         $chunk->set('name', $name);
         $chunk->save(3600);
     }
-}
+}*/
 
 return $modx->error->success();

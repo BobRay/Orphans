@@ -100,7 +100,7 @@ Orphans.grid.Chunks = function (config) {
 Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
      reloadChunks: function () {
         this.getStore().baseParams = {
-            action: 'mgr/chunk/getList'
+            action: 'mgr/getList'
             ,orphanSearch: 'modChunk'
         };
 
@@ -182,8 +182,9 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
 
         MODx.Ajax.request({
                 url: this.config.url, params: {
-                action: 'mgr/chunk/rename',
-                chunks: cs /* batch: act */
+                action: 'mgr/rename'
+                , chunks: cs /* batch: act */
+                , orphanSearch: 'modChunk'
             }, listeners: {
                 'success': {fn: function (r) {
                     var sels = this.getSelectionModel().getSelections();
@@ -220,8 +221,9 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
 
         MODx.Ajax.request({
             url: this.config.url, params: {
-                action: 'mgr/chunk/unrename',
-                chunks: cs /* batch: act */
+                action: 'mgr/unrename'
+                , chunks: cs
+                , orphanSearch : 'modChunk'
             }
             , listeners: {
                 'success': {fn: function (r) {
@@ -262,8 +264,9 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
 
         MODx.Ajax.request({
             url: this.config.url, params: {
-                action: 'mgr/chunk/addtoignore',
-                chunks: cs /* batch: act */
+                action: 'mgr/addtoignore'
+                , chunks: cs /* batch: act */
+                , orphanSearch: 'modChunk'
             }
             , listeners: {
                 'success': {fn: function (r) {
@@ -293,8 +296,9 @@ Ext.extend(Orphans.grid.Chunks, MODx.grid.Grid, {
              , text: _('orphans.confirm_delete')
              , url: this.config.url
              , params: {
-                action: 'mgr/chunk/delete'
+                action: 'mgr/delete'
                 , chunks: cs
+                , orphanSearch: 'modChunk'
             }
                              , listeners: {
                 'success': {fn: function (r) {
@@ -367,7 +371,8 @@ Orphans.window.ChangeCategory = function (config) {
         title: _('orphans.change_category')
         , url: Orphans.config.connector_url
         , baseParams: {
-            action: 'mgr/chunk/changecategory'
+            action: 'mgr/changecategory'
+            , orphanSearch: 'modChunk'
             }
         ,width: 400
         ,fields: [{

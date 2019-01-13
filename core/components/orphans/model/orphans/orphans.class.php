@@ -83,6 +83,8 @@ class Orphans {
         'modSnippet',
         'modPlugin'
     );
+    /** @var $request modManagerRequest */
+    public $request = null;
     public $classFileCount = 0;
     /* @var $modx modX */
     public $modx;
@@ -209,7 +211,7 @@ class Orphans {
             $c->select(array('id', 'name', 'category', 'description'));
             $c->sortby('name');
         }
-        // $c->limit(10);
+        $c->limit(300);
         /* ToDo: Use getCollectionGraph here */
         $objects = $this->modx->getCollection($type, $c);
 
@@ -478,7 +480,7 @@ class Orphans {
                 $pattern = "/modx\s*->\s*getService\s*\(\s*\'[^,]*,\s*'([^']+)/";
                 preg_match($pattern, $line, $matches);
                 if (isset($matches[1])) {
-                    $s = strtoLower($matches[1]);
+                    $s = strtolower($matches[1]);
                     if (strstr($s, '.')) {
                         $r = strrev($s);
                         $fileName = strrev(substr($r, 0, strpos($r, '.')));
@@ -491,7 +493,7 @@ class Orphans {
                 $pattern = "/modx\s*->\s*loadClass\s*\(\s*\'([^']+)/";
                 preg_match($pattern, $line, $matches);
                 if (isset($matches[1])) {
-                    $s = strtoLower($matches[1]);
+                    $s = strtolower($matches[1]);
                     if (strstr($s, '.')) {
                         $r = strrev($s);
                         $fileName = strrev(substr($r, 0, strpos($r, '.')));

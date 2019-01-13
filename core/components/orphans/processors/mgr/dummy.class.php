@@ -22,28 +22,30 @@
  * @package orphans
  */
 /**
- * un-rename multiple snippets
+ * returns an empty list of objects to initialize grid
  *
  * @package orphans
  * @subpackage processors
  */
-if (!$modx->hasPermission('save_snippet')) return $modx->error->failure($modx->lexicon('access_denied'));
 
-if (empty($scriptProperties['snippets'])) {
-    return $modx->error->failure($modx->lexicon('orphans.snippets_err_ns'));
+require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+
+
+class orphansDummyProcessor extends modProcessor {
+
+    public function process(array $scriptProperties=array()) {
+        $fields = array(
+            'id' => '',
+            'name' => '',
+            'category' => '',
+            'description' => '',
+        );
+
+        /* @var $this modProcessor */
+        return $this->outputArray($fields, 1);
+    }
+
+
 }
-/* get parent */
 
-/* iterate over snippets */
-$snippetIds = explode(',',$scriptProperties['snippets']);
-$prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
-foreach ($snippetIds as $snippetId) {
-    $snippet = $modx->getObject('modSnippet',$snippetId);
-    if ($snippet == null) continue;
-    $name = $snippet->get('name');
-    $name = str_replace($prefix, '', $name);
-    $snippet->set('name', $name);
-    $snippet->save(3600);
-}
-
-return $modx->error->success();
+return 'orphansDummyProcessor';

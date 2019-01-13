@@ -100,7 +100,7 @@ Orphans.grid.Snippets = function (config) {
 Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
      reloadSnippets: function () {
         this.getStore().baseParams = {
-            action: 'mgr/snippet/getList'
+            action: 'mgr/getList'
             , orphanSearch: 'modSnippet'
         };
 
@@ -182,8 +182,10 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
 
         MODx.Ajax.request({
                 url: this.config.url, params: {
-                action: 'mgr/snippet/rename',
-                snippets: cs /* batch: act */
+                action: 'mgr/rename'
+                , snippets: cs
+                , orphanSearch: 'modSnippet'
+
             }, listeners: {
                 'success': {fn: function (r) {
                     var sels = this.getSelectionModel().getSelections();
@@ -220,8 +222,9 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
 
         MODx.Ajax.request({
             url: this.config.url, params: {
-                action: 'mgr/snippet/unrename',
-                snippets: cs /* batch: act */
+                action: 'mgr/unrename'
+                , snippets: cs /* batch: act */
+                , orphanSearch: 'modSnippet'
             }
             , listeners: {
                 'success': {fn: function (r) {
@@ -255,15 +258,16 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         return true;
 
     }
-    // ********
+
     , snippetAddToIgnore: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
         MODx.Ajax.request({
             url: this.config.url, params: {
-                action: 'mgr/snippet/addtoignore',
-                snippets: cs /* batch: act */
+                action: 'mgr/addtoignore'
+                , snippets: cs /* batch: act */
+                , orphanSearch: 'modSnippet'
             }
             , listeners: {
                 'success': {fn: function (r) {
@@ -293,8 +297,9 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
              , text: _('orphans.confirm_delete')
              , url: this.config.url
              , params: {
-                action: 'mgr/snippet/delete'
+                action: 'mgr/delete'
                 , snippets: cs
+                , orphanSearch : 'modSnippet'
             }
              , listeners: {
                 'success': {fn: function (r) {
@@ -367,7 +372,8 @@ Orphans.window.ChangeCategory = function (config) {
         title: _('orphans.change_category')
         , url: Orphans.config.connector_url
         , baseParams: {
-            action: 'mgr/snippet/changecategory'
+            action: 'mgr/changecategory'
+            , orphanSearch: 'modSnippet'
             }
         ,width: 400
         ,fields: [{

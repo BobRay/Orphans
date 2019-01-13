@@ -104,7 +104,7 @@ Orphans.grid.Templates = function(config) {
 Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
     reloadTemplates: function () {
         this.getStore().baseParams = {
-            action: 'mgr/template/getList'
+            action: 'mgr/getList'
             , orphanSearch: 'modTemplate'
         };
 
@@ -186,8 +186,9 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
 
         MODx.Ajax.request({
                 url: this.config.url, params: {
-                action: 'mgr/template/rename',
-                templates: cs /* batch: act */
+                action: 'mgr/rename'
+                , templates: cs
+                , orphanSearch: 'modTemplate'
             }, listeners: {
                 'success': {fn: function (r) {
                     var sels = this.getSelectionModel().getSelections();
@@ -224,8 +225,9 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
 
         MODx.Ajax.request({
             url: this.config.url, params: {
-                action: 'mgr/template/unrename',
-                templates: cs
+                action: 'mgr/unrename'
+                , templates: cs
+                , orphanSearch: 'modTemplate'
             }, listeners: {
                 'success': {fn: function (r) {
                     var sels = this.getSelectionModel().getSelections();
@@ -258,15 +260,16 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
         return true;
 
     }
-    // ********
+
     , templateAddToIgnore: function () {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
 
         MODx.Ajax.request({
             url: this.config.url, params: {
-                action: 'mgr/template/addtoignore',
-                templates: cs /* batch: act */
+                action: 'mgr/addtoignore'
+                , templates: cs /* batch: act */
+                , orphanSearch: 'modTemplate'
             }
             , listeners: {
                 'success': {fn: function (r) {
@@ -296,8 +299,9 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
              , text: _('orphans.confirm_delete')
              , url: this.config.url
              , params: {
-                action: 'mgr/template/delete'
+                action: 'mgr/delete'
                 , templates: cs
+                , orphanSearch: 'modTemplate'
             }
              , listeners: {
                 'success': {fn: function (r) {
@@ -369,7 +373,8 @@ Orphans.window.ChangeCategory = function(config) {
         title: _('orphans.change_category')
         ,url: Orphans.config.connector_url
         ,baseParams: {
-            action: 'mgr/template/changecategory'
+            action: 'mgr/changecategory'
+            , orphanSearch: 'modTemplate'
         }
         ,width: 400
         ,fields: [{
