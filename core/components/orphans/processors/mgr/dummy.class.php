@@ -2,7 +2,7 @@
 /**
  * Orphans
  *
- * Copyright 2013-2017 Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2019 Bob Ray <https://bobsguides.com>
  *
  * This file is part of Orphans, a utility for finding unused elements.
  *

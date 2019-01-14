@@ -1,7 +1,7 @@
 /** 
  * JS file for Orphans extra
  * 
- * Copyright 2013-2017 Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2019 Bob Ray <https://bobsguides.com>
  * Created on 04-13-2013
  *
  * Orphans is free software; you can redistribute it and/or modify it under the

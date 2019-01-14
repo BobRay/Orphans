@@ -2,7 +2,7 @@
 /**
  * Orphans snippet for Orphans extra
  *
- * Copyright 2013-2017 Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2019 Bob Ray <https://bobsguides.com>
  * Created on 02-07-2015
  *
  * Orphans is free software; you can redistribute it and/or modify it under the
