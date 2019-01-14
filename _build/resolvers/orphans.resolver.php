@@ -51,6 +51,12 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
+
+            /* Remove old action object */
+            $action = $modx->getObject('modAction', array('namespace'=> 'orphans'));
+            if ($action) {
+                $action->remove();
+            }
             /*  Remove old files */
            //  Files:
             $files = array(
