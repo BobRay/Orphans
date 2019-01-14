@@ -67,7 +67,6 @@ if ($object->xpdo) {
             }
             // Directories:
                $dirs = array(
-                    MODX_CORE_PATH . 'components/orphans/elements/snippets',
                     MODX_CORE_PATH . 'components/orphans/processors/mgr/chunk',
                     MODX_CORE_PATH . 'components/orphans/processors/mgr/template',
                     MODX_CORE_PATH . 'components/orphans/processors/mgr/snippet',
