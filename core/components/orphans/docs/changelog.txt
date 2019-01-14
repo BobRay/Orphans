@@ -5,6 +5,7 @@ Orphans 1.2.0-pl
 Updates for MODX 2.7.0
 Class-based processors
 Class-based controller
+New-style menu object
 24 processor files replaced by 6 files
 Cleaner code
 
