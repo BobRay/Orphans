@@ -26,6 +26,9 @@
  * -----------
  * Standalone Version of Orphans
  *
+ * Comment out line 39 (exit) before running
+ * Comment it out again after running it
+ *
  * Variables
  * ---------
  * @var $modx modX
