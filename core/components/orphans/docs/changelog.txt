@@ -1,5 +1,13 @@
 Changelog for Orphans
 
+Orphans 1.2.0-pl
+---------------------------------
+Updates for MODX 2.7.0
+Class-based processors
+Class-based controller
+24 processor files replaced by 6 files
+Cleaner code
+
 Orphans 1.1.0-pl
 ---------------------------------
 Handles static elements

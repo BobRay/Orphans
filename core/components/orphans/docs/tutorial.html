@@ -1,10 +1,15 @@
 
-<p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the section around line 270 (my apologies if that code has been moved by the time you read this and I've forgotten to update this section).
+<p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the section around line 277 (my apologies if that code has been moved by the time you read this and I've forgotten to update this section).
 
 <p><b>Important: </b>Orphans will list the names of elements that might be unused, but it can't guarantee that they are really not in use somewhere.</p>
+<br>
+<h3>Updates Notes</h3>
+
+<p>Version 1.2.0 has been refactored to keep MODX 2.7.0+ happy. All controllers and processors are now class-based to prevent Orphans from crapping up the MODX error log. The code has also shrunk considerably. The original twenty-four separate processors have been consolidated into six, smarter processors that can handle multiple object types.</p>
+
 <br />
 <div class="box">
-    <p>On large sites, the Orphans CMP can time out and produce no output. As of Orphans 1.1.1, there is added code to prevent this, but it may not work for you, so the new version includes a standalone snippet that will give you an Orphans report. The location is <code>core/components/orphans/elements/snippets/orphans.snippet.php</code>.  It can be run from the command line or as a one-time cron job &mdash; in either case, it will not time out.</p>
+    <p>On large sites, the Orphans CMP can time out and produce no output. As of Orphans 1.1.1, there is added code to prevent this, but it may not work for you, so the new version includes a standalone snippet that will give you an Orphans report. The location is <code>core/components/orphans/elements/snippets/orphans.snippet.php</code>.  It can be run from the command line or as a one-time cron job &mdash; in either case, it will not time out. Because it processes chunks, templates, TVs, and snippets, it can take a long time to run.</p>
 
 <p><b>Important!</b> Because Orphans uses a <i>lot</i> of memory and time, the snippet is disabled on install. You definitely don't want outsiders to be able to run it at will. To enable it, just comment out the first line of code like this:</p>
 
@@ -23,14 +28,14 @@
 
 <p>
 Go to System | Package Management on the main menu in the MODX Manager and click on the "Download Extras" button. That will take you to the
-Revolution Repository (AKA Web Transport Facility). Put Orphans in the search box and press Enter. Click on the "Download" button, and when the download is finished, click on the "Back to Package Manager" button. That should bring you back to your Package Management grid. Click on the
+Revolution Repository. Put Orphans in the search box and press Enter. Click on the "Download" button, and when the download is finished, click on the "Back to Package Manager" button. That should bring you back to your Package Management grid. Click on the
 "Install" button next to Orphans in the grid. The Orphans package should now be installed.</p>
 
-<p>After installing Orphans, you'll need to reload the Manager page before it will show up under the Components menu. In fact, if you don't already have any components installed, the Components menu itself won't appear until after you install Orphans and then reload the Manager page.</p>
+<p>After installing Orphans, you'll need to reload the Manager page before it will show up under the Components menu. In fact, if you don't already have any components installed, the Extras (formerly Components) menu itself won't appear until after you install Orphans and then reload the Manager page.</p>
 
 <h3>Usage</h3>
 
-<p>To run Orphans, just select the Orphans menu item under Components in the Manager's Top Menu. You'll need to reload the Manager page after installing Orphans before the menu item will show up.</p>
+<p>To run Orphans, just select the Orphans menu item under Extras in the Manager's Top Menu. You'll need to reload the Manager page after installing Orphans before the menu item will show up.</p>
 
 <p>Once Orphans has launched, select the tab for the element you want to examine and click on the &quot;Search for Orphans&quot; button. Orphans does a tremendous amount of processing before it can render its output, so be patient. Nothing will show up until the analysis is complete. Orphans looks at the entire source code of all Resources and all Elements. It also examines all Element properties, Settings retrieved with getOption(), and the code of all class files included by snippets and plugins (and recursively looks at files included in those class files). It takes time.</p>
 
@@ -46,9 +51,9 @@ Revolution Repository (AKA Web Transport Facility). Put Orphans in the search bo
 
 <p>The default prefix used by Rename is &quot;aaOrphan.&quot; so the renamed orphans will be at the top of the grid when it's sorted by name. You can change the prefix by going to System | System Settings and selecting the orphans namespace (or putting &quot;Orphans&quot; in the search box at the upper right). Double-click on the prefix value to edit it, and after editing it, click somewhere else in the grid.</p>
 
-<p>The Ignore List is just a chunk called "OrphansIgnoreList." Important: Do not change the name of the chunk. You can add Element names to the chunk manually, but it's usually easier to do it in the grid. If you change your mind about ignoring some Element, you can delete it from the chunk Manually. The format of the chunk is unimportant, so don't worry about messing it up.</p>
+<p>The Ignore List is just a chunk called "OrphansIgnoreList." Important: Do not change the name of the chunk. You can add Element names to the chunk manually, but it's usually easier to do it in the grid. If you change your mind about ignoring some Element, you can delete it from the chunk Manually. The format of the chunk is unimportant, as long as each object appears on a separate line, so don't worry about messing it up.</p>
 
-<p>Remember that deleting an Element is permanent. There's no way to get it back once you've deleted it.</p>
+<p><b>Important!</b> Remember that deleting an Element is permanent. There's no way to get it back once you've deleted it.</p>
 
 <p>You can sort the Orphans grids by ID, Name, or Category by clicking on the heading in the grid. Clicking again reverses the order. The &quot;Per Page&quot; setting at the bottom of the grid is set permanently to 300. This is necessary due to a bug in how ExtJS sorts paged results. Hopefully, you don't have more than 300 orphans in any category.</p>
 <br />
@@ -76,13 +81,13 @@ $tpl = $name . 'Tpl';
 $modx->getChunk($tpl);
 </fixedpre></pre>
 
-<p>Since the name &quot;FileUploadTpl&quot; does not appear anywhere in the code, Orphans will consider it unused, even though it is in use and may be critical for that extra. Because of this, you should take all listed orphans with a grain of salt. In spite of this, Orphans is actually surprisingly good about identifying Tpl chunks that are in use because they are usually named in snippet and plugin properties, which Orphans always checks. Note that Orphans does not check custom Property Sets, which could also have references to Tpl chunks. Checking these is on the roadmap.</p>
+<p>Since the name &quot;FileUploadTpl&quot; does not appear anywhere in the code, Orphans will consider it unused, even though it is in use and may be critical for that extra. Because of this, you should take all listed orphans with a grain of salt. In spite of this, Orphans is actually surprisingly good about identifying Tpl chunks that are in use because they are usually named in snippet and plugin properties, which Orphans always checks. Note that Orphans does not check custom Property Sets, which could also have references to Tpl chunks.</p>
 
 <p>The report on Snippets is fairly reliable, since every snippet that's in use is referred to by name somewhere. It's theoretically possible to use a snippet without using its name, but it's quite rare.</p>
 
 <h3>General Advice</h3>
 
-<p>Often, you'll recognize listed orphans as things that are definitely no longer in use. You can delete those,although it's not a bad idea to rename them first and delete them later.</p>
+<p>Often, you'll recognize listed orphans as things that are definitely no longer in use. You can delete those, although it's not a bad idea to rename them first and delete them later.</p>
 
 <p>Other Elements listed as orphans will be elements that are either not used but important to keep (e.g., example Tpl Chunks) or elements that you know are used even though Orphans didn't find the use (e.g., MyComponent Tpl chunks). Add those to the Ignore list and Orphans will not show them to you again.</p>
 
@@ -100,7 +105,6 @@ $modx->getChunk($tpl);
 
 <p>The solution is to load the grids with a dummy processor that returns an empty list. When you click on the &quot;Search for Orphans&quot; button, the real processor is called and the grid is populated. When you select one of the actions in the grid, the processor gets called, but all the action from there on is local. Custom JavaScript modifies the grid locally, without contacting the server. There's a chance that the grid won't match what's in the DB if the processor messes up, but clicking on the &quot;Search for Orphans&quot; button will always synchronize the grid with what's in the DB.</p>
 
-<p>Overall, the Orphans JavaScript is not particularly well-designed. There's a fair amount of code duplication and some unwise uses of Ext.getCmp. Someday, I'll get around to refactoring it.</p>
 
 <p>&nbsp;</p>
 
