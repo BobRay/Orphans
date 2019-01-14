@@ -57,6 +57,7 @@ if ($object->xpdo) {
                 MODX_ASSETS_PATH . 'components/orphans/index.html',
                 MODX_CORE_PATH . 'components/orphans/controllers/index.php',
                 MODX_CORE_PATH . 'components/orphans/processors/mgr/dummy.php',
+                MODX_CORE_PATH . 'components/orphans/index.php'
             );
 
             foreach ($files as $file) {
