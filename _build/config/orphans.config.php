@@ -23,7 +23,7 @@ $components = array(
     'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
     'packageDocumentationUrl' => 'https://bobsguides.com/orphans-tutorial.html',
-    'copyright' => '2013',
+    'copyright' => '2013-2019',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -141,15 +141,8 @@ $components = array(
             'params' => '',
             'handler' => '',
             'permissions' => '',
-
-            'action' => array(
-                'id' => '',
-                'namespace' => 'orphans',
-                'controller' => 'index',
-                'haslayout' => true,
-                'lang_topics' => 'orphans:default',
-                'assets' => '',
-            ),
+            'namespace' => 'orphans',
+            'action' => 'index',
         ),
     ),
 
@@ -177,11 +170,6 @@ $components = array(
         ),
 
         'snippets' => array(
-            'Orphans' => array(
-                'category'    => 'Orphans',
-                'description' => 'Standalone Version of Orphans',
-            )
-
         ),
         'plugins' => array(
         ),
@@ -264,6 +252,7 @@ $components = array(
      * (other resolvers may be created above for TVs and plugins).
      * Suffix 'resolver.php' will be added automatically */
     'resolvers' => array(
+        'default',
     ),
 
     /* (optional) Validators can abort the install after checking

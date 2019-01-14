@@ -2,7 +2,7 @@
 /**
  * menus transport file for Orphans extra
  *
- * Copyright 2013-2017 Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2019 by Bob Ray <https://bobsguides.com>
  * Created on 05-02-2013
  *
  * @package orphans
@@ -22,21 +22,12 @@ if (! function_exists('stripPhpTags')) {
 /* @var $sources array */
 /* @var xPDOObject[] $menus */
 
-$action = $modx->newObject('modAction');
-$action->fromArray( array (
-  'namespace' => 'orphans',
-  'controller' => 'index',
-  'haslayout' => 1,
-  'lang_topics' => 'orphans:default',
-  'assets' => '',
-  'help_url' => '',
-  'id' => 1,
-), '', true, true);
 
 $menus[1] = $modx->newObject('modMenu');
 $menus[1]->fromArray( array (
   'text' => 'orphans',
   'parent' => 'components',
+  'action' => 'index',
   'description' => 'orphans.menu_desc',
   'icon' => '',
   'menuindex' => 3,
@@ -46,6 +37,5 @@ $menus[1]->fromArray( array (
   'namespace' => 'orphans',
   'id' => 1,
 ), '', true, true);
-$menus[1]->addOne($action);
 
 return $menus;
