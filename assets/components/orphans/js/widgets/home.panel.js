@@ -34,7 +34,7 @@ Orphans.panel.Home = function(config) {
             ,cls: 'modx-page-header'
         },{
             xtype: 'modx-tabs'
-            ,bodyStyle: 'padding: 10px'
+            ,bodyStyle: 'padding: 30px'
             ,defaults: { border: false ,autoHeight: true }
             ,border: true
             ,stateful: true
