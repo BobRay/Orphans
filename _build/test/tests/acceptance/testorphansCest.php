@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+use Page\Ovariables as Variables;
 
 class testorphansCest
 {
@@ -80,9 +81,14 @@ class testorphansCest
     public function tryToTest(\AcceptanceTester $I)
     {
           /** @var $I AcceptanceTester */
-        $I->amOnPage("manager/");
+      //   $I->amOnPage("manager/");
 
-       // $I->amOnPage($managerUrl);
+       $class = 'modChunk';
+       $name = 'Chunk';
+       $nameLower = strtolower($name);
+       $namePlural = $name . 's';
+       $namePluralLower = strtolower($namePlural);
+       $I->amOnPage(Variables::$managerUrl);
 
         $I->wantTo('Log In');
 
@@ -104,61 +110,61 @@ class testorphansCest
         // $I->see('Extras');
         $I->waitforElement('#orphans');
         $I->click('#orphans');
-
+        // span.x-tab-strip-text
+        //"//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']"
+        $I->waitForElement("//span[contains(@class, 'x-tab-strip-text') and text() = '{$namePlural}']");
+        $I->click("//span[contains(@class, 'x-tab-strip-text') and text() = '{$namePlural}']");
         $I->wantTo('Load objects in grid');
-        $I->waitForElement("#orphans-chunks-reload", 5);
-        $I->click("#orphans-chunks-reload");
-        $I->waitForElement('//div[contains(., "OrphansTestChunk")]', 3);
-        $I->see('OrphansTestChunk');
+        $I->waitForElement("#orphans-{$nameLower}s-reload", 5);
+        $I->click("#orphans-{$nameLower}s-reload");
+        $I->waitForElement("//div[contains(., 'OrphansTest{$name}')]", 3);
+        $I->see("OrphansTest{$name}");
 
         $I->wantToTest('Rename and UN-Rename');
 
-        $I->clickWithRightButton("//div[text() = 'OrphansTestChunk']");
-        $I->waitForElement("//span[text() = 'Rename Chunk(s)']");
-        $I->see('Rename Chunk(s)');
+        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
+        $I->waitForElement("//span[text() = 'Rename {$name}(s)']");
+        $I->see("Rename {$name}(s)");
 
-        $I->click("//span[text() = 'Rename Chunk(s)']");
-        $I->waitForText('aaOrphan.OrphansTestChunk', 3);
+        $I->click("//span[text() = 'Rename {$name}(s)']");
+        $I->waitForText("aaOrphan.OrphansTest{$name}", 3);
 
-        $I->clickWithRightButton("//div[text() = 'aaOrphan.OrphansTestChunk']");
-        $I->waitForElement("//span[text() = 'UN-Rename Chunk(s)']", 4);
+        $I->clickWithRightButton("//div[text() = 'aaOrphan.OrphansTest{$name}']");
+        $I->waitForElement("//span[text() = 'UN-Rename {$name}(s)']", 4);
 
-        $I->see('UN-Rename Chunk(s)');
+        $I->see("UN-Rename {$name}(s)");
               // Un-rename Chunks
-        $I->click("//span[text() = 'UN-Rename Chunk(s)']");
+        $I->click("//span[text() = 'UN-Rename {$name}(s)']");
         $I->wait(2);
-        $I->dontSee('aaOrphan.OrphansTestChunk');
+        $I->dontSee("aaOrphan.OrphansTest{$name}");
 
         $I->wantToTest('Changing a category');
-        $I->clickWithRightButton("//div[text() = 'OrphansTestChunk']");
+        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
         $I->waitForElement("//span[text() = 'Change Category']");
         $I->see('Change Category');
         $I->click("//span[text() = 'Change Category']");
-        $I->waitForElement("#orphans-chunk-category-combo");
-        $I->click("#orphans-chunk-category-combo");
+        $I->waitForElement("#orphans-{$nameLower}-category-combo");
+        $I->click("#orphans-{$nameLower}-category-combo");
         $I->waitForElement("//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']");
         $I->click("//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']");
         $I->click("//button[contains(@class, 'x-btn-text') and text() = 'Save']");
 
         $I->wantToTest('Deleting an element');
         $I->wait(2);
-        $I->waitForElement("//div[text() = 'OrphansTestChunk']");
-        $I->clickWithRightButton("//div[text() = 'OrphansTestChunk']");
-        $I->waitForElementVisible("//span[text() = 'Delete Chunk(s)']");
-        $I->click("//span[text() = 'Delete Chunk(s)']");
+        $I->waitForElement("//div[text() = 'OrphansTest{$name}']");
+        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
+        $I->waitForElementVisible("//span[text() = 'Delete {$name}(s)']");
+        $I->click("//span[text() = 'Delete {$name}(s)']");
         $I->waitForElement("//button[contains(@class, 'x-btn-text') and text() = 'Yes']");
         $I->click("//button[contains(@class, 'x-btn-text') and text() = 'Yes']");
         $I->wait(1);
-        $I->dontSee('OrphansTestChunk');
+        $I->dontSee("OrphansTest{$name}");
+
+        $I->wantToTest('Add Element to Ignore List');
 
         $I->wait(5);
     }
 
-    /*protected function testObject(\AcceptanceTester $I, $class, $name) {
-        $I->assertTrue(true);
-        $I->see('Nothing');
-        return true;
-    }*/
 
     public function _after(\AcceptanceTester $I) {
         $objects = array(
