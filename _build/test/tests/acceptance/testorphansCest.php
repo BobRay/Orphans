@@ -1,6 +1,8 @@
 <?php
 
 use Page\Ovariables as Variables;
+use Page\Login as LoginPage;
+
 
 class testorphansCest
 {
@@ -87,23 +89,25 @@ class testorphansCest
     public function tryToTest(\AcceptanceTester $I)
     {
           /** @var $I AcceptanceTester */
-       $class = 'modChunk';
-       $name = 'Chunk';
-       $nameLower = strtolower($name);
-       $namePlural = $name . 's';
-       $namePluralLower = strtolower($namePlural);
-       $I->amOnPage(Variables::$managerUrl);
+        $class = 'modChunk';
+        $name = 'Chunk';
+        $nameLower = strtolower($name);
+        $namePlural = $name . 's';
+        $namePluralLower = strtolower($namePlural);
 
         $I->wantTo('Log In');
+        $loginPage = new LoginPage($I);
+        $loginPage->login();
 
-        try {
+
+       /* try {
             $I->see("Login");
             $I->fillField('#modx-login-username', 'JoeTester');
             $I->fillField('#modx-login-password', 'testerPassword');
             $I->click('#modx-login-btn');
         } catch (Exception $e) {
 
-        }
+        }*/
 
         $I->wantTo('Launch Orphans');
         $I->amOnPage('manager/?a=index&namespace=orphans');

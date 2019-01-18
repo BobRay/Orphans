@@ -5,6 +5,7 @@ class Ovariables
 {
     // include url of current page
     public static $managerUrl = 'manager/';
+    public static $orphansPage = 'manager/?a=index&namespace=orphans';
 
     /**
      * Declare UI map for this page here. CSS or XPath allowed.
