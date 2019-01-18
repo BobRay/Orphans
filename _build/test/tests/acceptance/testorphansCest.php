@@ -64,9 +64,15 @@ class testorphansCest
                 $newObject = $modx->newObject('mod' . $object);
                 $newObject->set($nameField, 'OrphansTest' . $object);
                 $newObject->set('description', $object . ' for Orphans test');
-                $newObject->save();
+                $success = $newObject->save();
+                $I->assertNotFalse($success);
             }
         }
+        /* Empty Ignore chunk */
+        $obj = $this->modx->getObject('modChunk', array('name' => 'OrphansIgnoreList'));
+        $I->assertNotEmpty($obj);
+        $obj->setContent("OrphansIgnoreList\n");
+        $obj->save();
 
         $I->wantTo('Create a category');
         $cat = $modx->getObject('modCategory', array('category' => 'abOrphans'));
@@ -81,8 +87,6 @@ class testorphansCest
     public function tryToTest(\AcceptanceTester $I)
     {
           /** @var $I AcceptanceTester */
-      //   $I->amOnPage("manager/");
-
        $class = 'modChunk';
        $name = 'Chunk';
        $nameLower = strtolower($name);
@@ -102,22 +106,13 @@ class testorphansCest
         }
 
         $I->wantTo('Launch Orphans');
-        $I->waitForElement('#limenu-components > a',10);
-        $I->moveMouseOver('#limenu-components > a');
-        $I->wait(1);
-
-
-        // $I->see('Extras');
-        $I->waitforElement('#orphans');
-        $I->click('#orphans');
-        // span.x-tab-strip-text
-        //"//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']"
+        $I->amOnPage('manager/?a=index&namespace=orphans');
         $I->waitForElement("//span[contains(@class, 'x-tab-strip-text') and text() = '{$namePlural}']");
         $I->click("//span[contains(@class, 'x-tab-strip-text') and text() = '{$namePlural}']");
         $I->wantTo('Load objects in grid');
         $I->waitForElement("#orphans-{$nameLower}s-reload", 5);
         $I->click("#orphans-{$nameLower}s-reload");
-        $I->waitForElement("//div[contains(., 'OrphansTest{$name}')]", 3);
+        $I->waitForElement("//div[contains(., 'OrphansTest{$name}')]", 10);
         $I->see("OrphansTest{$name}");
 
         $I->wantToTest('Rename and UN-Rename');
@@ -149,6 +144,26 @@ class testorphansCest
         $I->click("//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']");
         $I->click("//button[contains(@class, 'x-btn-text') and text() = 'Save']");
 
+        $I->wantToTest('Add Element to Ignore List');
+        $I->waitForElement("//div[text() = 'OrphansTest{$name}']");
+        $I->wait(5);
+        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
+        $I->waitForElementVisible("//span[text() = 'Add to Ignore List']");
+        $I->click("//span[text() = 'Add to Ignore List']");
+        $I->wait(5);
+        $I->dontSee("OrphansTest{$name}");
+        $obj = $this->modx->getObject('modChunk', array('name' => 'OrphansIgnoreList'));
+        $I->assertNotEmpty($obj);
+        $c = $obj->getContent();
+        $I->assertContains("OrphansTest{$name}", $c);
+        $obj->setContent("OrphansIgnoreList\n");
+        $obj->save();
+        $I->click("#orphans-{$nameLower}s-reload");
+        $I->waitForText("OrphansTest{$name}", 20);
+        $I->see("OrphansTest{$name}");
+        $I->wait(1);
+        $I->see("OrphansTest{$name}");
+
         $I->wantToTest('Deleting an element');
         $I->wait(2);
         $I->waitForElement("//div[text() = 'OrphansTest{$name}']");
@@ -159,10 +174,7 @@ class testorphansCest
         $I->click("//button[contains(@class, 'x-btn-text') and text() = 'Yes']");
         $I->wait(1);
         $I->dontSee("OrphansTest{$name}");
-
-        $I->wantToTest('Add Element to Ignore List');
-
-        $I->wait(5);
+//         $I->wait(5);
     }
 
 
