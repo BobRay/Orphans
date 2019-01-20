@@ -3,15 +3,37 @@ namespace Page;
 
 class Ovariables
 {
-    // include url of current page
+    /*  include url of initial page */
     public static $managerUrl = 'manager/';
+
+    /* Orphans Page URL */
     public static $orphansPage = 'manager/?a=index&namespace=orphans';
 
-    /**
-     * Declare UI map for this page here. CSS or XPath allowed.
-     * public static $usernameField = '#username';
-     * public static $formSubmitButton = "#mainForm input[type=submit]";
-     */
+    /* Temporary category for change category test */
+    public static $category = 'abOrphans';
+
+    /* Name Prefix for objects */
+    public static $namePrefix = 'aaOrphansTest';
+
+    /* Save button for change category */
+    public static $changeCategorySaveButton = "//button[contains(@class, 'x-btn-text') and text() = 'Save']";
+
+    /* Confirm delete button */
+    public static $deleteYesButton = "//button[contains(@class, 'x-btn-text') and text() = 'Yes']";
+
+    /* Name of chunk containing ignore list */
+    public static $ignoreChunk = 'OrphansIgnoreList';
+
+    /* Content of empty ignore list Chunk */
+    public static $ignoreChunkText = "OrphansIgnoreList\n";
+
+    /* Add to ignore list context menu prompt */
+    public static $addToIgnoreListContextOption = "//span[text() = 'Add to Ignore List']";
+
+
+    public static function testTab($tab) {
+
+    }
 
     /**
      * Basic route example for your current URL

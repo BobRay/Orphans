@@ -1,6 +1,6 @@
 <?php
 
-use Page\Ovariables as Variables;
+use Page\Ovariables as oPageVariables;
 use Page\Login as LoginPage;
 
 
@@ -14,8 +14,11 @@ class testorphansCest
     {
         $I->wantToTest('Orphans');
         ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
-        include "c:/xampp/htdocs/test/core/config/config.inc.php";
-        include MODX_CORE_PATH . 'model/modx/modx.class.php';
+        if (!class_exists('modX')) {
+            include "c:/xampp/htdocs/test/core/config/config.inc.php";
+            include MODX_CORE_PATH . 'model/modx/modx.class.php';
+        }
+
         $this->modx = new modX();
 
         $modx =& $this->modx;
@@ -47,24 +50,26 @@ class testorphansCest
             'Chunk',
             'Snippet',
             'Template',
-            'TemplateVar',
+            'TV',
         );
 
 
         foreach ($objects as $object) {
             $nameField = $object == 'Template' ? 'templatename' : 'name';
-
+            $class = 'mod' . (($object == 'TV')? 'TemplateVar' : $object);
+            /* *************** */
             $I->wantTo('Clean up old renamed objects');
-            $oldObject = $modx->getObject('mod' . $object, array($nameField => 'aaOrphan.OrphansTest' . $object));
+            $oldObject = $modx->getObject($class, array($nameField => 'aaOrphan.' . oPageVariables::$namePrefix . $object));
             if ($oldObject) {
                 $oldObject->remove();
             }
 
+            /* *************** */
             $I->wantTo('Create new objects for tests');
-            $newObject = $modx->getObject('mod' . $object, array($nameField => 'OrphansTest' . $object));
+            $newObject = $modx->getObject($class, array($nameField => oPageVariables::$namePrefix . $object));
             if (! $newObject) {
-                $newObject = $modx->newObject('mod' . $object);
-                $newObject->set($nameField, 'OrphansTest' . $object);
+                $newObject = $modx->newObject($class);
+                $newObject->set($nameField, oPageVariables::$namePrefix . $object);
                 $newObject->set('description', $object . ' for Orphans test');
                 $success = $newObject->save();
                 $I->assertNotFalse($success);
@@ -76,109 +81,136 @@ class testorphansCest
         $obj->setContent("OrphansIgnoreList\n");
         $obj->save();
 
+        /* *************** */
         $I->wantTo('Create a category');
-        $cat = $modx->getObject('modCategory', array('category' => 'abOrphans'));
+        $cat = $modx->getObject('modCategory', array('category' => oPageVariables::$category));
         if (!$cat) {
             $cat = $modx->newObject('modCategory');
-            $cat->set('category', 'abOrphans');
+            $cat->set('category', oPageVariables::$category);
             $cat->save();
         }
     }
 
     // tests
+
+    /* @throws \Exception */
     public function tryToTest(\AcceptanceTester $I)
     {
           /** @var $I AcceptanceTester */
-        $class = 'modChunk';
-        $name = 'Chunk';
-        $nameLower = strtolower($name);
-        $namePlural = $name . 's';
-        $namePluralLower = strtolower($namePlural);
 
+        // $class = 'modChunk';
+        $types = array(
+            'Chunk',
+            'Snippet',
+            'Template',
+            'TV'
+        );
+        /* *************** */
         $I->wantTo('Log In');
         $loginPage = new LoginPage($I);
         $loginPage->login();
 
-
-       /* try {
-            $I->see("Login");
-            $I->fillField('#modx-login-username', 'JoeTester');
-            $I->fillField('#modx-login-password', 'testerPassword');
-            $I->click('#modx-login-btn');
-        } catch (Exception $e) {
-
-        }*/
-
+        /* *************** */
         $I->wantTo('Launch Orphans');
-        $I->amOnPage('manager/?a=index&namespace=orphans');
-        $I->waitForElement("//span[contains(@class, 'x-tab-strip-text') and text() = '{$namePlural}']");
-        $I->click("//span[contains(@class, 'x-tab-strip-text') and text() = '{$namePlural}']");
-        $I->wantTo('Load objects in grid');
-        $I->waitForElement("#orphans-{$nameLower}s-reload", 5);
-        $I->click("#orphans-{$nameLower}s-reload");
-        $I->waitForElement("//div[contains(., 'OrphansTest{$name}')]", 10);
-        $I->see("OrphansTest{$name}");
+        $I->amOnPage(oPageVariables::$orphansPage);
 
-        $I->wantToTest('Rename and UN-Rename');
+        foreach ($types as $type) {
+            $name = $type;
 
-        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
-        $I->waitForElement("//span[text() = 'Rename {$name}(s)']");
-        $I->see("Rename {$name}(s)");
+            $nameLower = strtolower($name);
+            $namePlural = $name . 's';
+            $namePluralLower = strtolower($namePlural);
 
-        $I->click("//span[text() = 'Rename {$name}(s)']");
-        $I->waitForText("aaOrphan.OrphansTest{$name}", 3);
+            $tabHeading = ($name == 'TV') ? 'Template Variables' : $namePlural;
+            // $I->wait(5);
+            $I->waitForElementVisible("//span[contains(@class, 'x-tab-strip-text') and text() = '{$tabHeading}']");
+            $I->click("//span[contains(@class, 'x-tab-strip-text') and text() = '{$tabHeading}']");
 
-        $I->clickWithRightButton("//div[text() = 'aaOrphan.OrphansTest{$name}']");
-        $I->waitForElement("//span[text() = 'UN-Rename {$name}(s)']", 4);
+            /* *************** */
+            $I->wantTo('Load objects in grid');
+            $I->waitForElement("#orphans-{$nameLower}s-reload", 5);
+            $I->click("#orphans-{$nameLower}s-reload");
+            $I->waitForElement("//div[contains(., '" . oPageVariables::$namePrefix . $name . "')]", 10);
+            // $I->wait(5);
+            $I->see(oPageVariables::$namePrefix . $name);
 
-        $I->see("UN-Rename {$name}(s)");
-              // Un-rename Chunks
-        $I->click("//span[text() = 'UN-Rename {$name}(s)']");
-        $I->wait(2);
-        $I->dontSee("aaOrphan.OrphansTest{$name}");
+            /* *************** */
+            $I->wantToTest('Rename and UN-Rename');
 
-        $I->wantToTest('Changing a category');
-        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
-        $I->waitForElement("//span[text() = 'Change Category']");
-        $I->see('Change Category');
-        $I->click("//span[text() = 'Change Category']");
-        $I->waitForElement("#orphans-{$nameLower}-category-combo");
-        $I->click("#orphans-{$nameLower}-category-combo");
-        $I->waitForElement("//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']");
-        $I->click("//div[contains(@class, 'x-combo-list-item') and text() = 'abOrphans']");
-        $I->click("//button[contains(@class, 'x-btn-text') and text() = 'Save']");
+            $I->clickWithRightButton("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
+            $I->waitForElement("//span[text() = 'Rename {$name}(s)']");
+            $I->see("Rename {$name}(s)");
 
-        $I->wantToTest('Add Element to Ignore List');
-        $I->waitForElement("//div[text() = 'OrphansTest{$name}']");
-        $I->wait(5);
-        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
-        $I->waitForElementVisible("//span[text() = 'Add to Ignore List']");
-        $I->click("//span[text() = 'Add to Ignore List']");
-        $I->wait(5);
-        $I->dontSee("OrphansTest{$name}");
-        $obj = $this->modx->getObject('modChunk', array('name' => 'OrphansIgnoreList'));
-        $I->assertNotEmpty($obj);
-        $c = $obj->getContent();
-        $I->assertContains("OrphansTest{$name}", $c);
-        $obj->setContent("OrphansIgnoreList\n");
-        $obj->save();
-        $I->click("#orphans-{$nameLower}s-reload");
-        $I->waitForText("OrphansTest{$name}", 20);
-        $I->see("OrphansTest{$name}");
-        $I->wait(1);
-        $I->see("OrphansTest{$name}");
+            $I->click("//span[text() = 'Rename {$name}(s)']");
+            $I->waitForText("aaOrphan." . oPageVariables::$namePrefix . $name, 3);
 
-        $I->wantToTest('Deleting an element');
-        $I->wait(2);
-        $I->waitForElement("//div[text() = 'OrphansTest{$name}']");
-        $I->clickWithRightButton("//div[text() = 'OrphansTest{$name}']");
-        $I->waitForElementVisible("//span[text() = 'Delete {$name}(s)']");
-        $I->click("//span[text() = 'Delete {$name}(s)']");
-        $I->waitForElement("//button[contains(@class, 'x-btn-text') and text() = 'Yes']");
-        $I->click("//button[contains(@class, 'x-btn-text') and text() = 'Yes']");
-        $I->wait(1);
-        $I->dontSee("OrphansTest{$name}");
-//         $I->wait(5);
+            $I->clickWithRightButton("//div[text() = 'aaOrphan." . oPageVariables::$namePrefix  . $name . "']");
+            $I->waitForElement("//span[text() = 'UN-Rename {$name}(s)']", 4);
+
+            $I->see("UN-Rename {$name}(s)");
+            // Un-rename Chunks
+            $I->click("//span[text() = 'UN-Rename {$name}(s)']");
+            $I->wait(2);
+            $I->dontSee("aaOrphan." . oPageVariables::$namePrefix . $name);
+
+            /* *************** */
+            $I->wantToTest('Changing a category');
+            $I->clickWithRightButton("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
+            $element = "//span[contains(@class, 'x-menu-item-text') and text() = 'Change {$name} Category']";
+            $I->waitForElement($element);
+
+ //            $I->see($element);
+            // $I->click("//span[text() = 'Change Category']");
+            $I->click($element);
+            $I->waitForElement("#orphans-{$nameLower}-category-combo");
+            $I->click("#orphans-{$nameLower}-category-combo");
+            $category = oPageVariables::$category;
+            $I->waitForElement("//div[contains(@class, 'x-combo-list-item') and text() = '{$category}']");
+            $I->wait(3);
+            $I->click("//div[contains(@class, 'x-combo-list-item') and text() = '{$category}']");
+            $I->click(oPageVariables::$changeCategorySaveButton);
+
+            /* *************** */
+            $I->wantToTest('Add Element to Ignore List');
+            $I->waitForElement("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
+            $I->wait(5);
+            $I->clickWithRightButton("//div[text() = '" .  oPageVariables::$namePrefix . $name . "']");
+            $I->waitForElementVisible(oPageVariables::$addToIgnoreListContextOption);
+            $I->click(oPageVariables::$addToIgnoreListContextOption);
+            $I->wait(5);
+            $I->dontSee( oPageVariables::$namePrefix . $name);
+            $obj = $this->modx->getObject('modChunk', array('name' => oPageVariables::$ignoreChunk));
+            $I->assertNotEmpty($obj);
+            $c = $obj->getContent();
+            $I->assertContains(oPageVariables::$namePrefix . $name, $c);
+
+            /* Empty Ignore list so element will reappear  */
+            $obj->setContent(oPageVariables::$ignoreChunkText);
+            $obj->save();
+
+            /* Reload objects */
+            $I->click("#orphans-{$nameLower}s-reload");
+            $I->waitForText(oPageVariables::$namePrefix . $name, 20);
+            $I->see("OrphansTest{$name}");
+            $I->wait(1);
+            $I->see(oPageVariables::$namePrefix . $name);
+
+            /* *************** */
+            $I->wantToTest('Deleting an element');
+            $I->wait(2);
+            $I->waitForElement("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
+            $I->clickWithRightButton("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
+
+            $I->waitForElementVisible("//span[text() = 'Delete {$name}(s)']", 2);
+            $I->click("//span[text() = 'Delete {$name}(s)']");
+            /* Confirm Delete  */
+            $I->waitForElement(oPageVariables::$deleteYesButton);
+            $I->click(oPageVariables::$deleteYesButton);
+            $I->wait(1);
+            $I->dontSee(oPageVariables::$namePrefix . $name);
+            $I->reloadPage();
+            // $I->wait(5);
+        }
     }
 
 
@@ -193,20 +225,20 @@ class testorphansCest
 
         foreach ($objects as $object) {
             $nameField = $object == 'Template' ? 'templatename' : 'name';
-
+            $nameSuffix = ($object == 'TemplateVar') ? 'TV' : $object;
             /* Get rid of leftover renamed objects */
-            $oldObject = $this->modx->getObject('mod' . $object, array($nameField => 'aaOrphan.OrphansTest' . $object));
+            $oldObject = $this->modx->getObject('mod' . $object, array($nameField => 'aaOrphan.' . oPageVariables::$namePrefix . $nameSuffix));
             if ($oldObject) {
                 $oldObject->remove();
             }
 
             /* delete objects */
-            $newObject = $this->modx->getObject('mod' . $object, array($nameField => 'OrphansTest' . $object));
+            $newObject = $this->modx->getObject('mod' . $object, array($nameField => oPageVariables::$namePrefix . $nameSuffix));
             if ($newObject) {
                 $newObject->remove();
             }
 
-            $cat = $this->modx->getObject('modCategory', array('category' => 'abOrphans'));
+            $cat = $this->modx->getObject('modCategory', array('category' => oPageVariables::$category));
             if ($cat) {
                 $cat->remove();
             }
