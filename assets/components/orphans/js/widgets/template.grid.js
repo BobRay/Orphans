@@ -331,7 +331,7 @@ Ext.extend(Orphans.grid.Templates,MODx.grid.Grid,{
     ,getBatchMenu: function() {
         var bm = [];
         bm.push({
-            text: _('orphans.change_category')
+            text: _('orphans.templates_change_category')
             ,handler: this.changeCategory
             ,scope: this
         }
@@ -370,7 +370,7 @@ Ext.reg('orphans-grid-template',Orphans.grid.Templates);
 Orphans.window.ChangeCategory = function(config) {
     config = config || {};
     Ext.applyIf(config,{
-        title: _('orphans.change_category')
+        title: _('orphans.templates_change_category')
         ,url: Orphans.config.connector_url
         ,baseParams: {
             action: 'mgr/changecategory'

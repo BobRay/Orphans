@@ -330,7 +330,7 @@ Ext.extend(Orphans.grid.Snippets, MODx.grid.Grid, {
         var bm = [];
         bm.push(
             {
-                text: _('orphans.change_category')
+                text: _('orphans.snippets_change_category')
                 , handler: this.changeCategory
                 , scope: this
             }
@@ -369,7 +369,7 @@ Ext.reg('orphans-grid-snippet', Orphans.grid.Snippets);
 Orphans.window.ChangeCategory = function (config) {
     config = config || {};
     Ext.applyIf(config, {
-        title: _('orphans.change_category')
+        title: _('orphans.snippets_change_category')
         , url: Orphans.config.connector_url
         , baseParams: {
             action: 'mgr/changecategory'
