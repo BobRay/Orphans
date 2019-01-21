@@ -2,6 +2,8 @@
 
 use Page\Ovariables as oPageVariables;
 use Page\Login as LoginPage;
+use \Helper\Acceptance;
+use \Codeception\Lib\Interfaces\SessionSnapshot;
 
 
 class testorphansCest
@@ -115,23 +117,26 @@ class testorphansCest
         $I->amOnPage(oPageVariables::$orphansPage);
 
         foreach ($types as $type) {
+            $I->seeMyVar($type); // log to console using helper
             $name = $type;
-
             $nameLower = strtolower($name);
             $namePlural = $name . 's';
             $namePluralLower = strtolower($namePlural);
 
             $tabHeading = ($name == 'TV') ? 'Template Variables' : $namePlural;
-            // $I->wait(5);
             $I->waitForElementVisible("//span[contains(@class, 'x-tab-strip-text') and text() = '{$tabHeading}']");
             $I->click("//span[contains(@class, 'x-tab-strip-text') and text() = '{$tabHeading}']");
 
             /* *************** */
             $I->wantTo('Load objects in grid');
-            $I->waitForElement("#orphans-{$nameLower}s-reload", 5);
-            $I->click("#orphans-{$nameLower}s-reload");
+            $element = "#orphans-{$nameLower}s-reload";
+            // $I->performOn($element, array('click' => $element), 5);
+            $I->waitForElementVisible($element, 5);
+            // $I->see($element);  // Crashes run
+            $I->click($element);
+
             $I->waitForElement("//div[contains(., '" . oPageVariables::$namePrefix . $name . "')]", 10);
-            // $I->wait(5);
+
             $I->see(oPageVariables::$namePrefix . $name);
 
             /* *************** */
@@ -148,7 +153,8 @@ class testorphansCest
             $I->waitForElement("//span[text() = 'UN-Rename {$name}(s)']", 4);
 
             $I->see("UN-Rename {$name}(s)");
-            // Un-rename Chunks
+
+            /* Un-rename Chunks */
             $I->click("//span[text() = 'UN-Rename {$name}(s)']");
             $I->wait(2);
             $I->dontSee("aaOrphan." . oPageVariables::$namePrefix . $name);
@@ -159,25 +165,24 @@ class testorphansCest
             $element = "//span[contains(@class, 'x-menu-item-text') and text() = 'Change {$name} Category']";
             $I->waitForElement($element);
 
- //            $I->see($element);
-            // $I->click("//span[text() = 'Change Category']");
+          //   $I->see($element);
             $I->click($element);
             $I->waitForElement("#orphans-{$nameLower}-category-combo");
             $I->click("#orphans-{$nameLower}-category-combo");
             $category = oPageVariables::$category;
             $I->waitForElement("//div[contains(@class, 'x-combo-list-item') and text() = '{$category}']");
-            $I->wait(3);
+            // $I->wait(3);
             $I->click("//div[contains(@class, 'x-combo-list-item') and text() = '{$category}']");
             $I->click(oPageVariables::$changeCategorySaveButton);
 
             /* *************** */
             $I->wantToTest('Add Element to Ignore List');
             $I->waitForElement("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
-            $I->wait(5);
+            $I->wait(1);
             $I->clickWithRightButton("//div[text() = '" .  oPageVariables::$namePrefix . $name . "']");
             $I->waitForElementVisible(oPageVariables::$addToIgnoreListContextOption);
             $I->click(oPageVariables::$addToIgnoreListContextOption);
-            $I->wait(5);
+            $I->wait(2);
             $I->dontSee( oPageVariables::$namePrefix . $name);
             $obj = $this->modx->getObject('modChunk', array('name' => oPageVariables::$ignoreChunk));
             $I->assertNotEmpty($obj);
@@ -192,12 +197,12 @@ class testorphansCest
             $I->click("#orphans-{$nameLower}s-reload");
             $I->waitForText(oPageVariables::$namePrefix . $name, 20);
             $I->see("OrphansTest{$name}");
-            $I->wait(1);
+  //          $I->wait(1);
             $I->see(oPageVariables::$namePrefix . $name);
 
             /* *************** */
             $I->wantToTest('Deleting an element');
-            $I->wait(2);
+//            $I->wait(2);
             $I->waitForElement("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
             $I->clickWithRightButton("//div[text() = '" . oPageVariables::$namePrefix . $name . "']");
 
@@ -209,7 +214,6 @@ class testorphansCest
             $I->wait(1);
             $I->dontSee(oPageVariables::$namePrefix . $name);
             $I->reloadPage();
-            // $I->wait(5);
         }
     }
 
