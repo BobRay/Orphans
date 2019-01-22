@@ -16,7 +16,7 @@ $components = array(
     'packageName' => 'Orphans',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'Orphans attempts to identify unused elements',
-    'version' => '1.1.1',
+    'version' => '1.2.0',
     'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<https://bobsguides.com>',
@@ -170,6 +170,10 @@ $components = array(
         ),
 
         'snippets' => array(
+            'Orphans' => array(
+                'category' => 'Orphans',
+                'description' => 'Standalone Version of Orphans',
+            )
         ),
         'plugins' => array(
         ),
@@ -323,6 +327,8 @@ $components = array(
     'process' => array(
         'systemSettings',
         'chunks',
+        'menus',
+        'snippets',
     ),
     /*  Array  of resources to process. You can specify specific resources
         or parent (container) resources, or both.
