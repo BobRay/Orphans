@@ -131,7 +131,7 @@ class testorphansCest
             $I->wantTo('Load objects in grid');
             $element = "#orphans-{$nameLower}s-reload";
             // $I->performOn($element, array('click' => $element), 5);
-            $I->waitForElementVisible($element, 5);
+            $I->waitForElementVisible($element, 15);
             // $I->see($element);  // Crashes run
             $I->click($element);
 
