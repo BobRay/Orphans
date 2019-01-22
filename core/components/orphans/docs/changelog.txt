@@ -8,6 +8,7 @@ Class-based controller
 New-style menu object
 24 processor files replaced by 6 files
 Cleaner code
+Codeception Acceptance tests
 
 Orphans 1.1.0-pl
 ---------------------------------
