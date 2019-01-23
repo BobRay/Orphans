@@ -77,6 +77,7 @@ if ($object->xpdo) {
                     MODX_CORE_PATH . 'components/orphans/processors/mgr/template',
                     MODX_CORE_PATH . 'components/orphans/processors/mgr/snippet',
                     MODX_CORE_PATH . 'components/orphans/processors/mgr/tv',
+                    MODX_CORE_PATH . 'components/orphans/processors/mgr/resource',
                 );
             $remover = new Remover();
             foreach ($dirs as $dir) {
