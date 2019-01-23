@@ -1,5 +1,9 @@
 Changelog for Orphans
 
+Orphans 1.2.1-pl
+---------------------------------
+Fix critical bug in core path
+
 Orphans 1.2.0-pl
 ---------------------------------
 Updates for MODX 2.7.0

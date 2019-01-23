@@ -16,7 +16,7 @@ $components = array(
     'packageName' => 'Orphans',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'Orphans attempts to identify unused elements',
-    'version' => '1.2.0',
+    'version' => '1.2.1',
     'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<https://bobsguides.com>',
@@ -265,6 +265,7 @@ $components = array(
      *  named after the package suffix 'validator.php' will be added */
 
     'validators' => array(
+        'default',
     ),
 
     /* (optional) install.options is needed if you will interact
