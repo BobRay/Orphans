@@ -28,13 +28,14 @@ Orphans.panel.Home = function(config) {
     Ext.apply(config,{
         border: false
         ,baseCls: 'modx-formpanel'
+        ,style: 'padding:22px'
         ,items: [{
             html: '<h2>'+_('orphans')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
         },{
             xtype: 'modx-tabs'
-            ,bodyStyle: 'padding: 30px'
+            ,bodyStyle: 'padding: 23px'
             ,defaults: { border: false ,autoHeight: true }
             ,border: true
             ,stateful: true
@@ -50,7 +51,7 @@ Orphans.panel.Home = function(config) {
                     , items: [{
                         html: '<p>' + _('orphans.chunks.intro_msg') + '</p>'
                         , border: false
-                        , bodyStyle: 'padding: 10px'
+                        , bodyStyle: 'padding: 0 0 16px 2px'
                     }
                     ,{
                         xtype: 'orphans-grid-chunk'
@@ -65,7 +66,7 @@ Orphans.panel.Home = function(config) {
                     ,items: [{
                         html: '<p>'+_('orphans.templates.intro_msg')+'</p>'
                         ,border: false
-                        ,bodyStyle: 'padding: 10px'
+                        , bodyStyle: 'padding: 0 0 16px 2px'
                     },{
                         xtype: 'orphans-grid-template'
                         ,preventRender: true
@@ -77,7 +78,7 @@ Orphans.panel.Home = function(config) {
                     {
                         html: '<p>' + _('orphans.tvs.intro_msg') + '</p>'
                         , border: false
-                        , bodyStyle: 'padding: 10px'
+                        , bodyStyle: 'padding: 0 0 16px 2px'
                     },
                     {
                         xtype: 'orphans-grid-tv'
@@ -92,7 +93,7 @@ Orphans.panel.Home = function(config) {
                     ,items: [{
                         html: '<p>'+_('orphans.snippets.intro_msg')+'</p>'
                         ,border: false
-                        ,bodyStyle: 'padding: 10px'
+                        , bodyStyle: 'padding: 0 0 16px 2px'
                     },{
                         xtype: 'orphans-grid-snippet'
                         ,preventRender: true
