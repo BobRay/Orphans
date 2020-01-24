@@ -334,6 +334,7 @@ if (! class_exists('Orphans')) {
             $fields = $object->toArray('', true, true);
             if (isset($fields['class_key'])
                 && ($fields['class_key'] == 'modStaticResource')) {
+                /* @var $object modResource */
 
                 $fields['content'] = $object->getContent();
             }

@@ -13,7 +13,12 @@
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- * @method waitForElement(string $element);
+ * @method waitForElement($element, $timeout = null)
+ * @method waitForElementVisible($element, $timeout = null)
+ * @method fillField($field, $value)
+ * @method dontSee($text, $selector = null)
+ * @method reloadPage()
+ *
  *
  * @SuppressWarnings(PHPMD)
 */

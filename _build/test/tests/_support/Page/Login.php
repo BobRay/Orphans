@@ -2,8 +2,10 @@
 namespace Page;
 
 use Codeception\Lib\Interfaces\SessionSnapshot;
+use PHPUnit\Runner\Exception;
 
 class Login {
+
     public static $managerUrl = 'manager/';
     public static $usernameField = '#modx-login-username';
     public static $passwordField = '#modx-login-password';
@@ -12,15 +14,18 @@ class Login {
     public static $loginButton = '#modx-login-btn';
 
     /**
-     * @var AcceptanceTester $tester
+     * @var \AcceptanceTester $tester
      */
     protected $tester;
+
 
     public function __construct(\AcceptanceTester $I) {
         $this->tester = $I;
     }
 
+    /* @throws Exception */
     public function login($username = '', $password = '') {
+        /* @var \AcceptanceTester $I */
         $username = empty($username) ? self::$username : $username;
         $password = empty($password) ? self::$password : $password;
         $I = $this->tester;

@@ -6,10 +6,16 @@ use \Helper\Acceptance;
 use \Codeception\Lib\Interfaces\SessionSnapshot;
 
 
+/**
+ * Class testorphansCest
+ */
 class testorphansCest
 {
     /** @var $modx modX */
     public $modx = null;
+    /** @var \AcceptanceTester $I */
+    public $I;
+
 
 
     public function _before(\AcceptanceTester $I)
@@ -82,7 +88,6 @@ class testorphansCest
         $I->assertNotEmpty($obj);
         $obj->setContent("OrphansIgnoreList\n");
         $obj->save();
-
         /* *************** */
         $I->wantTo('Create a category');
         $cat = $modx->getObject('modCategory', array('category' => oPageVariables::$category));
@@ -92,15 +97,16 @@ class testorphansCest
             $cat->save();
         }
     }
+/** @method void waitForElement($element, $delay = null, $tag = null) */
 
-    // tests
 
-    /* @throws \Exception */
+    /**
+     * @param $I \AcceptanceTester
+     * @throws \Exception
+     */
     public function tryToTest(\AcceptanceTester $I)
     {
-          /** @var $I AcceptanceTester */
 
-        // $class = 'modChunk';
         $types = array(
             'Chunk',
             'Snippet',
