@@ -22,25 +22,30 @@
  */
 
 /* @var $object xPDOObject */
+/* @var $transport xPDOObject */
 /* @var $modx modX */
 
 /* @var array $options */
 
-if ($object->xpdo) {
+if ($transport) {
+    $modx =& $transport->xpdo;
+} else {
     $modx =& $object->xpdo;
-    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
-        case xPDOTransport::ACTION_UPGRADE:
-
-            /* Remove old action object */
-            $action = $modx->getObject('modAction', array('namespace'=> 'orphans'));
-            if ($action) {
-                $action->remove();
-            }
-
-        case xPDOTransport::ACTION_UNINSTALL:
-            break;
-    }
 }
+
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+    case xPDOTransport::ACTION_INSTALL:
+    case xPDOTransport::ACTION_UPGRADE:
+
+        /* Remove old action object */
+        $action = $modx->getObject('modAction', array('namespace'=> 'orphans'));
+        if ($action) {
+            $action->remove();
+        }
+
+    case xPDOTransport::ACTION_UNINSTALL:
+        break;
+}
+
 
 return true;

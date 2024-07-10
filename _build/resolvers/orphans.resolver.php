@@ -46,50 +46,57 @@ class Remover {
     }
 }
 
-if ($object->xpdo) {
+/* @var $object xPDOObject */
+/* @var $transport xPDOObject */
+
+if($transport){
+$modx =& $transport->xpdo;
+} else {
     $modx =& $object->xpdo;
-    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
-        case xPDOTransport::ACTION_UPGRADE:
-
-            /* Remove old action object */
-            $action = $modx->getObject('modAction', array('namespace'=> 'orphans'));
-            if ($action) {
-                $action->remove();
-            }
-            /*  Remove old files */
-           //  Files:
-            $files = array(
-                MODX_ASSETS_PATH . 'components/orphans/index.html',
-                MODX_CORE_PATH . 'components/orphans/controllers/index.php',
-                MODX_CORE_PATH . 'components/orphans/processors/mgr/dummy.php',
-                MODX_CORE_PATH . 'components/orphans/index.php'
-            );
-
-            foreach ($files as $file) {
-                if(file_exists($file)) {
-                    unlink($file);
-                }
-            }
-            // Directories:
-               $dirs = array(
-                    MODX_CORE_PATH . 'components/orphans/processors/mgr/chunk',
-                    MODX_CORE_PATH . 'components/orphans/processors/mgr/template',
-                    MODX_CORE_PATH . 'components/orphans/processors/mgr/snippet',
-                    MODX_CORE_PATH . 'components/orphans/processors/mgr/tv',
-                    MODX_CORE_PATH . 'components/orphans/processors/mgr/resource',
-                );
-            $remover = new Remover();
-            foreach ($dirs as $dir) {
-                if(is_dir($dir)) {
-                    $remover->rrmdir($dir);
-                }
-            }
-            break;
-
-        case xPDOTransport::ACTION_UNINSTALL:
-            break;
-    }
 }
+
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+    case xPDOTransport::ACTION_INSTALL:
+    case xPDOTransport::ACTION_UPGRADE:
+
+        /* Remove old action object */
+        $action = $modx->getObject('modAction', array('namespace'=> 'orphans'));
+        if ($action) {
+            $action->remove();
+        }
+        /*  Remove old files */
+       //  Files:
+        $files = array(
+            MODX_ASSETS_PATH . 'components/orphans/index.html',
+            MODX_CORE_PATH . 'components/orphans/controllers/index.php',
+            MODX_CORE_PATH . 'components/orphans/processors/mgr/dummy.php',
+            MODX_CORE_PATH . 'components/orphans/index.php'
+        );
+
+        foreach ($files as $file) {
+            if(file_exists($file)) {
+                unlink($file);
+            }
+        }
+        // Directories:
+           $dirs = array(
+                MODX_CORE_PATH . 'components/orphans/processors/mgr/chunk',
+                MODX_CORE_PATH . 'components/orphans/processors/mgr/template',
+                MODX_CORE_PATH . 'components/orphans/processors/mgr/snippet',
+                MODX_CORE_PATH . 'components/orphans/processors/mgr/tv',
+                MODX_CORE_PATH . 'components/orphans/processors/mgr/resource',
+            );
+        $remover = new Remover();
+        foreach ($dirs as $dir) {
+            if(is_dir($dir)) {
+                $remover->rrmdir($dir);
+            }
+        }
+        break;
+
+    case xPDOTransport::ACTION_UNINSTALL:
+        break;
+}
+
 
 return true;
