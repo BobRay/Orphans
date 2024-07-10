@@ -41,7 +41,7 @@ if (!defined('MODX_CORE_PATH')) {
     @include(dirname(__FILE__) . '/config.core.php');
 
     if (!defined('MODX_CORE_PATH')) {
-        @include dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/config.core.php';
+        @include dirname(__FILE__,6 ) . '/config.core.php';
     }
     if (!defined('MODX_CORE_PATH')) {
         die('No config.core.php');
