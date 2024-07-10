@@ -7,10 +7,10 @@ Orphans Extra for MODx Revolution
 
 **Bugs and requests:** [Orphans Issues](https://github.com/BobRay/Orphans/issues)
 
-**Questions about using Orphans** [MODx Forums](https://forums.modx.com)
+**Questions about using Orphans** [MODX Forums](https://community.modx.com)
 
+**Fully updated for MODX 3 and PHP 8**
 
 Orphans is a utility for MODX Revolution that helps you find unused elements such as Snippets, Chunks, Template Variables, and Templates. The results are not perfect, but they can help you find out which elements are no longer in use.
 
 From within the Orphans grid, you can delete, rename, un-rename, or add elements to the ignore list.
-
