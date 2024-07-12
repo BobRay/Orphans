@@ -21,13 +21,14 @@
  *
  * @package orphans
  */
+
 /**
- * rename multiple chunks
+ * Add element name to ignore chunk
  *
  * @package orphans
  * @subpackage processors
  */
-class OrphansRenameProcessor extends modProcessor {
+class OrphansIgnoreProcessor extends modProcessor {
     public function process() {
         $class = $this->getProperty('orphanSearch');
         if ($class == 'modTemplateVar') {
@@ -67,24 +68,4 @@ class OrphansRenameProcessor extends modProcessor {
     }
 }
 
-return 'OrphansRenameProcessor';
-/* if (!$modx->hasPermission('save_chunk')) return $modx->error->failure($modx->lexicon('access_denied'));
-
-if (empty($scriptProperties['chunks'])) {
-    return $modx->error->failure($modx->lexicon('orphans.chunks_err_ns'));
-}
-
-$chunkIds = explode(',',$scriptProperties['chunks']);
-$prefix = $modx->getOption('orphans.prefix', null, 'aaOrphan.');
-foreach ($chunkIds as $chunkId) {
-    $chunk = $modx->getObject('modChunk',$chunkId);
-    if ($chunk == null) continue;
-    $name = $chunk->get('name');
-    if (! strstr($name, $prefix)) {
-        $name = $prefix . $name;
-        $chunk->set('name', $name);
-        $chunk->save(3600);
-    }
-}*/
-
-return $modx->error->success();
+return 'OrphansIgnoreProcessor';
