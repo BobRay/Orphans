@@ -64,21 +64,3 @@ class OrphansDeleteProcessor extends modProcessor {
 }
 
 return 'OrphansDeleteProcessor';
-
-/* if (!$modx->hasPermission('save_template')) return $modx->error->failure($modx->lexicon('access_denied'));
-
-if (empty($scriptProperties['templates'])) {
-    return $modx->error->failure($modx->lexicon('orphans.templates_err_ns'));
-}
-
-$templateIds = explode(',',$scriptProperties['templates']);
-foreach ($templateIds as $templateId) {
-    $template = $modx->getObject('modTemplate',$templateId);
-    if ($template == null) continue;
-
-    if ($template->remove() === false) {
-        
-    }
-}
-
-return $modx->error->success();*/

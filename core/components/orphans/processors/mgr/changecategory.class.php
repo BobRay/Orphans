@@ -71,28 +71,3 @@ class OrphansChangeCategoryProcessor extends modProcessor {
 }
 
 return 'OrphansChangeCategoryProcessor';
-/*if (!$modx->hasPermission('save_template')) return $modx->error->failure($modx->lexicon('access_denied'));
-
-if (empty($scriptProperties['templates'])) {
-    return $modx->error->failure($modx->lexicon('orphans.templates_err_ns'));
-}
-
-if (!empty($scriptProperties['category'])) {
-    $category = $modx->getObject('modCategory',$scriptProperties['category']);
-    if (empty($category)) return $modx->error->failure($modx->lexicon('orphans.category_err_nf',array('id' => $scriptProperties['category'])));
-}
-
-
-$templateIds = explode(',',$scriptProperties['templates']);
-foreach ($templateIds as $templateId) {
-    $template = $modx->getObject('modTemplate',$templateId);
-    if ($template == null) continue;
-
-    $template->set('category',$scriptProperties['category']);
-    $template->save(3600);
-}
-
-return $modx->error->success();
-
-*/
-
