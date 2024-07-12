@@ -30,7 +30,7 @@ $menus[1]->fromArray( array (
   'action' => 'index',
   'description' => 'orphans.menu_desc',
   'icon' => '',
-  'menuindex' => 3,
+  'menuindex' => 1,
   'params' => '',
   'handler' => '',
   'permissions' => '',
