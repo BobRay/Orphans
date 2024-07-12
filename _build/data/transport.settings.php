@@ -2,7 +2,7 @@
 /**
  * systemSettings transport file for Orphans extra
  *
- * Copyright 2013-2019 by Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2024 Bob Ray <https://bobsguides.com>
  * Created on 05-02-2013
  *
  * @package orphans
@@ -33,6 +33,6 @@ $systemSettings[1]->fromArray(array (
   'namespace' => 'orphans',
   'area' => 'orphans',
   'name' => 'Orphans Prefix',
-  'description' => 'orphans_prefix_desc~~Prefix to use when renaming orphans',
+  'description' => 'Prefix to use when renaming orphans',
 ), '', true, true);
 return $systemSettings;
