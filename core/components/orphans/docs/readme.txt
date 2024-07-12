@@ -3,7 +3,7 @@ Orphans
 
 
 Author: Bob Ray <https://bobsguides.com>
-Copyright 2013-2019 Bob Ray
+Copyright 2013-2024 Bob Ray
 
 Fully updated for MODX 3 and PHP 8
 

@@ -2,7 +2,7 @@
 /**
  * Validator for Orphans extra
  *
- * Copyright 2013-2019 by Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2024 by Bob Ray <https://bobsguides.com>
  * Created on 01-13-2019
  *
  * Orphans is free software; you can redistribute it and/or modify it under the

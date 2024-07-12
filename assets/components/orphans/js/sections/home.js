@@ -1,7 +1,7 @@
 /**
  * JS file for Orphans extra
  *
- * Copyright 2013-2019 Bob Ray <https://bobsguides.com>
+ * Copyright 2013-2024 Bob Ray <https://bobsguides.com>
  * Created on 04-13-2013
  *
  * Orphans is free software; you can redistribute it and/or modify it under the
@@ -34,7 +34,7 @@ Orphans.page.Home = function(config) {
             xtype: 'orphans-panel-home'
             ,renderTo: 'orphans-panel-home-div'
         }]
-    }); 
+    });
     Orphans.page.Home.superclass.constructor.call(this,config);
 };
 Ext.extend(Orphans.page.Home,MODx.Component);

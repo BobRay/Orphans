@@ -16,14 +16,14 @@ $components = array(
     'packageName' => 'Orphans',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'Orphans attempts to identify unused elements',
-    'version' => '1.2.1',
+    'version' => '1.2.3',
     'release' => 'pl',
     'author' => 'Bob Ray',
     'email' => '<https://bobsguides.com>',
     'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
     'packageDocumentationUrl' => 'https://bobsguides.com/orphans-tutorial.html',
-    'copyright' => '2013-2019',
+    'copyright' => '2013-2024',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
