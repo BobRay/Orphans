@@ -31,10 +31,26 @@
 /* @var $modx modX */
 /* @var $this modProcessor */
 
-require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+$v = @include MODX_CORE_PATH . 'docs/version.inc.php';
+$isMODX3 = $v['version'] >= 3;
+
+if ($isMODX3) {
+    require_once MODX_CORE_PATH . 'vendor/autoload.php';
+} else {
+    require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+}
+
+if ($isMODX3) {
+    abstract class DynamicOrphansGetlistProcessor extends MODX\Revolution\Processors\Processor {
+    }
+} else {
+    abstract class DynamicOrphansGetlistProcessor extends modProcessor {
+    }
+}
+
 
 /* @var $orphans Orphans */
-class orphansGetListProcessor extends modProcessor {
+class orphansGetListProcessor extends DynamicOrphansGetlistProcessor {
     public function initialize() {
 
         $orphansCorePath = $this->modx->getOption('orphans.core_path', null, $this->modx->getOption('core_path') . 'components/orphans/');

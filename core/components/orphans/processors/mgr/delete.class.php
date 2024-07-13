@@ -28,7 +28,23 @@
  * @subpackage processors
  */
 
-class OrphansDeleteProcessor extends modProcessor {
+$v = @include MODX_CORE_PATH . 'docs/version.inc.php';
+$isMODX3 = $v['version'] >= 3;
+
+if ($isMODX3) {
+    require_once MODX_CORE_PATH . 'vendor/autoload.php';
+} else {
+    require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+}
+
+if ($isMODX3) {
+    abstract class DynamicOrphansDeleteProcessor extends MODX\Revolution\Processors\Processor {
+    }
+} else {
+    abstract class DynamicOrphansDeleteProcessor extends modProcessor {
+    }
+}
+class OrphansDeleteProcessor extends DynamicOrphansDeleteProcessor {
 
     public function process(array $scriptProperties=array()) {
         $class = $this->getProperty('orphanSearch');

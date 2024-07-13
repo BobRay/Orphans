@@ -29,10 +29,25 @@
  * @subpackage processors
  */
 
-require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+$v = @include MODX_CORE_PATH . 'docs/version.inc.php';
+$isMODX3 = $v['version'] >= 3;
+
+if ($isMODX3) {
+    require_once MODX_CORE_PATH . 'vendor/autoload.php';
+} else {
+    require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+}
+
+if ($isMODX3) {
+    abstract class DynamicOrphansDummyProcessor extends MODX\Revolution\Processors\Processor {
+    }
+} else {
+    abstract class DynamicOrphansDummyProcessor extends modProcessor {
+    }
+}
 
 
-class orphansDummyProcessor extends modProcessor {
+class orphansDummyProcessor extends DynamicOrphansDummyProcessor {
 
     public function process(array $scriptProperties = array()) {
         $fields = array(

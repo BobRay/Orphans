@@ -28,7 +28,8 @@
  * @package orphans
  * @subpackage processors
  */
-class OrphansIgnoreProcessor extends modProcessor {
+
+class OrphansIgnoreProcessor extends DynamicOrphansIgnoreProcessor {
     public function process() {
         $class = $this->getProperty('orphanSearch');
         if ($class == 'modTemplateVar') {
