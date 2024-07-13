@@ -21,22 +21,40 @@
  *
  * @package orphans
  */
-require_once MODX_CORE_PATH . 'model/modx/modrequest.class.php';
+
+$v = @include MODX_CORE_PATH . 'docs/version.inc.php';
+$isMODX3 = $v['version'] >= 3;
+
+if ($isMODX3) {
+    require_once MODX_CORE_PATH . 'vendor/autoload.php';
+} else {
+    require_once MODX_CORE_PATH . 'model/modx/modrequest.class.php';
+}
+
 /**
  * Encapsulates the interaction of MODx manager with an HTTP request.
  *
  * {@inheritdoc}
  *
  * @package orphans
- * @extends modRequest
+ *
  */
-class OrphansControllerRequest extends modRequest {
+
+if ($isMODX3) {
+    abstract class DynamicOrphansControllerRequest extends MODX\Revolution\modManagerRequest {
+    }
+} else {
+    abstract class DynamicOrphansControllerRequest extends modRequest {
+    }
+}
+
+class OrphansControllerRequest extends DynamicOrphansControllerRequest {
     public $orphans = null;
     public $actionVar = 'action';
     public $defaultAction = 'home';
 
     function __construct(Orphans &$orphans) {
-        parent :: __construct($orphans->modx);
+        parent:: __construct($orphans->modx);
         $this->orphans =& $orphans;
     }
 
@@ -64,15 +82,15 @@ class OrphansControllerRequest extends modRequest {
     private function _respond() {
         $modx =& $this->modx;
         $orphans =& $this->orphans;
-        $viewHeader = include $this->orphans->config['corePath'].'controllers/mgr/header.php';
+        $viewHeader = include $this->orphans->config['corePath'] . 'controllers/mgr/header.php';
 
-        $f = $this->orphans->config['corePath'].'controllers/mgr/'.$this->action.'.php';
+        $f = $this->orphans->config['corePath'] . 'controllers/mgr/' . $this->action . '.php';
         if (file_exists($f)) {
             $viewOutput = include $f;
         } else {
-            $viewOutput = 'Action not found: '.$f;
+            $viewOutput = 'Action not found: ' . $f;
         }
 
-        return $viewHeader.$viewOutput;
+        return $viewHeader . $viewOutput;
     }
 }
