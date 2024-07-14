@@ -48,7 +48,7 @@ if (!defined('MODX_CORE_PATH')) {
     }
     @include MODX_CORE_PATH . 'model/modx/modx.class.php';
     $modx = new modX();
-    if ($modx instanceof modX) {
+    if ($modx) {
         $modx->initialize('mgr');
     } else {
         die('No MODX');
@@ -65,7 +65,7 @@ if (!defined('MODX_CORE_PATH')) {
     $homeId = $modx->getOption('site_start');
     $homeResource = $modx->getObject('modResource', $homeId);
 
-    if ($homeResource instanceof modResource) {
+    if ($homeResource) {
         $modx->resource = $homeResource;
     } else {
         $homeResource = $modx->getObject('modResource', 1);
@@ -75,7 +75,7 @@ if (!defined('MODX_CORE_PATH')) {
     }
 
     $myUser = $modx->getObject('modUser');
-    if ($myUser instanceof modUser) {
+    if ($myUser) {
         $modx->user = $myUser;
     }
 }
@@ -100,7 +100,7 @@ function output($msg, $suppressCr = false) {
 
 $logLevel = $modx->setLogLevel(MODX::LOG_LEVEL_ERROR);
 $orphans = new Orphans($modx);
-if ($orphans instanceof Orphans) {
+if ($orphans) {
     $orphans->initialize();
 } else {
     die('No Orphans class');
