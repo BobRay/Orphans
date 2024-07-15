@@ -11,7 +11,7 @@
  *
  * Build Script for MyComponent extra
  *
- * Copyright 2012-2013 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2024 by Bob Ray <http://bobsguides.com>
  * Created on 10-23-2012
  *
  * MyComponent is free software; you can redistribute it and/or modify it under the
@@ -226,7 +226,7 @@ set_time_limit(0);
  */
 require_once dirname(dirname(__FILE__)) . '/_build/build.config.php';
 
-if ( (! isset($modx)) || (! $modx instanceof modX) ) {
+if ( (! isset($modx)) || (! is_object($modx)) ) {
     require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
     $modx = new modX();
     $modx->initialize('mgr');
@@ -856,7 +856,7 @@ if ($hasMenu) {
 }
 
 /* Next-to-last step - pack in the license file, readme.txt, changelog,
- * and setup options 
+ * and setup options
  */
 $attr = array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),
