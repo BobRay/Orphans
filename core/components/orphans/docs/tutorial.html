@@ -87,6 +87,9 @@ $modx->getChunk($tpl);
 
 <p>The report on Snippets is fairly reliable, since every snippet that's in use is referred to by name somewhere. It's theoretically possible to use a snippet without using its name, but it's quite rare.</p>
 
+<p>Caution: Snippets for snippet-based dashboard widgets like UpgradeMODX will often be identified as orphans even though they are used by some widget. Add them to the ignore list.</p>
+
+
 <h3>General Advice</h3>
 
 <p>Often, you'll recognize listed orphans as things that are definitely no longer in use. You can delete those, although it's not a bad idea to rename them first and delete them later.</p>
