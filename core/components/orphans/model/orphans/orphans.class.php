@@ -223,7 +223,7 @@ if (! class_exists('Orphans')) {
             }
             $c->limit(300);
             /* ToDo: Use getCollectionGraph here */
-            $objects = $this->modx->getCollection($type, $c);
+            $objects = $this->modx->getCollection($this->prefix . $type, $c);
 
             /* get Ignore List */
             $ignoreChunk = $this->modx->getObject($this->prefix . 'modChunk', array('name' => 'OrphansIgnoreList'));
@@ -280,7 +280,7 @@ if (! class_exists('Orphans')) {
                         break;
                 }
 
-                $objects = $this->modx->getCollection($objectType, $c);
+                $objects = $this->modx->getCollection($this->prefix . $objectType, $c);
                 foreach ($objects as $object) {
                     /* @var $orphanObject OrphanObject */
                     /* Get concatenated content + included files + properties, etc. */
