@@ -213,7 +213,7 @@ if (! class_exists('Orphans')) {
             }
             // $this->classFileCount = count($this->classFiles);
             $objectTypes = $this->objectTypes;
-            $c = $this->modx->newQuery($type);
+            $c = $this->modx->newQuery($this->prefix . $type);
             if ($type == 'modTemplate') {
                 $c->select(array('id', 'templatename', 'category', 'description'));
                 $c->sortby('templatename');
@@ -256,7 +256,7 @@ if (! class_exists('Orphans')) {
 
             $this->orphans = array();
             foreach ($objectTypes as $objectType) {
-                $c = $this->modx->newQuery($objectType);
+                $c = $this->modx->newQuery($this->prefix . $objectType);
 
                 switch ($objectType) {
                     case 'modResource':
