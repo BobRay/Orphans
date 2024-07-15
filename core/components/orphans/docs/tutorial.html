@@ -1,5 +1,5 @@
 
-<p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the section around line 277 (my apologies if that code has been moved by the time you read this and I've forgotten to update this section).
+<p>Orphans is a utility for MODX Revolution that tries to identify unused elements, such as Chunks, Snippets, Templates, and Template variables. Unused elements can slow down your site and make it more difficult to find the things you want in the Manager. A utility to identify them has been requested many times. The process is amazingly complex, but I thought I'd give it a shot. The results, while not perfect, are more accurate than I thought they would be, and it was a fun challenge to write it. If you want to make yourself dizzy, read the code of the Orphans class file, especially the section around line 253 (my apologies if that code has been moved by the time you read this, and I've forgotten to update this section).
 
 <h4>[Fully updated for MODX 3 and PHP 8]</h4>
 
@@ -7,13 +7,13 @@
 <br>
 <h3>Updates Notes</h3>
 
-<p>Version 1.2.0 has been refactored to keep MODX 2.7.0+ happy. All controllers and processors are now class-based to prevent Orphans from crapping up the MODX error log. The code has also shrunk considerably. The original twenty-four separate processors have been consolidated into six, smarter processors that can handle multiple object types.</p>
+<p>Version 1.2.3 has been refactored to keep MODX 3.0+ happy. All controllers and processors are now class-based to prevent Orphans from crapping up the MODX error log. The code has also shrunk considerably. The original twenty-four separate processors have been consolidated into six, smarter processors that can handle multiple object types.</p>
 
 <br />
 <div class="box">
     <p>On large sites, the Orphans CMP can time out and produce no output. As of Orphans 1.1.1, there is added code to prevent this, but it may not work for you, so the new version includes a standalone snippet that will give you an Orphans report. The location is <code>core/components/orphans/elements/snippets/orphans.snippet.php</code>.  It can be run from the command line or as a one-time cron job &mdash; in either case, it will not time out. Because it processes chunks, templates, TVs, and snippets, it can take a long time to run.</p>
 
-<p><b>Important!</b> Because Orphans uses a <i>lot</i> of memory and time, the snippet is disabled on install. You definitely don't want outsiders to be able to run it at will. To enable it, just comment out the first line of code like this:</p>
+<p><b>Important!</b> Because Orphans can use a lot of memory and time, the snippet is disabled on installation. You definitely don't want outsiders to be able to run it at will. To enable it, just comment out the first line of code like this:</p>
 
 <pre class="brush: php; toolbar: false;"><fixedpre>
     // exit;
@@ -29,7 +29,7 @@
 <h3>Installing Orphans</h3>
 
 <p>
-Go to System | Package Management on the main menu in the MODX Manager and click on the "Download Extras" button. That will take you to the
+Go to System -> Package Management on the main menu in the MODX Manager and click on the "Download Extras" button. That will take you to the
 Revolution Repository. Put Orphans in the search box and press Enter. Click on the "Download" button, and when the download is finished, click on the "Back to Package Manager" button. That should bring you back to your Package Management grid. Click on the
 "Install" button next to Orphans in the grid. The Orphans package should now be installed.</p>
 
@@ -37,21 +37,21 @@ Revolution Repository. Put Orphans in the search box and press Enter. Click on t
 
 <h3>Usage</h3>
 
-<p>To run Orphans, just select the Orphans menu item under Extras in the Manager's Top Menu. You'll need to reload the Manager page after installing Orphans before the menu item will show up.</p>
+<p>To run Orphans, just select the Orphans menu item under Extras in the Manager's Main Menu. You'll need to reload the Manager page after installing Orphans before the menu item will show up.</p>
 
 <p>Once Orphans has launched, select the tab for the element you want to examine and click on the &quot;Search for Orphans&quot; button. Orphans does a tremendous amount of processing before it can render its output, so be patient. Nothing will show up until the analysis is complete. Orphans looks at the entire source code of all Resources and all Elements. It also examines all Element properties, Settings retrieved with getOption(), and the code of all class files included by snippets and plugins (and recursively looks at files included in those class files). It takes time.</p>
 
 <p>In the grid, you can perform any of the following functions by selecting the checkboxes next to the items you want to process and either right-clicking in the grid or using the &quot;Bulk Actions&quot; dropdown to select the action you want to perform.</p>
 
 <ul>
-    <li><b>Change Category</b> &mdash;Changes the category of selected Elements</li>
-    <li><b>Rename</b> &mdash;Adds the prefix set in the Orphans.prefix System Setting to the names of selected Elements</li>
-    <li><b>UN-Rename</b> &mdash;Removes the prefix from the names of selected Elements</li>
-    <li><b>Add to Ignore List</b> &mdash;Adds the selected elements to the Ignore List so they won't show up again</li>
-    <li><b>Delete</b> &mdash;Permanently deletes the selected elements.</li>
+    <li><b>Change Category</b> &mdash; Changes the category of selected Elements</li>
+    <li><b>Rename</b> &mdash; Adds the prefix set in the Orphans.prefix System Setting to the names of selected Elements</li>
+    <li><b>UN-Rename</b> &mdash; Removes the prefix from the names of selected Elements</li>
+    <li><b>Add to Ignore List</b> &mdash; Adds the selected elements to the Ignore List so they won't show up again</li>
+    <li><b>Delete</b> &mdash; Permanently deletes the selected elements.</li>
 </ul>
 
-<p>The default prefix used by Rename is &quot;aaOrphan.&quot; so the renamed orphans will be at the top of the grid when it's sorted by name. You can change the prefix by going to System | System Settings and selecting the orphans namespace (or putting &quot;Orphans&quot; in the search box at the upper right). Double-click on the prefix value to edit it, and after editing it, click somewhere else in the grid.</p>
+<p>The default prefix used by Rename is &quot;aaOrphan.&quot; so the renamed orphans will be at the top of the grid when it's sorted by name. You can change the prefix by going to System -> System Settings and selecting the orphans namespace (or putting &quot;Orphans&quot; in the search box at the upper right). Double-click on the prefix value to edit it, and after editing it, click somewhere else in the grid.</p>
 
 <p>The Ignore List is just a chunk called "OrphansIgnoreList." Important: Do not change the name of the chunk. You can add Element names to the chunk manually, but it's usually easier to do it in the grid. If you change your mind about ignoring some Element, you can delete it from the chunk Manually. The format of the chunk is unimportant, as long as each object appears on a separate line, so don't worry about messing it up.</p>
 
@@ -93,7 +93,7 @@ $modx->getChunk($tpl);
 
 <p>Other Elements listed as orphans will be elements that are either not used but important to keep (e.g., example Tpl Chunks) or elements that you know are used even though Orphans didn't find the use (e.g., MyComponent Tpl chunks). Add those to the Ignore list and Orphans will not show them to you again.</p>
 
-<p>For listed orphans you're not sure about, the best practice is to rename them. Run your site for a good while and try to check the operation of all extras to see if there are any problems. If there are no problems, you can delete the Orphans. If thing go sideways, you can un-rename them in the grid.</p>
+<p>For listed orphans you're not sure about, the best practice is to rename them. Run your site for a good while and try to check the operation of all extras to see if there are any problems. If there are no problems, you can delete the Orphans. If things go sideways, you can un-rename them in the grid.</p>
 
 <p>Another consideration is that you will often use your own Tpl chunks in place of the default ones that come with an extra. Orphans will list the default Tpl chunks as unused, but it's a good idea to add them to the Ignore List and keep them around for reference in case your own Tpl chunks develop problems.</p>
 
