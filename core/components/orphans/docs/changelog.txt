@@ -5,6 +5,7 @@ Orphans 1.2.3-pl
  - Updates for MODX 3
  - Updates for PHP 8
  - Code improvements
+ - Improved documentation
 
 Orphans 1.2.1-pl
 ---------------------------------
