@@ -92,6 +92,8 @@ if (! class_exists('Orphans')) {
         /* @var $modx modX */
         public $modx;
 
+        public $prefix;
+
         function __construct(modX &$modx, array $config = array()) {
             $this->modx =& $modx;
             $corePath = $modx->getOption('orphans.core_path', null, $modx->getOption('core_path') . 'components/orphans/');
@@ -137,7 +139,12 @@ if (! class_exists('Orphans')) {
         public function initialize($ctx = 'mgr') {
             @set_time_limit(0);
             @ini_set('memory_limit', '1024M');
-            $output = '';
+
+            /* Make it run in either MODX 2 or MODX 3 */
+            $this->prefix = $this->modx->getVersionData()['version'] >= 3
+              ? 'MODX\Revolution\\'
+              : '';
+                        $output = '';
             switch ($ctx) {
                 case 'mgr':
                     if (!$this->modx->loadClass('orphans.request.OrphansControllerRequest', $this->config['modelPath'], true, true)) {
@@ -219,7 +226,7 @@ if (! class_exists('Orphans')) {
             $objects = $this->modx->getCollection($type, $c);
 
             /* get Ignore List */
-            $ignoreChunk = $this->modx->getObject('modChunk', array('name' => 'OrphansIgnoreList'));
+            $ignoreChunk = $this->modx->getObject($this->prefix . 'modChunk', array('name' => 'OrphansIgnoreList'));
             $ignoreList = $ignoreChunk ? $ignoreChunk->getContent() : '';
 
             /* @var $object modElement */
@@ -232,7 +239,7 @@ if (! class_exists('Orphans')) {
                 if (strpos($ignoreList, $fields['name']) !== false) {
                     continue;
                 }
-                $cat = $this->modx->getObject('modCategory', $fields['category']);
+                $cat = $this->modx->getObject($this->prefix . 'modCategory', $fields['category']);
                 $fields['category'] = $cat ? $cat->get('category') : '';
                 $obj = $this->makeOrphan($fields, $type);
                 $this->allObjects[$fields['id']] = $obj;
@@ -343,7 +350,7 @@ if (! class_exists('Orphans')) {
                 case 'modResource':
                     $templateId = $fields['template'];
                     /* append the template name */
-                    $templateObj = $this->modx->getObject('modTemplate', $templateId);
+                    $templateObj = $this->modx->getObject($this->prefix . 'modTemplate', $templateId);
                     if ($templateObj) {
                         $content .= ' ' . $templateObj->get('templatename');
                     }

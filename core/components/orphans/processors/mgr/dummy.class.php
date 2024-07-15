@@ -50,6 +50,7 @@ if ($isMODX3) {
 class orphansDummyProcessor extends DynamicOrphansDummyProcessor {
 
     public function process(array $scriptProperties = array()) {
+
         $fields = array(
             'id' => '',
             'name' => '',

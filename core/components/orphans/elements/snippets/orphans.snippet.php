@@ -53,7 +53,15 @@ if (!defined('MODX_CORE_PATH')) {
     } else {
         die('No MODX');
     }
+
+
+    /* Make it run in either MODX 2 or MODX 3 */
+    $prefix = $modx->getVersionData()['version'] >= 3
+      ? 'MODX\Revolution\\'
+      : '';
+
     $modx->getService('error', 'error.modError', '', '');
+
     $modx->setLogLevel(xPDO::LOG_LEVEL_INFO);
     if (php_sapi_name() == 'cli') {
         $cliMode = true;
@@ -63,18 +71,18 @@ if (!defined('MODX_CORE_PATH')) {
     }
     $modx->getRequest();
     $homeId = $modx->getOption('site_start');
-    $homeResource = $modx->getObject('modResource', $homeId);
+    $homeResource = $modx->getObject($prefix . 'modResource', $homeId);
 
     if ($homeResource) {
         $modx->resource = $homeResource;
     } else {
-        $homeResource = $modx->getObject('modResource', 1);
+        $homeResource = $modx->getObject($prefix . 'modResource', 1);
         if ($homeResource) {
             $modx->resource = $homeResource;
         }
     }
 
-    $myUser = $modx->getObject('modUser');
+    $myUser = $modx->getObject($prefix . 'modUser');
     if ($myUser) {
         $modx->user = $myUser;
     }
@@ -124,7 +132,6 @@ foreach ($types as $type) {
             output('');
         }
     }
-
 }
 
 output("Finished!");

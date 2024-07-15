@@ -45,8 +45,14 @@ if ($isMODX3) {
     }
 }
 class OrphansRenameProcessor extends DynamicOrphansRenameProcessor {
+    protected string $prefix;
     public function process() {
-        $class = $this->getProperty('orphanSearch');
+
+/* Make it run in either MODX 2 or MODX 3 */
+        $this->prefix = $this->modx->getVersionData()['version'] >= 3
+          ? 'MODX\Revolution\\'
+          : '';
+                $class = $this->getProperty('orphanSearch');
         if ($class == 'modTemplateVar') {
             $name = 'tv';
         } else {
@@ -62,7 +68,7 @@ class OrphansRenameProcessor extends DynamicOrphansRenameProcessor {
         $prefix = $this->modx->getOption('orphans.prefix', null, 'aaOrphan.');
         $objectIds = explode(',', $objects);
         foreach ($objectIds as $objectId) {
-            $object = $this->modx->getObject($class, $objectId);
+            $object = $this->modx->getObject($this->prefix . $class, $objectId);
             if ($object == null) {
                 continue;
             }

@@ -45,7 +45,15 @@ if ($isMODX3) {
     }
 }
 class OrphansChangeCategoryProcessor extends DynamicOrphansChangeCategoryProcessor {
+    protected string $prefix;
+
     public function process(array $scriptProperties = array()) {
+
+/* Make it run in either MODX 2 or MODX 3 */
+        $this->prefix = $this->modx->getVersionData()['version'] >= 3
+          ? 'MODX\Revolution\\'
+          : '';
+
         $class = $this->getProperty('orphanSearch');
         if ($class == 'modTemplateVar') {
             $name = 'tv';
@@ -65,14 +73,14 @@ class OrphansChangeCategoryProcessor extends DynamicOrphansChangeCategoryProcess
         $category = $this->getProperty('category');
 
         if (!empty($category)) {
-            $categoryObj = $this->modx->getObject('modCategory', (int) $category);
+            $categoryObj = $this->modx->getObject($this->prefix . 'modCategory', (int) $category);
             if (empty($categoryObj)) {
                 return $this->modx->error->failure($this->modx->lexicon('orphans.category_err_nf', array('id' => $category)));
             }
         }
         $objectIds = explode(',', $objects);
         foreach ($objectIds as $objectId) {
-            $object = $this->modx->getObject($class, (int) $objectId);
+            $object = $this->modx->getObject($this->prefix . $class, (int) $objectId);
             if ($object == null) {
                 $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not get ' . $class . ' with ID ' . $objectId);
                 continue;

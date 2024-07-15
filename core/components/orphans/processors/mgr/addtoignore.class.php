@@ -28,9 +28,31 @@
  * @package orphans
  * @subpackage processors
  */
+$v = @include MODX_CORE_PATH . 'docs/version.inc.php';
+$isMODX3 = $v['version'] >= 3;
 
+if ($isMODX3) {
+    require_once MODX_CORE_PATH . 'vendor/autoload.php';
+} else {
+    require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+}
+
+if ($isMODX3) {
+    abstract class DynamicOrphansIgnoreProcessor extends MODX\Revolution\Processors\Processor {
+    }
+} else {
+    abstract class DynamicOrphansIgnoreProcessor extends modProcessor {
+    }
+}
 class OrphansIgnoreProcessor extends DynamicOrphansIgnoreProcessor {
+    protected string $prefix;
+
     public function process() {
+
+        $this->prefix = $this->modx->getVersionData()['version'] >= 3
+          ? 'MODX\Revolution\\'
+          : '';
+
         $class = $this->getProperty('orphanSearch');
         if ($class == 'modTemplateVar') {
             $name = 'tv';
@@ -47,7 +69,7 @@ class OrphansIgnoreProcessor extends DynamicOrphansIgnoreProcessor {
 
         $objectIds = explode(',', $objects);
         foreach ($objectIds as $objectId) {
-            $object = $this->modx->getObject($class, $objectId);
+            $object = $this->modx->getObject($this->prefix . $class, $objectId);
             if ($object == null) {
                 continue;
             }
@@ -55,7 +77,7 @@ class OrphansIgnoreProcessor extends DynamicOrphansIgnoreProcessor {
             $nameField = $class == 'modTemplate' ? 'templatename' : 'name';
             $name = $object->get($nameField);
             /* @var $chunk modChunk */
-            $chunk = $this->modx->getObject('modChunk', array('name' => 'OrphansIgnoreList'));
+            $chunk = $this->modx->getObject($this->prefix . 'modChunk', array('name' => 'OrphansIgnoreList'));
             if ($chunk) {
                 $content = $chunk->getContent();
                 $content .= "\n" . $name;
